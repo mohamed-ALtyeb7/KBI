@@ -6,7 +6,7 @@ import reactHooksPlugin from "eslint-plugin-react-hooks"
 import globals from "globals"
 
 export default [
-  { ignores: [".next/**", "node_modules/**", "dist/**", "build/**"] },
+  { ignores: [".next/**", "node_modules/**", "dist/**", "build/**", "out/**"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
