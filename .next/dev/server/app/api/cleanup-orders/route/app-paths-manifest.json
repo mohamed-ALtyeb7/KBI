@@ -1,0 +1,3 @@
+{
+  "/api/cleanup-orders/route": "app/api/cleanup-orders/route.js"
+}
