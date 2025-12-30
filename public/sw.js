@@ -1,12 +1,14 @@
 const CACHE_NAME = "kbi-repair-v1"
-const OFFLINE_URL = "/offline.html"
+const SCOPE_PATH = new URL(self.registration.scope).pathname
+const BASE = SCOPE_PATH.endsWith("/") ? SCOPE_PATH.slice(0, -1) : SCOPE_PATH
+const OFFLINE_URL = `${BASE}/offline.html`
 
 const STATIC_ASSETS = [
-  "/",
-  "/book",
-  "/track",
-  "/offline.html",
-  "/manifest.json"
+  `${BASE}/`,
+  `${BASE}/book`,
+  `${BASE}/track`,
+  `${BASE}/offline.html`,
+  `${BASE}/manifest.json`
 ]
 
 // Install event - cache static assets
@@ -41,8 +43,8 @@ self.addEventListener("fetch", (event) => {
 
   // Skip API requests and Firebase
   const url = new URL(event.request.url)
-  if (url.pathname.startsWith("/api/") ||
-    url.pathname.startsWith("/_next/") ||
+  if (url.pathname.startsWith(`${BASE}/api/`) ||
+    url.pathname.startsWith(`${BASE}/_next/`) ||
     url.searchParams.has("_rsc") ||
     url.hostname.includes("firebase") ||
     url.hostname.includes("googleapis")) {
@@ -94,11 +96,11 @@ self.addEventListener("push", (event) => {
 
   const options = {
     body: data.body || "You have a new notification",
-    icon: "/icons/icon-192x192.png",
-    badge: "/icons/badge-72x72.png",
+    icon: `${BASE}/apple-icon.png`,
+    badge: `${BASE}/icon-light-32x32.png`,
     vibrate: [100, 50, 100],
     data: {
-      url: data.url || "/"
+      url: data.url || `${BASE}/`
     },
     actions: [
       { action: "view", title: "View" },
@@ -116,7 +118,7 @@ self.addEventListener("notificationclick", (event) => {
   event.notification.close()
 
   if (event.action === "view" || !event.action) {
-    const url = event.notification.data?.url || "/"
+    const url = event.notification.data?.url || `${BASE}/`
     event.waitUntil(
       clients.matchAll({ type: "window" }).then((clientList) => {
         // Focus existing window or open new one

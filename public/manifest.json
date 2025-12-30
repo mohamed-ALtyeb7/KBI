@@ -2,7 +2,7 @@
     "name": "KBI Repair Services",
     "short_name": "KBI Repair",
     "description": "On-Site Device Repair Services in Abu Dhabi",
-    "start_url": "/",
+    "start_url": "/KBI/",
     "display": "standalone",
     "background_color": "#000000",
     "theme_color": "#06b6d4",

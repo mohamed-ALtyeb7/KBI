@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description:
     "Fast, professional on-site repair for phones, laptops, printers, monitors, TVs, Apple Watch, CCTV, and gaming consoles in Abu Dhabi.",
   generator: 'v0.app',
-  manifest: '/manifest.json',
+  manifest: `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/manifest.json`,
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
@@ -34,10 +34,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <link rel="apple-touch-icon" href={`${basePath}/apple-icon.png`} />
         <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>
       <body suppressHydrationWarning className={cn("min-h-screen font-sans antialiased selection:bg-cyan-500/20", inter.variable)}>
@@ -51,7 +52,7 @@ export default function RootLayout({
             __html: `
               if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js')
+                  navigator.serviceWorker.register('${basePath}/sw.js')
                     .then(function(registration) {
                       void 0;
                     })
