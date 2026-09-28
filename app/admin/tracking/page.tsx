@@ -1,0 +1,970 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+import {
+  MapPin,
+  Navigation,
+  ShieldAlert,
+  CheckCircle2,
+  RefreshCw,
+  Smartphone,
+  Clock,
+  UserCheck,
+  Radio,
+  Search,
+  Users,
+  Activity,
+  Layers,
+  Phone,
+  ArrowRight,
+  Wrench,
+  MessageCircle,
+} from "lucide-react";
+import { collection, limit, onSnapshot, query } from "firebase/firestore";
+import { db } from "@/firebase/firebaseConfig";
+import { authorizedFetch } from "@/lib/authorized-fetch";
+import { isTechnicianProfile } from "@/lib/technician-profile";
+import { technicianLocationState } from "@/lib/tracking/location-state";
+
+const InteractiveMap = dynamic(
+  () => import("@/components/admin/tracking/interactive-map"),
+  { ssr: false, loading: () => <div className="w-full h-[380px] bg-[#0B0F19] flex items-center justify-center text-xs text-slate-400">Loading interactive satellite dispatch radar...</div> }
+);
+
+const MiniRouteMap = dynamic(
+  () => import("@/components/admin/tracking/mini-route-map"),
+  { ssr: false, loading: () => <div className="h-28 w-full bg-muted/40 rounded-xl flex items-center justify-center text-[10px] text-muted-foreground">Loading mini map...</div> }
+);
+
+interface TechMarker {
+  id: string;
+  name: string;
+  phone: string;
+  email?: string;
+  avatar?: string;
+  role?: string;
+  latitude?: number;
+  longitude?: number;
+  batteryLevel?: number;
+  isCharging?: boolean;
+  networkStatus?: string;
+  speed?: number;
+  heading?: number;
+  status: string;
+  currentOrder?: string;
+  isOnline: boolean;
+  specialization?: string;
+  lastActive?: string;
+  deviceModel?: string;
+  osVersion?: string;
+  appVersion?: string;
+  accuracy?: number;
+  ipAddress?: string;
+  lastLocationTime?: string;
+  locationAgeMs?: number;
+  hasFreshLocation: boolean;
+  locationPermissionStatus?: string;
+  locationServicesEnabled?: boolean;
+  locationTrackingIssue?: string;
+  vehicle?: string;
+  rating?: number;
+  jobsCompleted?: number;
+  level?: string;
+  etaText?: string;
+  etaDistance?: string;
+  currentJobTitle?: string;
+  currentJobArea?: string;
+  destLat?: number;
+  destLng?: number;
+  destAddress?: string;
+  emirateId?: string;
+}
+
+interface PendingBooking {
+  id: string;
+  device?: string;
+  service?: string;
+  customerName?: string;
+  customerPhone?: string;
+  address?: string;
+  country?: string;
+  emirateId?: string;
+  emirate?: string;
+  areaId?: string;
+  area?: string;
+  latitude?: number;
+  longitude?: number;
+  status: string;
+  assignedTechnician?: string;
+}
+
+function getDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * (Math.PI / 180);
+  const dLon = (lon2 - lon1) * (Math.PI / 180);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * (Math.PI / 180)) *
+      Math.cos(lat2 * (Math.PI / 180)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return Math.round(R * c * 10) / 10;
+}
+
+const LIVE_LOCATION_MAX_AGE_MS = 2 * 60 * 1000;
+const ONLINE_PRESENCE_MAX_AGE_MS = 2 * 60 * 1000;
+const TERMINAL_BOOKING_STATUSES = new Set(["completed", "cancelled", "canceled", "rejected"]);
+
+function firestoreDate(value: unknown): Date | undefined {
+  if (!value) return undefined;
+  if (value instanceof Date) return value;
+  if (typeof value === "object" && value !== null && "toDate" in value) {
+    const toDate = (value as { toDate?: () => Date }).toDate;
+    if (typeof toDate === "function") return toDate.call(value);
+  }
+  if (typeof value === "string" || typeof value === "number") {
+    const parsed = new Date(value);
+    if (!Number.isNaN(parsed.getTime())) return parsed;
+  }
+  return undefined;
+}
+
+function validCoordinates(lat: number, lng: number) {
+  return Number.isFinite(lat) &&
+    Number.isFinite(lng) &&
+    lat >= -90 &&
+    lat <= 90 &&
+    lng >= -180 &&
+    lng <= 180 &&
+    !(lat === 0 && lng === 0);
+}
+
+function locationAgeLabel(locationTime: Date | undefined, now: number) {
+  if (!locationTime) return "GPS timestamp unavailable";
+  const seconds = Math.max(0, Math.round((now - locationTime.getTime()) / 1000));
+  if (seconds < 10) return "Updated just now";
+  if (seconds < 60) return `Updated ${seconds}s ago`;
+  const minutes = Math.round(seconds / 60);
+  if (minutes < 60) return `Updated ${minutes}m ago`;
+  const hours = Math.round(minutes / 60);
+  return `Updated ${hours}h ago`;
+}
+
+function optionalFiniteNumber(value: unknown, minimum?: number, maximum?: number) {
+  if (value === undefined || value === null || value === "") return undefined;
+  const numberValue = Number(value);
+  if (!Number.isFinite(numberValue)) return undefined;
+  if (minimum !== undefined && numberValue < minimum) return undefined;
+  if (maximum !== undefined && numberValue > maximum) return undefined;
+  return numberValue;
+}
+
+export default function LiveTrackingPage() {
+  const [technicians, setTechnicians] = useState<TechMarker[]>([]);
+  const [bookings, setBookings] = useState<PendingBooking[]>([]);
+  const [selectedTech, setSelectedTech] = useState<TechMarker | null>(null);
+  const [lastSync, setLastSync] = useState<Date>(new Date());
+  const [notice, setNotice] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [emirateFilter, setEmirateFilter] = useState<"ALL" | "abu-dhabi" | "dubai" | "sharjah" | "ajman">("ALL");
+  const [statusFilter, setStatusFilter] = useState<"ALL" | "ONLINE" | "AVAILABLE" | "ON_JOB" | "OFFLINE">("ALL");
+  const [trackingNow, setTrackingNow] = useState(() => Date.now());
+  const [requestingLocation, setRequestingLocation] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setTrackingNow(Date.now()), 30_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  // Bookings Real-time Listener
+  useEffect(() => {
+    // The dispatch map only needs the current work queue. Bounding the stream
+    // prevents historical bookings from being downloaded on every visit.
+    const bookQ = query(collection(db, "bookings"), limit(100));
+    const unsub = onSnapshot(bookQ, (snap) => {
+      const list: PendingBooking[] = snap.docs.map((d) => {
+        const data = d.data();
+        const lat = Number(data.location?.lat ?? data.latitude ?? data.lat);
+        const lng = Number(data.location?.lng ?? data.longitude ?? data.lng);
+        return {
+          id: d.id,
+          device: data.device || data.serviceType || "Device Repair",
+          service: data.service || data.issue || "Diagnostic & Repair",
+          customerName: data.customerName || data.clientName || "Customer",
+          customerPhone: data.customerPhone || data.phone || "",
+          address: data.address || data.locationName || data.city || "Location not provided",
+          country: data.country || "",
+          emirateId: data.emirateId || "",
+          emirate: data.emirate || "",
+          areaId: data.areaId || "",
+          area: data.area || "",
+          latitude: validCoordinates(lat, lng) ? lat : undefined,
+          longitude: validCoordinates(lat, lng) ? lng : undefined,
+          status: data.status || "unknown",
+          assignedTechnician:
+            data.assignedTechnician ||
+            data.assignedTechnicianId ||
+            data.technicianId ||
+            (Array.isArray(data.assignedTechnicians) ? data.assignedTechnicians[0] : undefined) ||
+            (Array.isArray(data.technicianIds) ? data.technicianIds[0] : undefined),
+        };
+      });
+      setBookings(list);
+    });
+
+    return () => unsub();
+  }, []);
+
+  // Technicians Real-time Listener
+  useEffect(() => {
+    // Technicians remain real-time, but the dashboard has a practical cap so a
+    // growing directory cannot freeze the map client.
+    const techQ = query(collection(db, "technicians"), limit(200));
+    const unsub = onSnapshot(
+      techQ,
+      (snap) => {
+        const liveList: TechMarker[] = snap.docs
+          .filter((d) => isTechnicianProfile(d.data()))
+          .map((d) => {
+            const raw = d.data();
+            const lat = Number(raw.location?.lat ?? raw.latitude ?? raw.lat ?? raw.lastKnownLatitude);
+            const lng = Number(raw.location?.lng ?? raw.longitude ?? raw.lng ?? raw.lastKnownLongitude);
+            const hasCoordinates = validCoordinates(lat, lng);
+            const locationTime = firestoreDate(raw.locationUpdatedAt ?? raw.location?.updatedAt);
+            const activityTime = firestoreDate(raw.lastActive ?? raw.lastSeen ?? raw.updatedAt);
+            const locationAgeMs = locationTime
+              ? Math.max(0, trackingNow - locationTime.getTime())
+              : undefined;
+            const hasFreshLocation = hasCoordinates &&
+              locationAgeMs !== undefined &&
+              locationAgeMs <= LIVE_LOCATION_MAX_AGE_MS;
+            const cleanAvailability = String(raw.availability ?? "").toLowerCase().trim();
+            const cleanStatus = String(raw.status ?? "").toUpperCase().trim();
+            const isExplicitlyOffline = cleanAvailability === "offline" || cleanStatus === "OFFLINE" || raw.online === false || raw.isOnline === false;
+            const hasOnlineFlag = raw.online === true || raw.isOnline === true || cleanAvailability === "available" || cleanAvailability === "busy" || cleanStatus === "AVAILABLE" || cleanStatus === "BUSY" || cleanStatus === "ON_JOB";
+            const activityAgeMs = activityTime ? Math.max(0, trackingNow - activityTime.getTime()) : undefined;
+            const hasFreshPresence = hasFreshLocation || (activityAgeMs !== undefined && activityAgeMs <= ONLINE_PRESENCE_MAX_AGE_MS);
+            const isOnline = !isExplicitlyOffline && hasOnlineFlag && hasFreshPresence;
+            
+            const avatar = raw.profile_photo || raw.avatar || raw.photoURL || raw.photo || "";
+            const deviceModel =
+              raw.deviceModel ||
+              raw.deviceInfo?.model ||
+              raw.device?.model ||
+              raw.device_name ||
+              raw.hardware ||
+              (raw.platform ? `${raw.platform} Device` : "") ||
+              (raw.userAgent ? (raw.userAgent.includes("iPhone") ? "iPhone" : raw.userAgent.includes("Android") ? "Android" : "Mobile Client") : "") ||
+              undefined;
+
+            const osVersion =
+              raw.osVersion ||
+              raw.deviceInfo?.os ||
+              raw.device?.os ||
+              raw.device_os ||
+              raw.platformVersion ||
+              (raw.platform ? `Platform: ${raw.platform}` : "") ||
+              undefined;
+
+            const appVersion = raw.appVersion || raw.deviceInfo?.appVersion || raw.version || undefined;
+            const accuracy = optionalFiniteNumber(raw.accuracy ?? raw.location?.accuracy, 0);
+            const isCharging = raw.isCharging === true || raw.batteryCharging === true;
+            const vehicle = raw.vehicle || raw.vehicleInfo || raw.car || raw.transport || undefined;
+            const rating = optionalFiniteNumber(raw.rating ?? raw.averageRating, 0, 5);
+            const jobsCompleted = optionalFiniteNumber(raw.jobsCompleted ?? raw.completedJobs ?? raw.totalJobs, 0);
+            const level = raw.level || raw.rank || undefined;
+
+            const activeJobId = raw.currentJob || raw.currentOrder || raw.activeBookingId;
+            const isBusy = (cleanAvailability === "busy" || cleanStatus === "BUSY" || cleanStatus === "ON_JOB" || Boolean(activeJobId)) && cleanAvailability !== "available";
+
+            return {
+              id: d.id,
+              name: raw.name || raw.full_name || raw.displayName || "Technician",
+              phone: raw.phone || raw.phoneNumber || "Not provided",
+              email: raw.email || raw.userEmail || "",
+              avatar: avatar || undefined,
+              role: raw.role || "TECHNICIAN",
+              latitude: hasCoordinates ? lat : undefined,
+              longitude: hasCoordinates ? lng : undefined,
+              batteryLevel: optionalFiniteNumber(raw.batteryLevel, 0, 100),
+              isCharging,
+              networkStatus: raw.networkStatus || undefined,
+              speed: optionalFiniteNumber(raw.speed ?? raw.location?.speed, 0),
+              heading: optionalFiniteNumber(raw.heading ?? raw.location?.heading, 0, 360),
+              status: isOnline ? (isBusy ? "ON_JOB" : "AVAILABLE") : "OFFLINE",
+              currentOrder: isBusy ? activeJobId : undefined,
+              isOnline,
+              specialization: raw.specialization || raw.experience_main_skill || undefined,
+              lastActive: activityTime ? locationAgeLabel(activityTime, trackingNow).replace("Updated", "Seen") : "Activity timestamp unavailable",
+              deviceModel,
+              osVersion,
+              appVersion,
+              accuracy: Number.isFinite(accuracy) ? accuracy : undefined,
+              ipAddress: raw.ipAddress || undefined,
+              lastLocationTime: hasCoordinates
+                ? locationAgeLabel(locationTime, trackingNow)
+                : "No GPS fix received",
+              locationAgeMs,
+              hasFreshLocation,
+              locationPermissionStatus: raw.locationPermissionStatus,
+              locationServicesEnabled: typeof raw.locationServicesEnabled === "boolean" ? raw.locationServicesEnabled : undefined,
+              locationTrackingIssue: raw.locationTrackingIssue,
+              vehicle,
+              rating,
+              jobsCompleted,
+              level,
+              emirateId: raw.emirateId || raw.emirate || raw.serviceEmirate || undefined,
+            };
+          });
+        setTechnicians(liveList);
+        setSelectedTech((current) => liveList.find((item) => item.id === current?.id) || liveList[0] || null);
+        setLastSync(new Date());
+      },
+      (err) => {
+        console.warn("Firestore tracking listener notice:", err);
+        setTechnicians([]);
+        setSelectedTech(null);
+      }
+    );
+
+    return () => unsub();
+  }, [trackingNow]);
+
+  const unassignedBookings = bookings.filter((booking) => {
+    const status = booking.status.toLowerCase().trim();
+    return !booking.assignedTechnician && !TERMINAL_BOOKING_STATUSES.has(status);
+  });
+
+  const onlineCount = technicians.filter((t) => t.isOnline).length;
+  const availableCount = technicians.filter((t) => t.status === "AVAILABLE").length;
+  const onJobCount = technicians.filter((t) => t.status === "ON_JOB").length;
+  const offlineCount = technicians.filter((t) => !t.isOnline).length;
+
+  // Compute dynamic ETA, real distance, and current job for each technician
+  const enrichedTechnicians = technicians.map((tech) => {
+    const activeBooking = bookings.find(
+      (b) =>
+        !TERMINAL_BOOKING_STATUSES.has(b.status.toLowerCase().trim()) &&
+        (b.assignedTechnician === tech.id || b.id === tech.currentOrder)
+    );
+
+    let etaText = tech.isOnline ? (tech.status === "ON_JOB" ? "On assigned job" : "Ready for dispatch") : "Offline";
+    let etaDistance = "";
+    let currentJobTitle = activeBooking ? `${activeBooking.device} · ${activeBooking.service}` : (tech.currentOrder ? `Order #${tech.currentOrder.slice(0, 8)}` : "No active job");
+    let currentJobArea = activeBooking ? activeBooking.address : (tech.currentOrder ? "Customer Location" : "Standby");
+
+    let destLat = activeBooking?.latitude;
+    let destLng = activeBooking?.longitude;
+    let destAddress = activeBooking?.address;
+
+    if (tech.hasFreshLocation && tech.latitude !== undefined && tech.longitude !== undefined && activeBooking?.latitude !== undefined && activeBooking?.longitude !== undefined) {
+      const distKm = getDistanceKm(tech.latitude, tech.longitude, activeBooking.latitude, activeBooking.longitude);
+      // This is clearly labelled as an approximation; it is not live traffic routing.
+      const minutes = Math.max(1, Math.round(distKm * 2 + 3));
+      etaText = `Approx. ETA: ${minutes} min`;
+      etaDistance = `${distKm} km away`;
+    }
+
+    return {
+      ...tech,
+      etaText,
+      etaDistance,
+      currentJobTitle,
+      currentJobArea,
+      destLat,
+      destLng,
+      destAddress,
+    };
+  });
+
+  const filteredTechnicians = enrichedTechnicians.filter((t) => {
+    const matchesSearch =
+      !searchQuery.trim() ||
+      [t.name, t.phone, t.specialization, t.id].some((v) =>
+        v?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    const matchesStatus =
+      statusFilter === "ALL" ||
+      (statusFilter === "ONLINE" && t.isOnline) ||
+      (statusFilter === "AVAILABLE" && t.status === "AVAILABLE") ||
+      (statusFilter === "ON_JOB" && t.status === "ON_JOB") ||
+      (statusFilter === "OFFLINE" && !t.isOnline);
+    const normalizedEmirate = String(t.emirateId || "").toLowerCase().replace(/\s+/g, "-");
+    const matchesEmirate = emirateFilter === "ALL" || normalizedEmirate === emirateFilter;
+    return matchesSearch && matchesStatus && matchesEmirate;
+  });
+
+  const selectedEnrichedTech = enrichedTechnicians.find((t) => t.id === selectedTech?.id) || selectedTech;
+  const selectedGpsState = selectedEnrichedTech ? technicianLocationState({
+    hasFreshLocation: selectedEnrichedTech.hasFreshLocation,
+    hasCoordinates: selectedEnrichedTech.latitude !== undefined && selectedEnrichedTech.longitude !== undefined,
+    permissionStatus: selectedEnrichedTech.locationPermissionStatus,
+    servicesEnabled: selectedEnrichedTech.locationServicesEnabled,
+    trackingIssue: selectedEnrichedTech.locationTrackingIssue,
+  }) : null;
+
+  const sendRemoteAction = async (action: string, payload?: any) => {
+    if (!selectedTech) return false;
+
+    try {
+      const res = await authorizedFetch("/api/admin/remote-command", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          technicianId: selectedTech.id,
+          action,
+          payload,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.error || "Remote command failed");
+      setNotice({
+        type: "success",
+        text: `Remote command [${action}] dispatched to ${selectedTech.name}.`,
+      });
+      return true;
+    } catch (error: unknown) {
+      setNotice({
+        type: "error",
+        text: error instanceof Error ? error.message : "Remote command failed.",
+      });
+      return false;
+    }
+  };
+
+  const requestCurrentLocation = async () => {
+    if (!selectedTech || requestingLocation) return;
+    setRequestingLocation(true);
+    await sendRemoteAction("REQUEST_LOCATION", {
+      message: "KBI Dispatch requested your current GPS location.",
+    });
+    setRequestingLocation(false);
+  };
+
+  return (
+    <div className="relative p-6 sm:p-8 bg-background min-h-screen text-foreground space-y-6 font-sans">
+      {/* Notice Alert */}
+      {notice && (
+        <div
+          className={`fixed top-6 right-6 z-[100] max-w-md rounded-xl p-4 shadow-xl border flex items-center justify-between gap-4 animate-in fade-in slide-in-from-top-4 ${
+            notice.type === "success"
+              ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border-emerald-500/40"
+              : "bg-rose-500/10 text-rose-600 dark:text-rose-300 border-rose-500/40"
+          }`}
+        >
+          <div className="flex items-center gap-3">
+            {notice.type === "success" ? (
+              <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+            ) : (
+              <ShieldAlert className="w-5 h-5 text-rose-500 shrink-0" />
+            )}
+            <p className="text-xs font-semibold">{notice.text}</p>
+          </div>
+          <button
+            onClick={() => setNotice(null)}
+            className="text-muted-foreground hover:text-foreground text-xs p-1"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
+      {/* Top Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border pb-5">
+        <div>
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 bg-primary/10 border border-primary/20 rounded-xl">
+              <Navigation className="w-6 h-6 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
+                Command Center
+              </h1>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Dispatch, monitoring, and telemetry operations
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="text-xs text-muted-foreground bg-muted/40 border border-border px-3.5 py-2 rounded-xl flex items-center gap-2 font-mono">
+            <Clock className="w-4 h-4 text-primary" />
+            <span>Sync: {lastSync.toLocaleTimeString()}</span>
+          </div>
+
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-muted hover:bg-muted/80 text-foreground border border-border text-xs font-bold rounded-xl flex items-center gap-2 transition cursor-pointer"
+          >
+            <RefreshCw className="w-4 h-4" /> Reconnect
+          </button>
+        </div>
+      </div>
+
+      {/* Stats Bar */}
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5">
+        <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3.5 shadow-xs">
+          <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+            <Radio className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400">{onlineCount}</div>
+            <div className="text-[11px] text-muted-foreground font-medium">Online</div>
+          </div>
+        </div>
+
+        <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3.5 shadow-xs">
+          <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+            <CheckCircle2 className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="text-xl font-bold text-primary">{availableCount}</div>
+            <div className="text-[11px] text-muted-foreground font-medium">Available</div>
+          </div>
+        </div>
+
+        <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3.5 shadow-xs">
+          <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400">
+            <Activity className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="text-xl font-bold text-amber-600 dark:text-amber-400">{onJobCount}</div>
+            <div className="text-[11px] text-muted-foreground font-medium">On Job</div>
+          </div>
+        </div>
+
+        <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3.5 shadow-xs">
+          <div className="w-10 h-10 rounded-lg bg-muted border border-border flex items-center justify-center text-muted-foreground">
+            <Users className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="text-xl font-bold text-foreground">{offlineCount}</div>
+            <div className="text-[11px] text-muted-foreground font-medium">Offline</div>
+          </div>
+        </div>
+
+        <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3.5 shadow-xs">
+          <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400">
+            <Activity className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="text-xl font-bold text-amber-600 dark:text-amber-400">{unassignedBookings.length}</div>
+            <div className="text-[11px] text-muted-foreground font-medium">Unassigned Orders</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Command Center Layout */}
+      <div className="space-y-4">
+        {/* Top Search & Filter Floating Card */}
+        <div className="bg-card border border-border rounded-2xl p-4 shadow-sm space-y-3">
+          {/* Top Search Bar & Main Segments */}
+          <div className="flex flex-col md:flex-row gap-3 justify-between items-center">
+            <div className="relative flex-1 w-full">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search technician, job or skill..."
+                className="w-full bg-background border border-border text-xs text-foreground pl-10 pr-4 h-11 rounded-2xl focus:outline-none focus:border-cyan-500 shadow-2xs"
+              />
+            </div>
+
+            <div className="flex items-center gap-1.5 p-1 bg-muted/40 border border-border rounded-2xl shrink-0">
+              <button
+                onClick={() => setStatusFilter("ALL")}
+                className={`px-4 py-2 text-xs font-bold rounded-xl transition ${
+                  statusFilter === "ALL"
+                    ? "bg-[#0F2850] text-white shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => setStatusFilter("ON_JOB")}
+                className={`px-4 py-2 text-xs font-bold rounded-xl transition ${
+                  statusFilter === "ON_JOB"
+                    ? "bg-[#0F2850] text-white shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                On Job
+              </button>
+              <button
+                onClick={() => setStatusFilter("OFFLINE")}
+                className={`px-4 py-2 text-xs font-bold rounded-xl transition ${
+                  statusFilter === "OFFLINE"
+                    ? "bg-[#0F2850] text-white shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Offline
+              </button>
+            </div>
+          </div>
+
+          {/* Multi-Emirate Filter Tabs */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 scrollbar-none border-b border-border/50 pb-2">
+            <span className="text-xs font-bold text-muted-foreground shrink-0 mr-1">Emirate:</span>
+            {[
+              { id: "ALL", name: "All Emirates" },
+              { id: "abu-dhabi", name: "Abu Dhabi (أبوظبي)" },
+              { id: "dubai", name: "Dubai (دبي)" },
+              { id: "sharjah", name: "Sharjah (الشارقة)" },
+              { id: "ajman", name: "Ajman (عجمان)" },
+            ].map((em) => {
+              const active = emirateFilter === em.id
+              return (
+                <button
+                  key={em.id}
+                  onClick={() => setEmirateFilter(em.id as any)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 ${
+                    active
+                      ? "bg-cyan-500 text-black shadow-xs font-extrabold"
+                      : "bg-background border border-border text-foreground hover:bg-muted"
+                  }`}
+                >
+                  {em.name}
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Filter Status Pills (All, Available, On Job, Busy, Offline) */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 scrollbar-none">
+            <button
+              onClick={() => setStatusFilter("ALL")}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-bold transition shrink-0 ${
+                statusFilter === "ALL"
+                  ? "bg-[#0F2850] text-white shadow-xs"
+                  : "bg-background border border-border text-foreground hover:bg-muted"
+              }`}
+            >
+              <Layers className="w-3.5 h-3.5" /> All ({technicians.length})
+            </button>
+            <button
+              onClick={() => setStatusFilter("AVAILABLE")}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-bold transition shrink-0 ${
+                statusFilter === "AVAILABLE"
+                  ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40"
+                  : "bg-background border border-border text-foreground hover:bg-muted"
+              }`}
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-500" /> Available ({availableCount})
+            </button>
+            <button
+              onClick={() => setStatusFilter("ON_JOB")}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-bold transition shrink-0 ${
+                statusFilter === "ON_JOB"
+                  ? "bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-500/40"
+                  : "bg-background border border-border text-foreground hover:bg-muted"
+              }`}
+            >
+              <span className="w-2 h-2 rounded-full bg-blue-500" /> On Job ({onJobCount})
+            </button>
+            <button
+              onClick={() => setStatusFilter("ON_JOB")}
+              className="flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-bold bg-background border border-border text-foreground hover:bg-muted shrink-0"
+            >
+              <span className="w-2 h-2 rounded-full bg-amber-500" /> Busy ({onJobCount})
+            </button>
+            <button
+              onClick={() => setStatusFilter("OFFLINE")}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-bold transition shrink-0 ${
+                statusFilter === "OFFLINE"
+                  ? "bg-slate-500/15 text-slate-700 dark:text-slate-300 border border-slate-500/40"
+                  : "bg-background border border-border text-foreground hover:bg-muted"
+              }`}
+            >
+              <span className="w-2 h-2 rounded-full bg-slate-400" /> Offline ({offlineCount})
+            </button>
+          </div>
+        </div>
+
+        {/* Every technician remains directly selectable, including technicians without GPS. */}
+        <div className="bg-card border border-border rounded-2xl p-4 shadow-sm">
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <div>
+              <h2 className="text-sm font-extrabold text-foreground">Technicians</h2>
+              <p className="text-[11px] text-muted-foreground">Select a technician to view or request their current location.</p>
+            </div>
+            <span className="text-[11px] font-bold text-muted-foreground bg-muted/50 border border-border rounded-full px-3 py-1">
+              {filteredTechnicians.length} shown
+            </span>
+          </div>
+
+          {filteredTechnicians.length > 0 ? (
+            <div className="flex gap-2.5 overflow-x-auto pb-1 scrollbar-none">
+              {filteredTechnicians.map((tech) => {
+                const isSelected = selectedTech?.id === tech.id;
+                const locationState = technicianLocationState({
+                  hasFreshLocation: tech.hasFreshLocation,
+                  hasCoordinates: tech.latitude !== undefined && tech.longitude !== undefined,
+                  permissionStatus: tech.locationPermissionStatus,
+                  servicesEnabled: tech.locationServicesEnabled,
+                  trackingIssue: tech.locationTrackingIssue,
+                });
+                return (
+                  <button
+                    key={tech.id}
+                    type="button"
+                    onClick={() => setSelectedTech(tech)}
+                    aria-pressed={isSelected}
+                    title={`Open ${tech.name} — ${locationState.label}`}
+                    className={`group min-w-[190px] p-2.5 rounded-2xl border text-left transition-all flex items-center gap-3 ${
+                      isSelected
+                        ? "border-cyan-500 bg-cyan-500/10 ring-1 ring-cyan-500/40 shadow-sm"
+                        : "border-border bg-background hover:border-cyan-500/50 hover:bg-muted/40"
+                    }`}
+                  >
+                    <div className="relative shrink-0">
+                      {tech.avatar ? (
+                        <img
+                          src={tech.avatar}
+                          alt=""
+                          className="w-11 h-11 rounded-full object-cover border border-border"
+                        />
+                      ) : (
+                        <span className="w-11 h-11 rounded-full bg-[#0F2850] text-white flex items-center justify-center font-black text-sm">
+                          {tech.name.charAt(0).toUpperCase()}
+                        </span>
+                      )}
+                      <span className={`absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full border-2 border-card ${
+                        locationState.kind === "live"
+                          ? "bg-emerald-500"
+                          : locationState.kind === "stale"
+                            ? "bg-amber-500"
+                            : locationState.kind === "blocked"
+                              ? "bg-rose-500"
+                              : "bg-slate-400"
+                      }`} />
+                    </div>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-xs font-extrabold text-foreground truncate">{tech.name}</span>
+                      <span className={`mt-1 flex items-center gap-1 text-[10px] font-bold ${
+                        locationState.kind === "live"
+                          ? "text-emerald-600 dark:text-emerald-400"
+                          : locationState.kind === "stale"
+                            ? "text-amber-600 dark:text-amber-400"
+                            : locationState.kind === "blocked"
+                              ? "text-rose-600 dark:text-rose-400"
+                              : "text-muted-foreground"
+                      }`}>
+                        <MapPin className="w-3 h-3" /> {locationState.label}
+                      </span>
+                    </span>
+                    <ArrowRight className={`w-4 h-4 shrink-0 transition-transform ${isSelected ? "text-cyan-500 translate-x-0.5" : "text-muted-foreground group-hover:translate-x-0.5"}`} />
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="rounded-xl border border-dashed border-border py-5 text-center text-xs text-muted-foreground">
+              No technicians match the selected filters.
+            </div>
+          )}
+        </div>
+
+        {/* Map View & Floating Bottom Technician Profile Sheet */}
+        <div className="relative rounded-3xl overflow-hidden border border-border bg-card shadow-sm">
+          {/* Radar Leaflet Map */}
+          <div className="w-full">
+            <InteractiveMap
+              technicians={filteredTechnicians}
+              selectedTechId={selectedTech?.id}
+              onSelectTech={(t) => {
+                setSelectedTech(t);
+              }}
+            />
+          </div>
+
+          {/* Floating Bottom Technician Inspector Card */}
+          {selectedEnrichedTech && selectedGpsState && (
+            <div className="p-4 sm:p-6 bg-card/95 backdrop-blur-md border-t border-border space-y-5 shadow-2xl">
+              {/* Drag bar indicator */}
+              <div className="w-12 h-1 bg-muted-foreground/30 rounded-full mx-auto" />
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                {/* Left: Tech Bio, Rating, ID, Metrics */}
+                <div className="lg:col-span-7 space-y-4">
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      {selectedEnrichedTech.avatar ? (
+                        <img
+                          src={selectedEnrichedTech.avatar}
+                          alt={selectedEnrichedTech.name}
+                          className="w-16 h-16 rounded-full object-cover border-2 border-primary/40 shadow-sm"
+                        />
+                      ) : (
+                        <div className="w-16 h-16 rounded-full bg-[#0F2850] text-white flex items-center justify-center font-black text-xl shadow-sm">
+                          {selectedEnrichedTech.name.charAt(0).toUpperCase()}
+                        </div>
+                      )}
+                      <span
+                        className={`absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-card ${
+                          selectedEnrichedTech.isOnline ? "bg-emerald-500" : "bg-slate-400"
+                        }`}
+                      />
+                    </div>
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <h2 className="text-xl font-extrabold text-foreground">{selectedEnrichedTech.name}</h2>
+                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide ${
+                            selectedEnrichedTech.status === "ON_JOB"
+                              ? "bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-300 dark:border-amber-800"
+                              : selectedEnrichedTech.isOnline
+                                ? "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-800"
+                                : "bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-700"
+                          }`}>
+                            {selectedEnrichedTech.status === "ON_JOB" ? "BUSY" : selectedEnrichedTech.isOnline ? "AVAILABLE" : "OFFLINE"}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <span className="text-amber-500 font-bold">★ {selectedEnrichedTech.rating !== undefined ? selectedEnrichedTech.rating.toFixed(1) : "Not rated"}</span>
+                          <span>({selectedEnrichedTech.jobsCompleted !== undefined ? `${selectedEnrichedTech.jobsCompleted} jobs` : "jobs not reported"})</span>
+                        </div>
+
+                        <div className="flex items-center gap-2 pt-1">
+                          <span className="px-2.5 py-0.5 rounded-lg bg-muted text-[11px] font-semibold text-muted-foreground border border-border">
+                            Level: {selectedEnrichedTech.level || "Not reported"}
+                          </span>
+                          <span className="px-2.5 py-0.5 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[11px] font-mono font-bold border border-blue-500/20">
+                            ID: KBI-{selectedEnrichedTech.id.slice(0, 4).toUpperCase()}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 3 Detail Badges: Current Job, ETA to Next, Vehicle */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs w-full">
+                      <div className="flex items-center gap-3 p-3 rounded-2xl bg-muted/30 border border-border min-w-0 overflow-hidden">
+                        <div className="w-9 h-9 rounded-xl bg-background border border-border flex items-center justify-center text-primary shrink-0">
+                          <Wrench className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <span className="text-[10px] text-muted-foreground block font-medium">Current Job</span>
+                          <p className="font-bold text-foreground truncate">{selectedEnrichedTech.currentJobTitle || "No Active Job"}</p>
+                          <span className="text-[10px] text-muted-foreground truncate block">{selectedEnrichedTech.currentJobArea || "Standby"}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3 p-3 rounded-2xl bg-muted/30 border border-border min-w-0 overflow-hidden">
+                        <div className="w-9 h-9 rounded-xl bg-background border border-border flex items-center justify-center text-primary shrink-0">
+                          <Clock className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <span className="text-[10px] text-muted-foreground block font-medium">ETA to Destination</span>
+                          <p className="font-bold text-foreground truncate">{selectedEnrichedTech.etaText || "Standby"}</p>
+                          <span className="text-[10px] text-muted-foreground truncate block">{selectedEnrichedTech.etaDistance || (selectedEnrichedTech.hasFreshLocation ? "Live GPS connected" : selectedEnrichedTech.lastLocationTime)}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3 p-3 rounded-2xl bg-muted/30 border border-border min-w-0 overflow-hidden">
+                        <div className="w-9 h-9 rounded-xl bg-background border border-border flex items-center justify-center text-primary shrink-0">
+                          <Smartphone className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <span className="text-[10px] text-muted-foreground block font-medium">Device & Hardware</span>
+                          <p className="font-bold text-foreground truncate">{selectedEnrichedTech.deviceModel || "Device not reported"}</p>
+                          <span className="text-[10px] text-muted-foreground truncate block">{selectedEnrichedTech.osVersion || "OS not reported"}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Primary Action Buttons */}
+                    <div className="flex flex-wrap items-center gap-2 pt-1">
+                      <a
+                        href={`https://wa.me/${selectedEnrichedTech.phone.replace(/[^0-9]/g, "")}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-5 py-2.5 bg-[#0F2850] hover:bg-[#16386d] text-white text-xs font-bold rounded-2xl flex items-center gap-2 shadow-xs transition"
+                      >
+                        <MessageCircle className="w-4 h-4" /> Message on WhatsApp
+                      </a>
+
+                      {selectedEnrichedTech.phone && (
+                        <a
+                          href={`tel:${selectedEnrichedTech.phone}`}
+                          className="px-4 py-2.5 bg-background border border-border hover:bg-muted text-foreground text-xs font-bold rounded-2xl flex items-center gap-1.5 shadow-2xs transition"
+                        >
+                          <Phone className="w-3.5 h-3.5 text-primary" /> Call
+                        </a>
+                      )}
+
+                      {selectedEnrichedTech.latitude !== undefined && selectedEnrichedTech.longitude !== undefined && (
+                        <a
+                          href={`https://maps.google.com/?q=${selectedEnrichedTech.latitude},${selectedEnrichedTech.longitude}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-4 py-2.5 bg-background border border-border hover:bg-muted text-foreground text-xs font-bold rounded-2xl flex items-center gap-1.5 shadow-2xs transition"
+                        >
+                          <Navigation className="w-3.5 h-3.5 text-primary" /> Directions
+                        </a>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Right: Live Location Mini Map & Profile Link */}
+                  <div className="lg:col-span-5 space-y-3">
+                    <div className="p-3.5 bg-muted/20 border border-border rounded-2xl space-y-2">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-bold text-foreground">Technician GPS Location</span>
+                        <span className={`${selectedGpsState.kind === "live" ? "text-emerald-500" : selectedGpsState.kind === "stale" ? "text-amber-500" : selectedGpsState.kind === "blocked" ? "text-rose-500" : "text-slate-500"} font-bold flex items-center gap-1`}>
+                          <span className={`w-2 h-2 rounded-full ${selectedGpsState.kind === "live" ? "bg-emerald-500 animate-pulse" : selectedGpsState.kind === "stale" ? "bg-amber-500" : selectedGpsState.kind === "blocked" ? "bg-rose-500" : "bg-slate-400"}`} />
+                          {selectedGpsState.label}
+                        </span>
+                      </div>
+
+                      <p className="text-[10px] text-muted-foreground">{selectedGpsState.detail}</p>
+
+                      <div className="flex items-center justify-between gap-3 text-[10px] text-muted-foreground">
+                        <span>{selectedEnrichedTech.lastLocationTime}</span>
+                        <span>{selectedEnrichedTech.accuracy !== undefined ? `Accuracy ±${Math.round(selectedEnrichedTech.accuracy)}m` : "Accuracy unavailable"}</span>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={requestCurrentLocation}
+                        disabled={requestingLocation}
+                        className="w-full h-10 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-60 disabled:cursor-wait text-slate-950 text-xs font-extrabold flex items-center justify-center gap-2 transition"
+                      >
+                        <RefreshCw className={`w-4 h-4 ${requestingLocation ? "animate-spin" : ""}`} />
+                        {requestingLocation ? "Requesting current location…" : selectedGpsState.kind === "blocked" ? "Ask technician to enable GPS" : "Request current location now"}
+                      </button>
+
+                      {/* Real Interactive Mini Route Map */}
+                      <MiniRouteMap
+                        techLat={selectedEnrichedTech.latitude}
+                        techLng={selectedEnrichedTech.longitude}
+                        techName={selectedEnrichedTech.name}
+                        destLat={selectedEnrichedTech.destLat}
+                        destLng={selectedEnrichedTech.destLng}
+                        destAddress={selectedEnrichedTech.destAddress}
+                      />
+                    </div>
+
+                    <Link
+                      href={`/admin/technicians`}
+                      className="w-full py-3 px-4 rounded-2xl border border-border bg-card hover:bg-muted flex items-center justify-between text-xs font-bold text-foreground transition shadow-2xs"
+                    >
+                      <span className="flex items-center gap-2">
+                        <UserCheck className="w-4 h-4 text-primary" /> View Technician Profile
+                      </span>
+                      <ArrowRight className="w-4 h-4 text-muted-foreground" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }

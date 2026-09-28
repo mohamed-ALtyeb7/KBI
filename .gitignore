@@ -1,0 +1,27 @@
+# Dependencies and build output
+node_modules/
+.next/
+out/
+dist/
+
+# Local environment and platform state
+.env
+.env.*
+!.env.example
+.vercel/
+
+# Credentials
+lib/service-account.json
+*service-account*.json
+
+# Generated test and TypeScript state
+test-results/
+playwright-report/
+*.tsbuildinfo
+
+# Logs and OS/editor files
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

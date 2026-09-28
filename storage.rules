@@ -1,0 +1,48 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn() && (
+        (request.auth.token.keys().hasAny(['admin']) && request.auth.token.admin == true)
+        || (request.auth.token.keys().hasAny(['role'])
+          && request.auth.token.role in ['admin', 'super_admin'])
+      );
+    }
+
+    function safeImage() {
+      return request.resource.size < 10 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    function safeTechnicianFile() {
+      return request.resource.size < 10 * 1024 * 1024
+        && request.resource.contentType.matches('(image/(jpeg|png)|application/pdf)');
+    }
+
+    match /company/{fileName} {
+      allow read: if true;
+      allow write: if isAdmin() && request.resource.size < 25 * 1024 * 1024;
+    }
+
+    match /devices/{fileName} {
+      allow read: if true;
+      allow write: if isAdmin() && safeImage();
+    }
+
+    match /technicians/{uid}/{allPaths=**} {
+      allow read: if (signedIn() && request.auth.uid == uid) || isAdmin();
+      allow create, update: if signedIn()
+        && request.auth.uid == uid
+        && safeTechnicianFile();
+      allow delete: if (signedIn() && request.auth.uid == uid) || isAdmin();
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
