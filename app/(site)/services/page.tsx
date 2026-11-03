@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     canonical: "/services",
     languages: {
       en: "/services",
+      ar: "/ar/services",
       "x-default": "/services",
     },
   },

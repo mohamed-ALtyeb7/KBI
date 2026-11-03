@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   description: "Professional corporate IT support, device maintenance, networking, CCTV and on-site technical services for businesses across the UAE.",
   alternates: {
     canonical: "/corporate",
-    languages: { en: "/corporate", "x-default": "/corporate" },
+    languages: { en: "/corporate", ar: "/ar/corporate", "x-default": "/corporate" },
   },
   openGraph: {
     title: "Corporate IT Support & Maintenance Across the UAE | KBI Services",

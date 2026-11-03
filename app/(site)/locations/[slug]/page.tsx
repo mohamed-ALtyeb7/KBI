@@ -39,6 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             canonical: `/locations/${loc.slug}`,
             languages: {
                 en: `/locations/${loc.slug}`,
+                ar: `/ar/locations/${loc.slug}`,
                 "x-default": `/locations/${loc.slug}`,
             },
         },
