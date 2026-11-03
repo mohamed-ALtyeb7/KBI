@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test"
 
-const keyPages = ["/", "/book", "/services", "/corporate", "/contact", "/track", "/ar", "/ar/book"]
+const keyPages = ["/", "/book", "/services", "/corporate", "/contact", "/track"]
 const viewports = [
   { width: 320, height: 568 },
   { width: 390, height: 844 },
@@ -71,10 +71,10 @@ test("booking draft survives refresh and offline submission stays safe", async (
   await context.setOffline(false)
 })
 
-test("Arabic booking controls render in Arabic", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto("/ar/book")
-  await expect(page.getByRole("heading", { name: "احجز فنيًا" })).toBeVisible()
-  await expect(page.getByRole("heading", { name: "ما الجهاز الذي يحتاج إلى صيانة؟" })).toBeVisible()
-  await expect(page.locator("html")).toHaveAttribute("dir", "rtl")
+test("removed Arabic routes return 404 and are absent from the sitemap", async ({ request }) => {
+  for (const path of ["/ar", "/ar/book", "/ar/services", "/ar/services/laptop-repair", "/ar/locations/dubai-marina"]) {
+    expect((await request.get(path)).status(), path).toBe(404)
+  }
+  const sitemap = await request.get("/sitemap.xml")
+  expect(await sitemap.text()).not.toContain("kbi.services/ar")
 })

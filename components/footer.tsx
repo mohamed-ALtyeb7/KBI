@@ -16,7 +16,7 @@ interface FooterProps {
 export function Footer({ contact }: FooterProps) {
   const { lang } = useLanguage()
   const pathname = usePathname()
-  const isAr = lang === "ar" || pathname === "/ar" || pathname?.startsWith("/ar/")
+  const isAr = lang === "ar"
   const t = useT()
   const googleReviewUrl = "https://g.page/r/CWG_uPaqr-MjEAI/review"
   const socialItems = [
@@ -63,7 +63,7 @@ export function Footer({ contact }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-20 justify-items-center items-center text-center w-full" style={{ textAlign: "center" }}>
           {/* Brand Column (4 cols) */}
           <div className="lg:col-span-4 w-full flex flex-col items-center justify-center text-center mx-auto" style={{ textAlign: "center" }}>
-            <Link href={isAr ? "/ar" : "/"} className="inline-block mb-6 group relative" dir="ltr">
+            <Link href="/" className="inline-block mb-6 group relative" dir="ltr">
               <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
               <div className="relative text-5xl font-bold tracking-tighter text-foreground group-hover:text-cyan-500 transition-all duration-300 inline-flex items-center" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }}>
                 <span>KBI</span><span className="text-cyan-500 group-hover:text-blue-400 transition-colors">.</span>
@@ -105,11 +105,11 @@ export function Footer({ contact }: FooterProps) {
             </div>
             <ul className="space-y-4 w-full flex flex-col items-center justify-center text-center" style={{ textAlign: "center" }}>
               {[
-                { key: "Services", href: isAr ? "/ar/services" : "/services" },
-                { key: "Book Now", href: isAr ? "/ar/book" : "/book" },
-                { key: "Track Order", href: isAr ? "/ar/track" : "/track" },
-                { key: "About", href: isAr ? "/ar/about" : "/about" },
-                { key: "Contact", href: isAr ? "/ar/contact" : "/contact" },
+                { key: "Services", href: "/services" },
+                { key: "Book Now", href: "/book" },
+                { key: "Track Order", href: "/track" },
+                { key: "About", href: "/about" },
+                { key: "Contact", href: "/contact" },
               ].map((item) => (
                 <li key={item.key} className="w-full flex justify-center text-center" style={{ textAlign: "center" }}>
                   <Link
@@ -155,7 +155,7 @@ export function Footer({ contact }: FooterProps) {
               ].map((service, i) => (
                 <li key={i} className="w-full flex justify-center text-center" style={{ textAlign: "center" }}>
                   <Link
-                    href={`${isAr ? "/ar" : ""}/services/${service.slug}`}
+                    href={`/services/${service.slug}`}
                     className="text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center justify-center gap-2 group text-center mx-auto"
                     style={{ textAlign: "center" }}
                   >

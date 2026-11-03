@@ -57,7 +57,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical: canonicalPath,
       languages: {
         en: canonicalPath,
-        ar: `/ar${canonicalPath}`,
         "x-default": canonicalPath,
       },
     },
