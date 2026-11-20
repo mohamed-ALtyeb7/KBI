@@ -38,7 +38,7 @@ export function Hero({ contact }: { contact: SiteContact }) {
             </p>
 
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 w-full max-w-xs sm:max-w-none mx-auto">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 w-full max-w-sm sm:max-w-none mx-auto">
               <Link
                 href="/book"
                 className="group relative inline-flex min-h-[60px] w-full items-center justify-center gap-2.5 overflow-hidden rounded-full border border-white/20 bg-gradient-to-r from-cyan-500 to-blue-600 px-7 text-base font-bold text-white shadow-[0_14px_32px_rgba(6,182,212,0.28)] transition-[transform,box-shadow,filter] duration-200 ease-out hover:-translate-y-0.5 hover:from-cyan-400 hover:to-blue-500 hover:shadow-[0_18px_38px_rgba(6,182,212,0.38)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto sm:min-w-[208px] sm:px-6 sm:text-base"
@@ -50,7 +50,7 @@ export function Hero({ contact }: { contact: SiteContact }) {
                 href={`https://wa.me/${contact.whatsappRaw}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-7 text-base font-bold text-emerald-700 shadow-sm backdrop-blur-md transition-[transform,box-shadow,background-color,border-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-emerald-500/50 hover:bg-emerald-500/20 hover:shadow-[0_14px_30px_rgba(16,185,129,0.12)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:text-emerald-400 sm:w-auto sm:min-w-[208px] sm:px-6 sm:text-base"
+                className="group inline-flex min-h-[56px] w-full items-center justify-center gap-3 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-7 text-base font-bold text-emerald-700 shadow-sm backdrop-blur-md transition-[transform,box-shadow,background-color,border-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-emerald-500/50 hover:bg-emerald-500/20 hover:shadow-[0_14px_30px_rgba(16,185,129,0.12)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:text-emerald-400 sm:w-auto sm:min-w-[208px] sm:px-6 sm:text-base"
               >
                 <MessageCircle className="h-5 w-5" />
                 <span>{t("WhatsApp")}</span>

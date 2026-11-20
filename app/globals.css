@@ -1631,3 +1631,26 @@ html:not(.dark) :is(.site-shell, .admin-theme) :focus-visible {
     max-height: 64px;
   }
 }
+
+/* Consistent home page rhythm with readable Arabic typography. */
+.home-page > section:not(.brand-hero) { padding-top: 64px; padding-bottom: 64px; }
+.home-page > section > .container { max-width: 1200px; }
+.home-page h2 { text-wrap: balance; line-height: 1.4; }
+.home-page h3 { line-height: 1.5; }
+.home-page p { text-wrap: pretty; }
+.home-page .brand-hero h1 { max-width: 900px; margin-inline: auto; }
+html[lang="ar"] .home-page { letter-spacing: 0; }
+html[lang="ar"] .home-page .brand-hero h1 { line-height: 1.5; letter-spacing: 0; }
+html[lang="ar"] .home-page p { line-height: 1.9; letter-spacing: 0; }
+.home-page .brand-hero a { min-width: 208px; }
+.home-page [data-slot="button"] { min-height: 48px; border-radius: 999px; }
+@media (max-width: 639px) {
+  .home-page > section:not(.brand-hero) { padding-top: 44px; padding-bottom: 44px; }
+  .home-page .brand-hero { padding-top: 108px; padding-bottom: 44px; }
+  .home-page .brand-hero h1 { font-size: clamp(1.75rem, 6.7vw, 2.3rem); }
+  .home-page .brand-hero p { font-size: 15px; padding-inline: 6px; }
+  .home-page h2 { font-size: 1.8rem; }
+  .home-page .text-center.mb-16 { margin-bottom: 32px; }
+  .home-page .brand-hero a { min-width: 0; width: 100%; }
+  .home-page .home-deferred .glass { padding: 24px; }
+}

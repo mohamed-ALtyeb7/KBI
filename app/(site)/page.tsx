@@ -38,7 +38,7 @@ export default async function Home() {
   const contact = await getSiteContact()
 
   return (
-    <main className="min-h-screen bg-background text-foreground selection:bg-cyan-500/30 pb-20 lg:pb-0">
+    <main className="home-page min-h-screen bg-background text-foreground selection:bg-cyan-500/30 pb-20 lg:pb-0">
       <Hero contact={contact} />
       <Services />
       <WhyChooseUs />
