@@ -56,7 +56,7 @@ export default async function CorporatePage() {
   const hasHandshake = fs.existsSync(path.join(process.cwd(), "public", "handshake-mobile.webp"))
   const contact = await getSiteContact()
   return (
-    <PageEntrance className="min-h-screen bg-background text-foreground selection:bg-cyan-500/30 pb-16 lg:pb-0 font-sans text-start">
+    <PageEntrance className="corporate-page min-h-screen bg-background text-foreground selection:bg-cyan-500/30 pb-16 lg:pb-0 font-sans text-start">
 
       <section className="relative pt-24 md:pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 -z-10">
@@ -75,7 +75,7 @@ export default async function CorporatePage() {
                 </div>
               </FadeIn>
               <FadeIn delay={0.2}>
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8 leading-[1.1]">
                   <span className="text-foreground"><T k="Corporate" /></span> <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-600 to-cyan-500 dark:from-cyan-400 dark:via-blue-500 dark:to-cyan-400 animate-gradient-x"><T k="Repair Solutions" /></span>
                 </h1>
@@ -86,30 +86,30 @@ export default async function CorporatePage() {
                 </p>
               </FadeIn>
 
-              <StaggerContainer delay={0.4} className="grid grid-cols-2 gap-x-6 gap-y-8 mb-12">
-                <StaggerItem className="flex items-start gap-4 group">
-                  <div className="p-3 rounded-2xl bg-cyan-500/10 text-cyan-500 dark:text-cyan-400 ring-1 ring-cyan-500/20 group-hover:bg-cyan-500/20 transition-colors"><CalendarClock className="w-6 h-6" /></div>
+              <StaggerContainer delay={0.4} className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+                <StaggerItem className="flex min-w-0 items-start gap-3 rounded-2xl border border-border bg-card/70 p-4 group">
+                  <div className="shrink-0 p-3 rounded-2xl bg-cyan-500/10 text-cyan-500 dark:text-cyan-400 ring-1 ring-cyan-500/20 group-hover:bg-cyan-500/20 transition-colors"><CalendarClock className="w-6 h-6" /></div>
                   <div>
                     <p className="font-bold text-foreground mb-1"><T k="Priority SLA" /></p>
                     <p className="text-sm text-muted-foreground"><T k="Response targets defined in your SLA" /></p>
                   </div>
                 </StaggerItem>
-                <StaggerItem className="flex items-start gap-4 group">
-                  <div className="p-3 rounded-2xl bg-green-500/10 text-green-500 dark:text-green-400 ring-1 ring-green-500/20 group-hover:bg-green-500/20 transition-colors"><Shield className="w-6 h-6" /></div>
+                <StaggerItem className="flex min-w-0 items-start gap-3 rounded-2xl border border-border bg-card/70 p-4 group">
+                  <div className="shrink-0 p-3 rounded-2xl bg-green-500/10 text-green-500 dark:text-green-400 ring-1 ring-green-500/20 group-hover:bg-green-500/20 transition-colors"><Shield className="w-6 h-6" /></div>
                   <div>
                     <p className="font-bold text-foreground mb-1"><T k="Secure Handling" /></p>
                     <p className="text-sm text-muted-foreground"><T k="Data privacy compliant" /></p>
                   </div>
                 </StaggerItem>
-                <StaggerItem className="flex items-start gap-4 group">
-                  <div className="p-3 rounded-2xl bg-blue-500/10 text-blue-500 dark:text-blue-400 ring-1 ring-blue-500/20 group-hover:bg-blue-500/20 transition-colors"><FileText className="w-6 h-6" /></div>
+                <StaggerItem className="flex min-w-0 items-start gap-3 rounded-2xl border border-border bg-card/70 p-4 group">
+                  <div className="shrink-0 p-3 rounded-2xl bg-blue-500/10 text-blue-500 dark:text-blue-400 ring-1 ring-blue-500/20 group-hover:bg-blue-500/20 transition-colors"><FileText className="w-6 h-6" /></div>
                   <div>
                     <p className="font-bold text-foreground mb-1"><T k="Contract-Based" /></p>
                     <p className="text-sm text-muted-foreground"><T k="Flexible monthly plans" /></p>
                   </div>
                 </StaggerItem>
-                <StaggerItem className="flex items-start gap-4 group">
-                  <div className="p-3 rounded-2xl bg-purple-500/10 text-purple-500 dark:text-purple-400 ring-1 ring-purple-500/20 group-hover:bg-purple-500/20 transition-colors"><Truck className="w-6 h-6" /></div>
+                <StaggerItem className="flex min-w-0 items-start gap-3 rounded-2xl border border-border bg-card/70 p-4 group">
+                  <div className="shrink-0 p-3 rounded-2xl bg-purple-500/10 text-purple-500 dark:text-purple-400 ring-1 ring-purple-500/20 group-hover:bg-purple-500/20 transition-colors"><Truck className="w-6 h-6" /></div>
                   <div>
                     <p className="font-bold text-foreground mb-1"><T k="24/7 Ops" /></p>
                     <p className="text-sm text-muted-foreground"><T k="Critical infrastructure support" /></p>
