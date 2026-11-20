@@ -87,6 +87,8 @@ type DeviceConfig = {
 }
 
 const GAMING_PC_ISSUES_AR: Record<string, string> = {
+  Other: "أخرى",
+  "Not Sure": "لست متأكداً",
   "No Power / Won't Start": "لا يعمل أو لا يبدأ التشغيل",
   "No Display / No Signal": "لا توجد صورة أو إشارة",
   "GPU / Graphics Card Issue": "مشكلة في بطاقة الرسومات",
