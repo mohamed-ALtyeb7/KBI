@@ -21,7 +21,7 @@ export function Hero({ contact }: { contact: SiteContact }) {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </div>
-                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-emerald-600 dark:text-emerald-300">
+                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">
                   {t("AVAILABLE ACROSS THE UAE")}
                 </span>
               </div>
@@ -32,7 +32,7 @@ export function Hero({ contact }: { contact: SiteContact }) {
               <span>{t("Tech Repair at Your Doorstep")}<br /><span className="text-cyan-600 dark:text-cyan-400 inline-block mt-1.5 sm:mt-2">{t("Across the UAE")}</span></span>
             </h1>
 
-            <p className="text-sm sm:text-base md:text-xl text-slate-600 dark:text-gray-300 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed font-normal dark:font-light tracking-wide px-2 sm:px-0" suppressHydrationWarning>
+            <p className="text-sm sm:text-lg md:text-xl text-slate-600 dark:text-gray-300 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed font-normal dark:font-light tracking-wide px-2 sm:px-0" suppressHydrationWarning>
               {t("On-site device repair and IT support at your home or office across the UAE. Appointment timing depends on technician and parts availability.")}
             </p>
 
@@ -40,21 +40,21 @@ export function Hero({ contact }: { contact: SiteContact }) {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 w-full max-w-xs sm:max-w-none mx-auto">
               <Link
                 href="/book"
-                className="group relative inline-flex min-h-12 w-full items-center justify-center gap-2.5 overflow-hidden rounded-full border border-white/20 bg-gradient-to-r from-cyan-500 to-blue-600 px-7 text-base font-bold text-white shadow-[0_14px_32px_rgba(6,182,212,0.28)] transition-[transform,box-shadow,filter] duration-200 ease-out hover:-translate-y-0.5 hover:from-cyan-400 hover:to-blue-500 hover:shadow-[0_18px_38px_rgba(6,182,212,0.38)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto sm:min-w-[208px] sm:px-6 sm:text-base"
+                className="group relative inline-flex min-h-14 w-full items-center justify-center gap-2.5 overflow-hidden rounded-full border border-white/20 bg-gradient-to-r from-cyan-500 to-blue-600 px-7 text-base font-bold text-white shadow-[0_14px_32px_rgba(6,182,212,0.28)] transition-[transform,box-shadow,filter] duration-200 ease-out hover:-translate-y-0.5 hover:from-cyan-400 hover:to-blue-500 hover:shadow-[0_18px_38px_rgba(6,182,212,0.38)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto sm:min-w-[208px] sm:px-6 sm:text-lg"
               >
                 <span>{t("Book a Technician")}</span>
-                <span className="grid size-7 shrink-0 place-items-center rounded-full border border-white/20 bg-white/10">
-                  <ArrowRight className="h-4.5 w-4.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+                <span className="grid size-8 shrink-0 place-items-center rounded-full border border-white/20 bg-white/10">
+                  <ArrowRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-0.5" />
                 </span>
               </Link>
               <a
                 href={`https://wa.me/${contact.whatsappRaw}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-7 text-base font-bold text-emerald-600 shadow-sm backdrop-blur-md transition-[transform,box-shadow,background-color,border-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-emerald-500/50 hover:bg-emerald-500/20 hover:shadow-[0_14px_30px_rgba(16,185,129,0.12)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:text-emerald-400 sm:w-auto sm:min-w-[208px] sm:px-6 sm:text-base"
+                className="group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full border border-emerald-500/60 bg-emerald-500/10 px-7 text-base font-bold text-emerald-700 shadow-sm backdrop-blur-md transition-[transform,box-shadow,background-color,border-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-emerald-500/50 hover:bg-emerald-500/20 hover:shadow-[0_14px_30px_rgba(16,185,129,0.12)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:text-emerald-300 sm:w-auto sm:min-w-[208px] sm:px-6 sm:text-lg"
               >
-                <span className="grid size-7 shrink-0 place-items-center rounded-full border border-emerald-500/30 bg-emerald-500/10">
-                  <MessageCircle className="h-4.5 w-4.5 fill-emerald-500/20 text-emerald-600 dark:text-emerald-400" />
+                <span className="grid size-8 shrink-0 place-items-center rounded-full border border-emerald-500/60 bg-emerald-500/10">
+                  <MessageCircle className="h-5 w-5 fill-emerald-500/20 text-emerald-700 dark:text-emerald-300" />
                 </span>
                 <span>{t("Chat on WhatsApp")}</span>
               </a>
