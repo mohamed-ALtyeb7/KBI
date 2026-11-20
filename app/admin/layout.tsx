@@ -288,36 +288,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </div>
             </div>
 
-            {/* Top Navigation Bar Tabs for Desktop/Tablet */}
-            <nav className="flex items-center gap-2 overflow-x-auto px-4 md:px-6 py-2.5 border-t border-border/40 scrollbar-none bg-background/50">
-              {[
-                { name: t("Dashboard"), href: "/admin", icon: LayoutDashboard, exact: true },
-                { name: t("Orders"), href: "/admin/orders", icon: ClipboardList },
-                { name: t("Live Tracking"), href: "/admin/tracking", icon: MapPin },
-                { name: t("Technicians"), href: "/admin/technicians", icon: Users },
-                { name: t("Settings"), href: "/admin/settings", icon: Settings },
-              ].map((item) => {
-                const isActive = item.exact ? pathname === item.href : pathname?.startsWith(item.href)
-                const Icon = item.icon
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn(
-                      "flex items-center gap-2.5 px-4 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all duration-250 shrink-0",
-                      isActive
-                        ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20 font-extrabold scale-[1.02]"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/70 bg-muted/30 border border-border/40"
-                    )}
-                  >
-                    <div className={cn("size-6 rounded-xl flex items-center justify-center transition-colors", isActive ? "bg-white/20 text-white" : "bg-background/80 text-muted-foreground")}>
-                      <Icon className="size-3.5" />
-                    </div>
-                    <span>{item.name}</span>
-                  </Link>
-                )
-              })}
-            </nav>
           </header>
 
           {!online && (
