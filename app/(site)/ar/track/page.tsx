@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { OrderTracker } from "@/components/order-tracker"
 
 export const metadata: Metadata = {
   title: { absolute: "تتبع طلب الصيانة | KBI Services" },
@@ -19,10 +18,4 @@ export const metadata: Metadata = {
   },
 }
 
-export default function ArabicTrackPage() {
-  return (
-    <main className="min-h-screen bg-background pb-16 text-foreground selection:bg-cyan-500/30 lg:pb-0">
-      <OrderTracker />
-    </main>
-  )
-}
+export { default } from "../../track/page"

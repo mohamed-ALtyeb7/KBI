@@ -45,7 +45,7 @@ export function CorporateContractsSection() {
 
   return (
     <section className="py-20 relative">
-      <div className="container mx-auto px-6" data-dir={isAr ? "rtl" : "ltr"}>
+      <div className="container mx-auto px-6" data-dir="ltr">
         <FadeIn>
           <div className="text-center md:text-start mb-10">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">{t("Corporate Maintenance Contracts")}</h2>

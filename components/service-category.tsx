@@ -1,7 +1,7 @@
 "use client"
 
 import { GlassCard } from "@/components/ui/glass-card"
-import { ChevronRight, ChevronLeft } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 import type { ReactNode } from "react"
 import { useLanguage, useT } from "@/components/language-provider"
@@ -55,7 +55,7 @@ export function ServiceCategory({ id, name, icon, brands, issues, accentColor }:
                 key={index}
                 className={`flex items-center gap-2 p-3 rounded-xl ${colors.bg} border ${colors.border}`}
               >
-                {isAr ? <ChevronLeft className={`w-4 h-4 ${colors.text}`} /> : <ChevronRight className={`w-4 h-4 ${colors.text}`} />}
+                <ChevronRight className={`w-4 h-4 ${colors.text}`} />
                 <span className="text-sm font-medium text-foreground/90">{isAr ? t(issue) : issue}</span>
               </div>
             ))}
@@ -71,7 +71,7 @@ export function ServiceCategory({ id, name, icon, brands, issues, accentColor }:
               }
               return `View ${name} Service`
             })()}
-            {isAr ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+            <ChevronRight className="w-4 h-4" />
           </Link>
         </GlassCard>
 

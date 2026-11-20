@@ -121,7 +121,7 @@ export default async function CorporatePage() {
 
               <FadeIn delay={0.5} className="flex flex-wrap items-center gap-4">
                 <HoverScale>
-                  <a href="#corporate-form" className="px-8 py-4 rounded-full bg-cyan-500 text-black font-bold hover:bg-cyan-400 transition-colors shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_35px_rgba(6,182,212,0.6)] flex items-center justify-center gap-2"><T k="Request Partnership" /> <ArrowRight className="w-4 h-4 rtl:rotate-180" /></a>
+                  <a href="#corporate-form" className="px-8 py-4 rounded-full bg-cyan-500 text-black font-bold hover:bg-cyan-400 transition-colors shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_35px_rgba(6,182,212,0.6)] flex items-center justify-center gap-2"><T k="Request Partnership" /> <ArrowRight className="w-4 h-4" /></a>
                 </HoverScale>
                 <HoverScale>
                   <a href={`https://wa.me/${contact.whatsappRaw}`} target="_blank" rel="noopener noreferrer" className="px-8 py-4 rounded-full bg-green-700 text-white font-semibold hover:bg-green-800 transition-colors shadow-[0_0_20px_rgba(21,128,61,0.3)] hover:shadow-[0_0_35px_rgba(21,128,61,0.55)] flex items-center justify-center gap-2"><MessageCircle className="w-5 h-5" /> <T k="WhatsApp" /></a>

@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react"
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { usePathname } from "next/navigation"
 
 export type Lang = "en" | "ar"
@@ -39,12 +39,21 @@ export function LanguageProvider({
 }) {
   const [lang, setLang] = useState<Lang>(initialLang ?? "en")
   const [dictionary, setDictionary] = useState<Dictionary | null>(initialDictionary ?? null)
+  const [languageReady, setLanguageReady] = useState(Boolean(initialLang))
   const pathname = usePathname()
 
   useEffect(() => {
-    if (initialLang) return
-    setLang(pathname === "/ar" || pathname?.startsWith("/ar/") ? "ar" : "en")
-  }, [initialLang, pathname])
+    if (languageReady) return
+    let savedLanguage: string | null = null
+    try {
+      savedLanguage = window.localStorage.getItem("kbi-lang")
+    } catch {}
+    const initialLanguage: Lang = savedLanguage === "ar" || savedLanguage === "en"
+      ? savedLanguage
+      : pathname === "/ar" || pathname?.startsWith("/ar/") ? "ar" : "en"
+    setLang(initialLanguage)
+    setLanguageReady(true)
+  }, [initialLang, languageReady, pathname])
 
   useEffect(() => {
     if (lang !== "ar" || dictionary) return
@@ -56,13 +65,15 @@ export function LanguageProvider({
   }, [dictionary, lang])
 
   useEffect(() => {
+    if (!languageReady) return
     document.documentElement.lang = lang
-    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr"
+    // Language changes replace copy while preserving the site's English layout.
+    document.documentElement.dir = "ltr"
     try {
       window.localStorage.setItem("kbi-lang", lang)
       document.cookie = `kbi_lang=${lang};path=/;max-age=31536000;SameSite=Lax`
     } catch {}
-  }, [lang])
+  }, [lang, languageReady])
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "production") return
@@ -87,7 +98,23 @@ export function LanguageProvider({
     }
   }, [])
 
-  const value = useMemo(() => ({ lang, setLang, dictionary }), [dictionary, lang])
+  useEffect(() => {
+    const onLanguageChange = (event: Event) => {
+      const nextLanguage = (event as CustomEvent<Lang>).detail
+      if (nextLanguage === "en" || nextLanguage === "ar") setLang(nextLanguage)
+    }
+    window.addEventListener("kbi-language-change", onLanguageChange)
+    return () => window.removeEventListener("kbi-language-change", onLanguageChange)
+  }, [])
+
+  const updateLanguage = useCallback((nextLanguage: Lang) => {
+    setLang(nextLanguage)
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent<Lang>("kbi-language-change", { detail: nextLanguage }))
+    }
+  }, [])
+
+  const value = useMemo(() => ({ lang, setLang: updateLanguage, dictionary }), [dictionary, lang, updateLanguage])
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>
 }
 

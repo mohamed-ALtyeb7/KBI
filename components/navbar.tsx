@@ -5,7 +5,7 @@ import dynamic from "next/dynamic"
 import { Phone, MessageCircle, CalendarDays, Search, Home, Building2, Globe } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { useLanguage, useT } from "@/components/language-provider"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -26,7 +26,6 @@ export function Navbar({ contact }: NavbarProps) {
   const t = useT()
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
-  const router = useRouter()
   const hasArabicUrls = pathname === "/ar" || pathname?.startsWith("/ar/")
 
   const [supportReady, setSupportReady] = useState(false)
@@ -70,29 +69,7 @@ export function Navbar({ contact }: NavbarProps) {
   const languageSwitcher = (
     <button
       type="button"
-      onClick={() => {
-        const isArabicRoute = pathname === "/ar" || pathname?.startsWith("/ar/")
-        const supportsArabicRoute = pathname === "/"
-          || pathname === "/services"
-          || pathname?.startsWith("/services/")
-          || pathname === "/about"
-          || pathname === "/contact"
-          || pathname === "/book"
-          || pathname === "/track"
-          || pathname === "/corporate"
-          || pathname?.startsWith("/locations/")
-
-        if (isArabicRoute) {
-          setLang("en")
-          router.push(pathname === "/ar" ? "/" : pathname.replace(/^\/ar/, ""))
-          return
-        }
-
-        setLang("ar")
-        if (supportsArabicRoute) {
-          router.push(pathname === "/" ? "/ar" : `/ar${pathname}`)
-        }
-      }}
+      onClick={() => setLang(lang === "en" ? "ar" : "en")}
       title={lang === "en" ? "التغيير إلى العربية" : "Switch to English"}
       aria-label={lang === "en" ? "Switch to Arabic" : "Switch to English"}
       className={cn(
@@ -118,10 +95,6 @@ export function Navbar({ contact }: NavbarProps) {
     { name: t("Contact"), raw: "Contact", href: hasArabicUrls ? "/ar/contact" : "/contact" },
     { name: t("Track Order"), raw: "Track Order", href: hasArabicUrls ? "/ar/track" : "/track" },
   ]
-
-  const sortedNavLinks = lang === "ar" 
-    ? [...navLinks].reverse()
-    : navLinks
 
   return (
     <>
@@ -162,7 +135,7 @@ export function Navbar({ contact }: NavbarProps) {
           {/* Desktop Menu */}
           <nav aria-label="Primary" className="hidden md:flex items-center justify-center flex-1">
             <ul className="flex items-center justify-center gap-1 xl:gap-2">
-              {sortedNavLinks.map((link) => {
+              {navLinks.map((link) => {
                 const active = link.href === "/" || link.href === "/ar" ? pathname === link.href : pathname.startsWith(link.href)
                 return (
                   <li key={link.raw}>

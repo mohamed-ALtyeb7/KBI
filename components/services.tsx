@@ -83,7 +83,7 @@ export function Services() {
                     </div>
                     <div className={`flex items-center justify-center gap-2 ${colors.text} font-semibold text-sm group-hover:gap-3 transition-all mx-auto`}>
                       {t("View Service")}
-                      {isAr ? <ArrowRight className="w-4 h-4 rotate-180" /> : <ArrowRight className="w-4 h-4" />}
+                      <ArrowRight className="w-4 h-4" />
                     </div>
                   </div>
                 </Link>
@@ -98,7 +98,7 @@ export function Services() {
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-card border border-border hover:bg-muted text-foreground transition-all duration-300 font-semibold shadow-sm"
           >
             {t("View All Services")}
-            {isAr ? <ArrowRight className="w-5 h-5 rotate-180" /> : <ArrowRight className="w-5 h-5" />}
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </div>

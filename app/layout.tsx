@@ -7,7 +7,7 @@ import { LanguageProvider } from "@/components/language-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 
 const cairo = Cairo({
-  subsets: ["latin"],
+  subsets: ["latin", "arabic"],
   variable: "--font-sans",
   display: "optional",
 })

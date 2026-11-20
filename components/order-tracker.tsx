@@ -202,7 +202,7 @@ export function OrderTracker({ initialOrderId = "" }: { initialOrderId?: string 
             <form onSubmit={handleSearch} className="flex flex-col md:flex-row items-stretch gap-3.5 sm:gap-4">
               <div className="relative flex-1">
                 <span className="sr-only">{isAr ? "رقم الطلب" : "KBI Order Number"}</span>
-                <Search className={`absolute top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground ${isAr ? "right-4" : "left-4"}`} />
+                <Search className="absolute top-1/2 left-4 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   type="text"
                   name="orderId"
@@ -210,13 +210,13 @@ export function OrderTracker({ initialOrderId = "" }: { initialOrderId?: string 
                   value={orderId}
                   onChange={(e) => setOrderId(e.target.value)}
                   placeholder={isAr ? "رقم طلب KBI (مثال: KBI-123456)" : "KBI Order # (e.g. KBI-123456)"}
-                  className={`w-full py-4 bg-background border border-input rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 transition-all text-foreground text-sm sm:text-base shadow-xs placeholder:text-muted-foreground/60 ${isAr ? "pr-12 pl-4 text-right" : "pl-12 pr-4 text-left"}`}
+                  className="w-full py-4 pl-12 pr-4 text-left bg-background border border-input rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 transition-all text-foreground text-sm sm:text-base shadow-xs placeholder:text-muted-foreground/60"
                   dir="ltr"
                 />
               </div>
               <div className="relative flex-1">
                 <span className="sr-only">{isAr ? "رقم الهاتف" : "Phone Number"}</span>
-                <Phone className={`absolute top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground ${isAr ? "right-4" : "left-4"}`} />
+                <Phone className="absolute top-1/2 left-4 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   type="tel"
                   name="phone"
@@ -225,7 +225,7 @@ export function OrderTracker({ initialOrderId = "" }: { initialOrderId?: string 
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder={isAr ? "أو رقم الهاتف (05X XXX XXXX)" : "Or Phone # (e.g. 050 123 4567)"}
-                  className={`w-full py-4 bg-background border border-input rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 transition-all text-foreground text-sm sm:text-base shadow-xs placeholder:text-muted-foreground/60 ${isAr ? "pr-12 pl-4 text-right" : "pl-12 pr-4 text-left"}`}
+                  className="w-full py-4 pl-12 pr-4 text-left bg-background border border-input rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 transition-all text-foreground text-sm sm:text-base shadow-xs placeholder:text-muted-foreground/60"
                   dir="ltr"
                 />
               </div>
@@ -406,7 +406,7 @@ export function OrderTracker({ initialOrderId = "" }: { initialOrderId?: string 
                         <div className="relative">
                           {/* Vertical Track Line */}
                           <div
-                            className={`absolute top-3 bottom-3 w-0.5 ${isAr ? "right-[21px]" : "left-[21px]"} bg-gradient-to-b from-cyan-500 via-cyan-500/40 to-border/50`}
+                            className="absolute top-3 bottom-3 left-[21px] w-0.5 bg-gradient-to-b from-cyan-500 via-cyan-500/40 to-border/50"
                           />
 
                           <div className="space-y-4">

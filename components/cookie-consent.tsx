@@ -17,7 +17,7 @@ export function CookieConsent({ onDecision }: { onDecision: (_decision: CookieDe
   }
 
   return (
-    <aside aria-label={isAr ? "اختيارات ملفات تعريف الارتباط" : "Cookie choices"} className="fixed inset-x-4 bottom-20 z-[100] mx-auto max-w-xl rounded-2xl border border-border bg-background/98 p-4 text-foreground shadow-xl backdrop-blur-xl lg:bottom-6" dir={isAr ? "rtl" : "ltr"}>
+    <aside aria-label={isAr ? "اختيارات ملفات تعريف الارتباط" : "Cookie choices"} className="fixed inset-x-4 bottom-20 z-[100] mx-auto max-w-xl rounded-2xl border border-border bg-background/98 p-4 text-foreground shadow-xl backdrop-blur-xl lg:bottom-6" dir="ltr">
       <p className="text-sm font-bold">{isAr ? "الخصوصية والتحليلات" : "Privacy and analytics"}</p>
       <p className="mt-1.5 text-xs leading-5 text-muted-foreground">
         {isAr ? "نستخدم التخزين الضروري فقط. ولا تعمل التحليلات دون موافقتك." : "We use essential storage only. Analytics stays off without your consent."}{" "}

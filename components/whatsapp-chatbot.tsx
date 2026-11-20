@@ -96,8 +96,8 @@ export function WhatsAppChatbot({
 
   return (
     <div
-      className={`${isAr ? "left-6" : "right-6"} fixed bottom-24 md:bottom-8 z-[100]`}
-      dir={isAr ? "rtl" : "ltr"}
+      className="fixed right-6 bottom-24 md:bottom-8 z-[100]"
+      dir="ltr"
     >
       <AnimatePresence>
         {open && (
@@ -106,7 +106,7 @@ export function WhatsAppChatbot({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.3, ease: "circOut" }}
-            className={`mb-4 ${isAr ? "ml-0" : "mr-0"}`}
+            className="mb-4 mr-0"
           >
             <div className="w-[92vw] max-w-[380px] p-5 rounded-3xl border border-border/80 shadow-2xl backdrop-blur-2xl bg-card/95 text-card-foreground">
               <div className="flex items-center gap-3.5 mb-4">

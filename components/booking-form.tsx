@@ -1117,7 +1117,7 @@ export function BookingForm() {
                       className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-400 text-black hover:opacity-95 font-black text-base shadow-xl shadow-cyan-400/25 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2 group transition-all"
                     >
                       <span>{t("Continue")}</span>
-                      <ChevronRight className={cn("w-4 h-4 transition-transform group-hover:translate-x-1", isAr && "rotate-180 group-hover:-translate-x-1")} />
+                      <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </Button>
                   </div>
                 </motion.div>
@@ -1207,7 +1207,7 @@ export function BookingForm() {
                       </button>
                     </div>
                     <div className="relative">
-                      <MapPin className={cn("absolute top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground", isAr ? "right-3.5" : "left-3.5")} />
+                      <MapPin className="absolute top-1/2 left-3.5 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                       <input
                         type="text"
                         value={state.area}
@@ -1215,7 +1215,7 @@ export function BookingForm() {
                         placeholder={t("Area, community or building")}
                         className={cn(
                           "w-full py-3.5 bg-background/80 border border-white/10 rounded-2xl text-xs sm:text-sm text-foreground focus:border-cyan-400 focus:outline-none transition-colors shadow-inner",
-                          isAr ? "pr-10 pl-4 text-right" : "pl-10 pr-4 text-left",
+                          "pl-10 pr-4 text-left",
                         )}
                       />
                     </div>
@@ -1315,7 +1315,7 @@ export function BookingForm() {
                       onClick={handlePrevStep}
                       className="py-4 px-6 rounded-2xl border-white/10 font-bold text-sm cursor-pointer"
                     >
-                      <ChevronLeft className={cn("w-4 h-4", isAr && "rotate-180")} />
+                      <ChevronLeft className="w-4 h-4" />
                       <span>{t("Back")}</span>
                     </Button>
                     <Button
@@ -1325,7 +1325,7 @@ export function BookingForm() {
                       className="flex-1 py-4 rounded-2xl bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-400 text-black hover:opacity-95 font-black text-base shadow-xl shadow-cyan-400/25 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2 group"
                     >
                       <span>{t("Continue")}</span>
-                      <ChevronRight className={cn("w-4 h-4 transition-transform group-hover:translate-x-1", isAr && "rotate-180 group-hover:-translate-x-1")} />
+                      <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </Button>
                   </div>
                 </motion.div>
@@ -1453,7 +1453,7 @@ export function BookingForm() {
                         {t("Full Name")} <span className="text-rose-500">*</span>
                       </label>
                       <div className="relative">
-                        <User className={cn("absolute top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground", isAr ? "right-3.5" : "left-3.5")} />
+                        <User className="absolute top-1/2 left-3.5 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                         <input
                           type="text"
                           required
@@ -1462,7 +1462,7 @@ export function BookingForm() {
                           placeholder={isAr ? "اسم العميل الكريم" : "e.g. Sultan Al Nuaimi"}
                           className={cn(
                             "w-full py-3.5 bg-background/80 border border-white/10 rounded-2xl text-xs sm:text-sm text-foreground focus:border-cyan-400 focus:outline-none transition-colors shadow-inner",
-                            isAr ? "pr-10 pl-4 text-right" : "pl-10 pr-4 text-left",
+                            "pl-10 pr-4 text-left",
                           )}
                         />
                       </div>
@@ -1480,7 +1480,7 @@ export function BookingForm() {
                         </span>
                       </div>
                       <div className="relative">
-                        <Phone className={cn("absolute top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground", isAr ? "right-3.5" : "left-3.5")} />
+                        <Phone className="absolute top-1/2 left-3.5 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                         <input
                           type="tel"
                           inputMode="tel"
@@ -1491,7 +1491,7 @@ export function BookingForm() {
                           placeholder="050 123 4567"
                           className={cn(
                             "w-full py-3.5 bg-background/80 border border-white/10 rounded-2xl text-xs sm:text-sm text-foreground focus:border-cyan-400 focus:outline-none transition-colors font-semibold shadow-inner",
-                            isAr ? "pr-10 pl-4 text-right" : "pl-10 pr-4 text-left",
+                            "pl-10 pr-4 text-left",
                           )}
                           dir="ltr"
                         />
@@ -1504,7 +1504,7 @@ export function BookingForm() {
                         {t("Email (Optional)")}
                       </label>
                       <div className="relative">
-                        <Mail className={cn("absolute top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground", isAr ? "right-3.5" : "left-3.5")} />
+                        <Mail className="absolute top-1/2 left-3.5 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                         <input
                           type="email"
                           value={state.email}
@@ -1512,7 +1512,7 @@ export function BookingForm() {
                           placeholder="name@example.com"
                           className={cn(
                             "w-full py-3 bg-background/80 border border-white/10 rounded-2xl text-xs sm:text-sm text-foreground focus:border-cyan-400 focus:outline-none transition-colors",
-                            isAr ? "pr-10 pl-4 text-right" : "pl-10 pr-4 text-left",
+                            "pl-10 pr-4 text-left",
                           )}
                           dir="ltr"
                         />
@@ -1525,7 +1525,7 @@ export function BookingForm() {
                         {t("Anything else we should know?")}
                       </label>
                       <div className="relative">
-                        <MessageSquare className={cn("absolute top-3.5 w-4 h-4 text-muted-foreground", isAr ? "right-3.5" : "left-3.5")} />
+                        <MessageSquare className="absolute top-3.5 left-3.5 w-4 h-4 text-muted-foreground" />
                         <textarea
                           rows={2}
                           value={state.notes}
@@ -1533,7 +1533,7 @@ export function BookingForm() {
                           placeholder={t("Describe the problem briefly if needed...")}
                           className={cn(
                             "w-full py-3 bg-background/80 border border-white/10 rounded-2xl text-xs sm:text-sm text-foreground focus:border-cyan-400 focus:outline-none transition-colors resize-none",
-                            isAr ? "pr-10 pl-4 text-right" : "pl-10 pr-4 text-left",
+                            "pl-10 pr-4 text-left",
                           )}
                         />
                       </div>
@@ -1577,7 +1577,7 @@ export function BookingForm() {
                         disabled={isPending}
                         className="py-4 px-6 rounded-2xl border-white/10 font-bold text-sm cursor-pointer"
                       >
-                        <ChevronLeft className={cn("w-4 h-4", isAr && "rotate-180")} />
+                        <ChevronLeft className="w-4 h-4" />
                         <span>{t("Back")}</span>
                       </Button>
                       <Button
@@ -1594,7 +1594,7 @@ export function BookingForm() {
                         ) : (
                           <>
                             <span>{t("Confirm Booking")}</span>
-                            <ArrowRight className={cn("w-5 h-5", isAr && "rotate-180")} />
+                            <ArrowRight className="w-5 h-5" />
                           </>
                         )}
                       </Button>
