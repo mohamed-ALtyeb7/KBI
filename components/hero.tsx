@@ -1,8 +1,11 @@
+"use client"
 import { ArrowRight, MessageCircle } from "lucide-react"
 import Link from "next/link"
+import { useT } from "@/components/language-provider"
 import type { SiteContact } from "@/lib/site-contact"
 
 export function Hero({ contact }: { contact: SiteContact }) {
+  const t = useT()
   return (
     <section className="relative flex items-center justify-center overflow-hidden pt-28 pb-16 sm:py-24 md:py-32 brand-hero">
 
@@ -19,18 +22,18 @@ export function Hero({ contact }: { contact: SiteContact }) {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </div>
                 <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-emerald-600 dark:text-emerald-300">
-                  AVAILABLE ACROSS THE UAE
+                  {t("AVAILABLE ACROSS THE UAE")}
                 </span>
               </div>
             </div>
 
             {/* Headings */}
             <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-slate-900 via-slate-800 to-slate-600 dark:from-white dark:via-blue-50 dark:to-white/60 mb-5 sm:mb-6 tracking-tighter text-balance leading-[1.1]" suppressHydrationWarning>
-              <span>Tech Repair at Your Doorstep<br /><span className="text-cyan-600 dark:text-cyan-400 inline-block mt-1.5 sm:mt-2">Across the UAE</span></span>
+              <span>{t("Tech Repair at Your Doorstep")}<br /><span className="text-cyan-600 dark:text-cyan-400 inline-block mt-1.5 sm:mt-2">{t("Across the UAE")}</span></span>
             </h1>
 
             <p className="text-sm sm:text-lg md:text-xl text-slate-600 dark:text-gray-300 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed font-normal dark:font-light tracking-wide px-2 sm:px-0" suppressHydrationWarning>
-              On-site device repair and IT support at your home or office across the UAE. Appointment timing depends on technician and parts availability.
+              {t("On-site device repair and IT support at your home or office across the UAE. Appointment timing depends on technician and parts availability.")}
             </p>
 
             {/* Buttons */}
@@ -39,7 +42,7 @@ export function Hero({ contact }: { contact: SiteContact }) {
                 href="/book"
                 className="group relative inline-flex min-h-16 w-full items-center justify-center gap-3 overflow-hidden rounded-[1.35rem] border border-white/20 bg-gradient-to-r from-cyan-500 to-blue-600 px-7 text-base font-bold text-white shadow-[0_14px_32px_rgba(6,182,212,0.28)] transition-[transform,box-shadow,filter] duration-200 ease-out hover:-translate-y-0.5 hover:from-cyan-400 hover:to-blue-500 hover:shadow-[0_18px_38px_rgba(6,182,212,0.38)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto sm:min-w-[248px] sm:px-8 sm:text-lg"
               >
-                <span>Book a Technician</span>
+                <span>{t("Book a Technician")}</span>
                 <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-white/20 bg-white/10">
                   <ArrowRight className="h-4.5 w-4.5 transition-transform duration-200 group-hover:translate-x-0.5" />
                 </span>
@@ -53,14 +56,14 @@ export function Hero({ contact }: { contact: SiteContact }) {
                 <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-emerald-500/30 bg-emerald-500/10">
                   <MessageCircle className="h-4.5 w-4.5 fill-emerald-500/20 text-emerald-600 dark:text-emerald-400" />
                 </span>
-                <span>Chat on WhatsApp</span>
+                <span>{t("Chat on WhatsApp")}</span>
               </a>
             </div>
 
             {/* Emirates List */}
             <div className="mt-8 pt-4 border-t border-slate-200/40 dark:border-white/5 max-w-xl mx-auto">
               <p className="text-xs sm:text-sm text-slate-500 dark:text-gray-400 font-medium tracking-wide">
-                Abu Dhabi · Dubai · Sharjah · Ajman · Ras Al Khaimah · Fujairah · Umm Al Quwain
+                {t("Abu Dhabi · Dubai · Sharjah · Ajman · Ras Al Khaimah · Fujairah · Umm Al Quwain")}
               </p>
             </div>
           </div>

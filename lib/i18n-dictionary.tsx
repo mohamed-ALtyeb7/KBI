@@ -24,6 +24,7 @@ const ENGLISH_COPY: Record<string, string> = {
   "Quality Guarantee Desc": "We use original or high-quality parts and back eligible repairs with a clear service warranty.",
 }
 export const DICTIONARY: Record<string, string> = {
+  "On-site device repair and IT support at your home or office across the UAE. Appointment timing depends on technician and parts availability.": "صيانة الأجهزة والدعم التقني في منزلك أو مكتبك في جميع أنحاء الإمارات. يتم تأكيد الموعد حسب توفر الفني والقطع.",
   "Need Help?": "هل تحتاج إلى مساعدة؟",
   "Chat with us on WhatsApp for quick assistance with your booking!": "تواصل معنا عبر واتساب للحصول على مساعدة سريعة مع الحجز!",
   "We're Online": "نحن متصلون الآن",
