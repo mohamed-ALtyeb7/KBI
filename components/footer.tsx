@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import { Phone, Mail, MapPin, MessageCircle, ArrowRight, Instagram } from "lucide-react"
 import { FaTiktok } from "react-icons/fa6"
 import { useLanguage, useT } from "@/components/language-provider"
-import CircularText from "@/components/ui/circular-text"
+
 import { SiteContact } from "@/lib/site-contact"
 import Link from "next/link"
 
@@ -204,48 +204,6 @@ export function Footer({ contact }: FooterProps) {
               © {new Date().getFullYear()} {t("KBI Services")}. {t("All rights reserved.")}
             </p>
             <p className="mt-2 max-w-md text-xs leading-relaxed text-muted-foreground">{isAr ? "خدمات KBI، بإدارة KBI GLOBAL TECHNOLOGIES" : "KBI Services, operated by KBI GLOBAL TECHNOLOGIES"} · <a href={`mailto:${contact.email || "support@kbi.services"}`} className="inline-block underline-offset-4 hover:underline" dir="ltr">{contact.email || "support@kbi.services"}</a></p>
-          </div>
-
-          {/* Center Circular Text - Absolute centered on Desktop */}
-          <div className="md:absolute md:left-1/2 md:top-8 md:-translate-x-1/2 md:-translate-y-1/2 flex justify-center">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-cyan-500/20 blur-xl rounded-full group-hover:bg-cyan-500/40 transition-colors" />
-              <CircularText
-                text="KBI*TECHNOLOGY*KBI*TECHNOLOGY*"
-                onHover="speedUp"
-                spinDuration={20}
-                className="w-20 h-20 md:w-24 md:h-24 text-cyan-500 dark:text-cyan-400"
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div
-                  aria-hidden="true"
-                  className="relative w-7 h-7 md:w-8 md:h-8 scale-100 group-hover:scale-105 transition-transform"
-                >
-                  <div
-                    className="absolute inset-0 rounded-full bg-cyan-500/20 blur-sm animate-ping"
-                    style={{ animationDuration: "2.8s" }}
-                  />
-                  <div
-                    className="absolute inset-0 rounded-full border-2 border-cyan-400/30 border-t-cyan-400 animate-spin"
-                    style={{ animationDuration: "1.8s" }}
-                  />
-                  <div className="absolute -inset-2 rounded-full bg-gradient-to-b from-cyan-500/10 to-transparent blur-md opacity-70 group-hover:opacity-100 transition-opacity" />
-                  <div
-                    className="absolute inset-0 animate-spin"
-                    style={{ animationDuration: "6s" }}
-                  >
-                    <div className="absolute left-1/2 top-0 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.8)]" />
-                  </div>
-                  <div
-                    className="absolute inset-0 animate-spin"
-                    style={{ animationDuration: "10s", animationDirection: "reverse" }}
-                  >
-                    <div className="absolute left-1/2 top-0 -translate-x-1/2 w-1 h-1 rounded-full bg-blue-400 opacity-90 shadow-[0_0_8px_rgba(59,130,246,0.7)]" />
-                  </div>
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-cyan-500 dark:bg-white shadow-[0_0_14px_rgba(255,255,255,0.9)]" />
-                </div>
-              </div>
-            </div>
           </div>
 
           <div className="flex gap-6 text-sm text-muted-foreground">
