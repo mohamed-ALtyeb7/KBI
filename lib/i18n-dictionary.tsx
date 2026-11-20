@@ -24,6 +24,7 @@ const ENGLISH_COPY: Record<string, string> = {
   "Quality Guarantee Desc": "We use original or high-quality parts and back eligible repairs with a clear service warranty.",
 }
 export const DICTIONARY: Record<string, string> = {
+  "Device repair and IT solutions wherever you are in the UAE. We come to your home or office with fast, professional, same-day service.": "إصلاح الأجهزة وحلول تقنية المعلومات أينما كنت في الإمارات. نصل إلى منزلك أو مكتبك بخدمة سريعة واحترافية في اليوم نفسه.",
   "Operations Overview": "نظرة عامة على العمليات",
   "Operations workspace": "مساحة العمليات",
   "Total Revenue": "إجمالي الإيرادات",
@@ -244,9 +245,9 @@ export const DICTIONARY: Record<string, string> = {
   "Serving Customers Across the UAE": "نخدم العملاء في جميع أنحاء الإمارات",
   "We Serve All Seven Emirates": "نخدم جميع إمارات الدولة السبع",
   "Professional Repair and IT Services": "خدمات صيانة وإصلاح تقنية احترافية",
-  "Tech Repair at Your Doorstep": "خدمة إصلاح الأجهزة التقنية حتى باب منزلك",
+  "Tech Repair at Your Doorstep": "صيانة أجهزتك التقنية حتى باب منزلك",
   "Across UAE": "في مختلف إمارات الدولة",
-  "Across the UAE": "في جميع أنحاء الإمارات العربية المتحدة",
+  "Across the UAE": "في جميع أنحاء الإمارات",
   "Device repair and IT solutions wherever you are in the UAE. We come to your home or office with fast, professional service, with same-day appointments available depending on technician and parts availability.": "صيانة أجهزتك وحلول تقنية المعلومات أينما كنت في الإمارات. نصل إليك في المنزل أو المكتب بخدمة سريعة واحترافية، مع إمكانية الخدمة في نفس اليوم حسب التوفر.",
   "Professional repair and IT services across Abu Dhabi, Dubai, Sharjah & Ajman. We come to your home or office with quality-matched parts and same-day appointments subject to availability.": "خدمات صيانة وإصلاح تقنية احترافية في أبوظبي ودبي والشارقة وعجمان. نصلك إلى منزلك أو مكتبك مع خيارات قطع مناسبة، ومواعيد في اليوم نفسه حسب التوفر.",
   "Device repair and IT solutions wherever you are in the UAE. We reach you at home or office with fast, professional same-day service.": "صيانة أجهزتك وحلول تقنية المعلومات أينما كنت في الإمارات. نصل إليك في المنزل أو المكتب بخدمة سريعة واحترافية، مع إمكانية الخدمة في نفس اليوم حسب التوفر.",

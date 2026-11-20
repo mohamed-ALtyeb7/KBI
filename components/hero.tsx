@@ -34,7 +34,7 @@ export function Hero({ contact }: { contact: SiteContact }) {
             </h1>
 
             <p className="text-sm sm:text-base md:text-xl text-slate-600 dark:text-gray-300 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed font-normal dark:font-light tracking-wide px-2 sm:px-0" suppressHydrationWarning>
-              {t("On-site device repair and IT support at your home or office across the UAE. Appointment timing depends on technician and parts availability.")}
+              {t("Device repair and IT solutions wherever you are in the UAE. We come to your home or office with fast, professional, same-day service.")}
             </p>
 
             {/* Buttons */}
