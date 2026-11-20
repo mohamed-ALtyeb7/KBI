@@ -242,11 +242,11 @@ export default function AdminDashboardPage() {
         <div>
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-              Operations Overview
+              <AdminText k="Operations Overview" />
             </h1>
             <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-primary/10 border border-primary/25 text-primary shadow-xs">
               <span className="size-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              Live Sync
+              <AdminText k="Live Sync" />
             </span>
           </div>
           <p className="text-xs text-muted-foreground mt-1">
@@ -277,7 +277,7 @@ export default function AdminDashboardPage() {
               <div className="p-2 rounded-xl bg-primary/10 text-primary border border-primary/20">
                 <Activity className="size-4" />
               </div>
-              <span className="text-xs font-bold text-foreground">Open Work</span>
+              <span className="text-xs font-bold text-foreground"><AdminText k="Open Work" /></span>
             </div>
             <Badge variant="outline" className="bg-primary/10 border-primary/20 text-primary text-[10px] font-mono">
               ACTIVE
@@ -301,7 +301,7 @@ export default function AdminDashboardPage() {
                 <UserCheck className="size-4" />
               </div>
               <span className="text-xs font-bold text-foreground">
-                Available Technicians
+                <AdminText k="Available Technicians" />
               </span>
             </div>
             <Badge variant="outline" className="bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono">
@@ -326,7 +326,7 @@ export default function AdminDashboardPage() {
                 <ClipboardList className="size-4" />
               </div>
               <span className="text-xs font-bold text-foreground">
-                Unassigned Orders
+                <AdminText k="Unassigned Orders" />
               </span>
             </div>
             {metrics.unassignedCount > 0 ? (
@@ -357,7 +357,7 @@ export default function AdminDashboardPage() {
                 <DollarSign className="size-4" />
               </div>
               <span className="text-xs font-bold text-foreground">
-                Completed Revenue
+                <AdminText k="Completed Revenue" />
               </span>
             </div>
             <Badge variant="outline" className="bg-primary/10 border-primary/20 text-primary text-[10px] font-mono">
@@ -473,11 +473,11 @@ export default function AdminDashboardPage() {
           <div className="flex items-center justify-center gap-6 pt-2 text-xs text-muted-foreground font-medium">
             <div className="flex items-center gap-2">
               <span className="size-2 rounded-full bg-[#32CBE9]"></span>
-              <span className="text-foreground font-semibold">Orders Placed</span>
+              <span className="text-foreground font-semibold"><AdminText k="Orders Placed" /></span>
             </div>
             <div className="flex items-center gap-2">
               <span className="size-2 rounded-full bg-[#3E7EBF]"></span>
-              <span className="text-foreground font-semibold">Revenue (AED)</span>
+              <span className="text-foreground font-semibold"><AdminText k="Revenue (AED)" /></span>
             </div>
           </div>
         </div>
@@ -489,7 +489,7 @@ export default function AdminDashboardPage() {
               <BellRing className="size-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-foreground">Needs Attention</h3>
+              <h3 className="text-sm font-bold text-foreground"><AdminText k="Needs Attention" /></h3>
               <p className="text-xs text-muted-foreground mt-0.5">
                 Unassigned or pending work requiring review.
               </p>
@@ -533,7 +533,7 @@ export default function AdminDashboardPage() {
         <div className="flex items-center gap-2">
           <Zap className="size-4 text-primary" />
           <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-            Quick Actions
+            <AdminText k="Quick Actions" />
           </h3>
         </div>
 
@@ -584,7 +584,7 @@ export default function AdminDashboardPage() {
             </div>
             <div>
               <h4 className="text-xs font-bold text-foreground group-hover:text-primary transition">
-                View Live Map
+                <AdminText k="View Live Map" />
               </h4>
               <p className="text-[11px] text-muted-foreground">
                 Track technicians live
@@ -602,7 +602,7 @@ export default function AdminDashboardPage() {
             </div>
             <div>
               <h4 className="text-xs font-bold text-foreground group-hover:text-primary transition">
-                Generate Report
+                <AdminText k="Generate Report" />
               </h4>
               <p className="text-[11px] text-muted-foreground">
                 Download performance

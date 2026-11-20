@@ -1,5 +1,6 @@
 "use client";
 
+import { T as AdminText } from "@/components/i18n-text";
 import * as React from "react";
 import Link from "next/link";
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -187,7 +188,7 @@ export function AdminAppSidebar(props: React.ComponentProps<typeof Sidebar>) {
                   </Avatar>
                   <div className="grid flex-1 text-left text-xs leading-tight ml-1">
                     <span className="truncate font-bold text-sidebar-foreground">
-                      Administrator
+                      <AdminText k="Administrator" />
                     </span>
                     <div className="flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>

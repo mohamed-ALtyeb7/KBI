@@ -1,5 +1,6 @@
 "use client"
 
+import { T as AdminText } from "@/components/i18n-text";
 import { FormEvent, useEffect, useState } from "react"
 import Image from "next/image"
 import {
@@ -155,8 +156,8 @@ export default function AdminLogin() {
               <CardTitle><h1 id="admin-login-title">{mustChangePassword ? "Create a new password" : "Welcome back"}</h1></CardTitle>
               <CardDescription>{mustChangePassword ? "Create a secure password to finish signing in." : "Sign in to your KBI administrator workspace."}</CardDescription>
               <div className="admin-access-mode" aria-label="Portal access type">
-                <span className="is-active"><LockKeyhole /> Sign in</span>
-                <span><ShieldCheck /> Admin only</span>
+                <span className="is-active"><LockKeyhole /> <AdminText k="Sign in" /></span>
+                <span><ShieldCheck /> <AdminText k="Admin only" /></span>
               </div>
             </CardHeader>
 
@@ -164,11 +165,11 @@ export default function AdminLogin() {
               {mustChangePassword ? (
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="new-password">New password</Label>
+                    <Label htmlFor="new-password"><AdminText k="New password" /></Label>
                     <div className="admin-access-field"><LockKeyhole aria-hidden="true" /><Input id="new-password" type="password" minLength={12} autoComplete="new-password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} /></div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="confirm-password">Confirm password</Label>
+                    <Label htmlFor="confirm-password"><AdminText k="Confirm password" /></Label>
                     <div className="admin-access-field"><LockKeyhole aria-hidden="true" /><Input id="confirm-password" type="password" minLength={12} autoComplete="new-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} /></div>
                   </div>
                   <Button className="admin-access-submit group w-full" disabled={loading || newPassword.length < 12 || newPassword !== confirmPassword} onClick={handleRequiredPasswordChange}>
@@ -178,14 +179,14 @@ export default function AdminLogin() {
               ) : (
                 <form className="space-y-4" onSubmit={handleLogin}>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email address</Label>
+                    <Label htmlFor="email"><AdminText k="Email address" /></Label>
                     <div className="admin-access-field">
                       <Mail aria-hidden="true" />
                       <Input id="email" type="email" autoComplete="username" required autoFocus value={email} onChange={(e) => setEmail(e.target.value)} aria-invalid={Boolean(error)} />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between gap-4"><Label htmlFor="password">Password</Label><Button type="button" variant="link" size="sm" className="h-auto p-0 text-xs text-cyan-200 hover:text-cyan-100" disabled={resetting} onClick={handleReset}>{resetting ? "Sending…" : "Forgot password?"}</Button></div>
+                    <div className="flex items-center justify-between gap-4"><Label htmlFor="password"><AdminText k="Password" /></Label><Button type="button" variant="link" size="sm" className="h-auto p-0 text-xs text-cyan-200 hover:text-cyan-100" disabled={resetting} onClick={handleReset}>{resetting ? "Sending…" : "Forgot password?"}</Button></div>
                     <div className="admin-access-field">
                       <LockKeyhole aria-hidden="true" />
                       <Input id="password" type={showPassword ? "text" : "password"} autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} aria-invalid={Boolean(error)} />
@@ -195,18 +196,18 @@ export default function AdminLogin() {
 
                   <label htmlFor="remember-email" className="admin-access-remember">
                     <Checkbox id="remember-email" checked={rememberMe} onCheckedChange={(value) => setRememberMe(value === true)} />
-                    Remember this email
+                    <AdminText k="Remember this email" />
                   </label>
 
                   <Button className="admin-access-submit group w-full" disabled={loading} type="submit">
-                    {loading ? <Loader2 className="animate-spin" /> : <>Sign in securely <ArrowRight className="transition-transform group-hover:translate-x-0.5" /></>}
+                    {loading ? <Loader2 className="animate-spin" /> : <><AdminText k="Sign in securely" /> <ArrowRight className="transition-transform group-hover:translate-x-0.5" /></>}
                   </Button>
                 </form>
               )}
 
               <div aria-live="polite" className="mt-4 min-h-5">
-                {error && <Alert variant="destructive" className="border-red-300/25 bg-red-950/45 text-red-100"><CircleAlert /><AlertTitle>Sign in failed</AlertTitle><AlertDescription>{error}</AlertDescription></Alert>}
-                {!error && notice && <Alert className="border-emerald-300/25 bg-emerald-950/40 text-emerald-100"><CheckCircle2 /><AlertTitle>Email sent</AlertTitle><AlertDescription>{notice}</AlertDescription></Alert>}
+                {error && <Alert variant="destructive" className="border-red-300/25 bg-red-950/45 text-red-100"><CircleAlert /><AlertTitle><AdminText k="Sign in failed" /></AlertTitle><AlertDescription>{error}</AlertDescription></Alert>}
+                {!error && notice && <Alert className="border-emerald-300/25 bg-emerald-950/40 text-emerald-100"><CheckCircle2 /><AlertTitle><AdminText k="Email sent" /></AlertTitle><AlertDescription>{notice}</AlertDescription></Alert>}
               </div>
             </CardContent>
 

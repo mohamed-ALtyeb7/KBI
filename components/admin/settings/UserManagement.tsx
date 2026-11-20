@@ -1,5 +1,6 @@
 "use client"
 
+import { T as AdminText } from "@/components/i18n-text";
 import { useState } from "react"
 import { Search, Users } from "lucide-react"
 import { Input } from "@/components/ui/input"
@@ -33,7 +34,7 @@ export function UserManagement({ accounts }: Props) {
               <Users className="size-4" />
             </div>
             <div>
-              <CardTitle className="text-base font-bold text-foreground">Global Account Directory</CardTitle>
+              <CardTitle className="text-base font-bold text-foreground"><AdminText k="Global Account Directory" /></CardTitle>
               <CardDescription className="text-xs text-muted-foreground">
                 Overview of system users across all roles and credentials.
               </CardDescription>

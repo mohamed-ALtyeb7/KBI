@@ -280,7 +280,7 @@ export default function OrdersPage() {
   return (
     <main className={styles.workspace}>
       <section className={styles.titleRow}>
-        <div><p className={styles.eyebrow}>Operations workspace</p><h1><AdminText k="Orders" /></h1><p>Dispatch, monitor, and complete field repairs.</p></div>
+        <div><p className={styles.eyebrow}><AdminText k="Operations workspace" /></p><h1><AdminText k="Orders" /></h1><p>Dispatch, monitor, and complete field repairs.</p></div>
         <Button className={styles.newOrderButton} onClick={() => setCreateModalOpen(true)}><Plus /><AdminText k="New Order" /></Button>
       </section>
 
@@ -295,7 +295,7 @@ export default function OrdersPage() {
 
       <section className={styles.glassPanel}>
         <div className={styles.toolbar}>
-          <label className={styles.searchBox}><Search /><span className="sr-only">Search orders</span>
+          <label className={styles.searchBox}><Search /><span className="sr-only"><AdminText k="Search orders" /></span>
             <input type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search order, customer, device..." />
           </label>
           <div className={styles.segments} aria-label="Order segments">
@@ -304,35 +304,35 @@ export default function OrdersPage() {
           </div>
           <div className={styles.toolbarActions}>
             <button type="button" className={hasAdvancedFilters ? styles.controlActive : ""} onClick={() => setFiltersOpen((open) => !open)} aria-expanded={filtersOpen}>
-              <Filter />Filters{hasAdvancedFilters && <span className={styles.filterCount}>{Number(status !== "ALL") + Number(priority !== "ALL")}</span>}
+              <Filter /><AdminText k="Filters" />{hasAdvancedFilters && <span className={styles.filterCount}>{Number(status !== "ALL") + Number(priority !== "ALL")}</span>}
             </button>
             <Select value={sortMode} onValueChange={(value) => setSortMode(value as SortMode)}>
               <SelectTrigger className={styles.sortTrigger} aria-label="Sort orders"><ArrowDownUp /><SelectValue /></SelectTrigger>
               <SelectContent align="end">
-                <SelectItem value="NEWEST">Newest</SelectItem><SelectItem value="OLDEST">Oldest</SelectItem>
+                <SelectItem value="NEWEST"><AdminText k="Newest" /></SelectItem><SelectItem value="OLDEST"><AdminText k="Oldest" /></SelectItem>
                 <SelectItem value="PRICE_HIGH">Price: high to low</SelectItem><SelectItem value="PRICE_LOW">Price: low to high</SelectItem>
-                <SelectItem value="PRIORITY">Priority</SelectItem>
+                <SelectItem value="PRIORITY"><AdminText k="Priority" /></SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
 
         {filtersOpen && <div className={styles.filterDrawer}>
-          <div><label htmlFor="orders-status-filter">Status</label><Select value={status} onValueChange={(value) => setStatus(value as typeof status)}>
-            <SelectTrigger id="orders-status-filter"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="ALL">All statuses</SelectItem>
+          <div><label htmlFor="orders-status-filter"><AdminText k="Status" /></label><Select value={status} onValueChange={(value) => setStatus(value as typeof status)}>
+            <SelectTrigger id="orders-status-filter"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="ALL"><AdminText k="All statuses" /></SelectItem>
               {ORDER_STATUSES.map((item) => <SelectItem key={item} value={item}>{orderStatusLabel(item)}</SelectItem>)}</SelectContent></Select></div>
-          <div><label htmlFor="orders-priority-filter">Priority</label><Select value={priority} onValueChange={(value) => setPriority(value as typeof priority)}>
-            <SelectTrigger id="orders-priority-filter"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="ALL">All priorities</SelectItem>
+          <div><label htmlFor="orders-priority-filter"><AdminText k="Priority" /></label><Select value={priority} onValueChange={(value) => setPriority(value as typeof priority)}>
+            <SelectTrigger id="orders-priority-filter"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="ALL"><AdminText k="All priorities" /></SelectItem>
               {(["LOW", "NORMAL", "HIGH", "URGENT"] as const).map((item) => <SelectItem key={item} value={item}>{item.charAt(0) + item.slice(1).toLowerCase()}</SelectItem>)}</SelectContent></Select></div>
-          <button type="button" onClick={clearFilters} disabled={!search && !hasAdvancedFilters && segment === "ALL"}>Clear all</button>
+          <button type="button" onClick={clearFilters} disabled={!search && !hasAdvancedFilters && segment === "ALL"}><AdminText k="Clear all" /></button>
         </div>}
 
         <div className={styles.contentGrid}>
           <div className={styles.orderList}>
-            <div className={styles.tableHeader} aria-hidden="true"><span>Reference</span><span>Customer</span><span>Service</span><span>Technician</span><span><AdminText k="ETA" /></span><span>Status</span><span>Price</span></div>
+            <div className={styles.tableHeader} aria-hidden="true"><span><AdminText k="Reference" /></span><span><AdminText k="Customer" /></span><span><AdminText k="Service" /></span><span><AdminText k="Technician" /></span><span><AdminText k="ETA" /></span><span><AdminText k="Status" /></span><span><AdminText k="Price" /></span></div>
             <div className={styles.rows} aria-live="polite">
               {loading ? Array.from({ length: PAGE_SIZE }).map((_, index) => <Skeleton key={index} className={styles.skeleton} />)
-                : visible.length === 0 ? <div className={styles.emptyState}><span><Clipboard /></span><h2>No matching orders</h2><p>Try another search or clear the active filters.</p><button type="button" onClick={clearFilters}>Clear filters</button></div>
+                : visible.length === 0 ? <div className={styles.emptyState}><span><Clipboard /></span><h2><AdminText k="No matching orders" /></h2><p>Try another search or clear the active filters.</p><button type="button" onClick={clearFilters}><AdminText k="Clear filters" /></button></div>
                 : visible.map((order) => {
                   const active = keyFor(order) === focusedKey
                   const eta = etaLabel(order)
@@ -411,7 +411,7 @@ function OrderInspector({ order, onCopy, onEdit, onReassign }: {
       <aside className={styles.inspector} aria-label={`Selected order ${order.reference}`}>
         <header className={styles.inspectorHeader}>
           <div>
-            <p>Order</p>
+            <p><AdminText k="Order" /></p>
             <h2>{order.reference}</h2>
           </div>
           <div>
@@ -421,7 +421,7 @@ function OrderInspector({ order, onCopy, onEdit, onReassign }: {
                 <button type="button" className={styles.moreButton} aria-label="More order actions"><Ellipsis /></button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => onCopy(order)}><Copy className="w-4 h-4 mr-2" />Copy reference</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => onCopy(order)}><Copy className="w-4 h-4 mr-2" /><AdminText k="Copy reference" /></DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setInvoiceOpen(true)}><FileText className="w-4 h-4 mr-2" />View Tax Invoice (PDF)</DropdownMenuItem>
                 {order.customerPhone && (
                   <>
@@ -437,13 +437,13 @@ function OrderInspector({ order, onCopy, onEdit, onReassign }: {
                       </a>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <a href={`tel:${order.customerPhone}`}><Phone className="w-4 h-4 mr-2" />Call customer</a>
+                      <a href={`tel:${order.customerPhone}`}><Phone className="w-4 h-4 mr-2" /><AdminText k="Call customer" /></a>
                     </DropdownMenuItem>
                   </>
                 )}
-                {order.customerEmail && <DropdownMenuItem asChild><a href={`mailto:${order.customerEmail}`}><Mail className="w-4 h-4 mr-2" />Email customer</a></DropdownMenuItem>}
+                {order.customerEmail && <DropdownMenuItem asChild><a href={`mailto:${order.customerEmail}`}><Mail className="w-4 h-4 mr-2" /><AdminText k="Email customer" /></a></DropdownMenuItem>}
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => onEdit(order)}><ArrowRight className="w-4 h-4 mr-2" />Open order</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => onEdit(order)}><ArrowRight className="w-4 h-4 mr-2" /><AdminText k="Open order" /></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -479,8 +479,8 @@ function OrderInspector({ order, onCopy, onEdit, onReassign }: {
             <button type="button" disabled><MessageCircle /><AdminText k="Message" /></button>
           )}
           <button type="button" onClick={() => setInvoiceOpen(true)}><FileText /><AdminText k="Invoice" /></button>
-          <button type="button" onClick={() => onReassign(order)}><UserRoundCog />Reassign</button>
-          <button type="button" className={styles.primaryAction} onClick={() => onEdit(order)}>Open Order<ArrowRight /></button>
+          <button type="button" onClick={() => onReassign(order)}><UserRoundCog /><AdminText k="Reassign" /></button>
+          <button type="button" className={styles.primaryAction} onClick={() => onEdit(order)}><AdminText k="Open Order" /><ArrowRight /></button>
         </div>
       </aside>
 

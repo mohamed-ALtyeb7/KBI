@@ -283,7 +283,7 @@ function EditTechnicianDialog({
       <DialogContent className="bg-card border-border text-card-foreground rounded-2xl sm:max-w-2xl max-h-[90vh] overflow-y-auto p-6 font-sans">
         <DialogHeader className="border-b border-border pb-4">
           <DialogTitle className="text-xl font-bold flex items-center gap-2 text-foreground">
-            <Pencil className="size-5 text-primary" /> Edit Technician Profile
+            <Pencil className="size-5 text-primary" /> <AdminText k="Edit Technician Profile" />
           </DialogTitle>
           <DialogDescription className="text-xs text-muted-foreground">
             Update contact information, skills, service areas, and account status.
@@ -352,7 +352,7 @@ function EditTechnicianDialog({
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-xs text-muted-foreground font-semibold">Nationality</Label>
+              <Label className="text-xs text-muted-foreground font-semibold"><AdminText k="Nationality" /></Label>
               <Input
                 value={formData.nationality}
                 onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
@@ -361,7 +361,7 @@ function EditTechnicianDialog({
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-xs text-muted-foreground font-semibold">Date of Birth</Label>
+              <Label className="text-xs text-muted-foreground font-semibold"><AdminText k="Date of Birth" /></Label>
               <Input
                 type="date"
                 value={formData.dob}
@@ -371,21 +371,21 @@ function EditTechnicianDialog({
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-xs text-muted-foreground font-semibold">Gender</Label>
+              <Label className="text-xs text-muted-foreground font-semibold"><AdminText k="Gender" /></Label>
               <Select value={formData.gender} onValueChange={(val) => setFormData({ ...formData, gender: val })}>
                 <SelectTrigger className="bg-background border-border text-foreground text-xs h-10 rounded-xl">
                   <SelectValue placeholder="Select Gender" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-popover-foreground">
-                  <SelectItem value="Male">Male</SelectItem>
-                  <SelectItem value="Female">Female</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
+                  <SelectItem value="Male"><AdminText k="Male" /></SelectItem>
+                  <SelectItem value="Female"><AdminText k="Female" /></SelectItem>
+                  <SelectItem value="Other"><AdminText k="Other" /></SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-xs text-muted-foreground font-semibold">Spoken Languages</Label>
+              <Label className="text-xs text-muted-foreground font-semibold"><AdminText k="Spoken Languages" /></Label>
               <Input
                 value={formData.language}
                 onChange={(e) => setFormData({ ...formData, language: e.target.value })}
@@ -415,7 +415,7 @@ function EditTechnicianDialog({
             </div>
 
             {profile.kind === "technician" && <div className="space-y-1.5 sm:col-span-2">
-              <Label className="text-xs text-muted-foreground font-semibold">Account Status</Label>
+              <Label className="text-xs text-muted-foreground font-semibold"><AdminText k="Account Status" /></Label>
               <Select
                 value={formData.isActive ? "active" : "inactive"}
                 onValueChange={(val) => setFormData({ ...formData, isActive: val === "active" })}
@@ -442,12 +442,12 @@ function EditTechnicianDialog({
                 }}
                 className="w-full sm:w-auto h-10 rounded-xl border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold text-xs hover:bg-rose-500/20"
               >
-                <Trash2 className="size-3.5 mr-1.5" /> Delete Profile
+                <Trash2 className="size-3.5 mr-1.5" /> <AdminText k="Delete Profile" />
               </Button>
             )}
             <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
               <Button type="button" variant="outline" onClick={onClose} className="h-10 rounded-xl border-border bg-background text-xs font-semibold text-foreground hover:bg-muted">
-                Cancel
+                <AdminText k="Cancel" />
               </Button>
               <Button type="submit" disabled={saving} className="h-10 rounded-xl bg-primary text-primary-foreground font-extrabold text-xs px-6 hover:brightness-110 shadow-xs">
                 {saving ? "Saving Changes…" : "Save Changes"}
@@ -549,7 +549,7 @@ function ProfileDialog({
                     onClick={() => onEdit(profile)}
                     className="h-9 rounded-xl border-primary/30 bg-primary/10 text-xs font-bold text-primary hover:bg-primary/20 shadow-xs"
                   >
-                    <Pencil className="size-3.5 mr-1.5" /> Edit Profile
+                    <Pencil className="size-3.5 mr-1.5" /> <AdminText k="Edit Profile" />
                   </Button>
 
                   {onDelete && (
@@ -559,7 +559,7 @@ function ProfileDialog({
                       onClick={() => onDelete(profile)}
                       className="h-9 rounded-xl border-rose-500/30 bg-rose-500/10 text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 shadow-xs"
                     >
-                      <Trash2 className="size-3.5 mr-1.5 text-rose-500" /> Delete Profile
+                      <Trash2 className="size-3.5 mr-1.5 text-rose-500" /> <AdminText k="Delete Profile" />
                     </Button>
                   )}
 
@@ -585,7 +585,7 @@ function ProfileDialog({
                 <span className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <UsersRound className="size-4" />
                 </span>
-                <h3 className="text-base font-bold text-foreground">Contact & Identity</h3>
+                <h3 className="text-base font-bold text-foreground"><AdminText k="Contact & Identity" /></h3>
               </div>
 
               <div className="space-y-2.5">
@@ -625,7 +625,7 @@ function ProfileDialog({
                           <span>{String(value)}</span>
                         )
                       ) : (
-                        <span className="text-muted-foreground/60 italic font-normal">Not recorded</span>
+                        <span className="text-muted-foreground/60 italic font-normal"><AdminText k="Not recorded" /></span>
                       )}
                     </span>
                   </div>
@@ -706,7 +706,7 @@ function ProfileDialog({
                         <span className="font-bold text-foreground text-xs leading-normal">{label}</span>
                       </div>
                       <span className="text-primary font-bold text-xs flex items-center gap-1 shrink-0">
-                        View <ExternalLink className="size-3" />
+                        <AdminText k="View" /> <ExternalLink className="size-3" />
                       </span>
                     </a>
                   ))}
@@ -833,7 +833,7 @@ function ProfileDialog({
         <DialogFooter className="shrink-0 border-t border-border bg-muted/30 px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <Button variant="outline" size="sm" onClick={onClose} className="h-10 w-full sm:w-auto rounded-xl border-border bg-background text-xs font-semibold text-foreground px-5 hover:bg-muted">
-              Close Modal
+              <AdminText k="Close Modal" />
             </Button>
             {onDelete && (
               <Button
@@ -843,7 +843,7 @@ function ProfileDialog({
                 onClick={() => onDelete(profile)}
                 className="h-10 w-full sm:w-auto rounded-xl border-rose-500/30 bg-rose-500/10 text-xs font-bold text-rose-600 dark:text-rose-400 px-4 hover:bg-rose-500/20"
               >
-                <Trash2 className="size-3.5 mr-1.5 text-rose-500" /> Delete Profile
+                <Trash2 className="size-3.5 mr-1.5 text-rose-500" /> <AdminText k="Delete Profile" />
               </Button>
             )}
           </div>
@@ -855,7 +855,7 @@ function ProfileDialog({
                   Request Documents
                 </Button>}
                 {profile.kind === "request" && <Button variant="destructive" size="sm" disabled={busy} onClick={() => onReject(profile)} className="h-10 w-full sm:w-auto rounded-xl text-xs font-bold px-4">
-                  Reject
+                  <AdminText k="Reject" />
                 </Button>}
                 {profile.kind === "request" && <Button size="sm" disabled={busy} onClick={() => onApprove(profile)} className="h-10 w-full sm:w-auto rounded-xl bg-primary text-primary-foreground text-xs font-bold px-5 hover:brightness-110 shadow-md shadow-primary/20">
                   Approve Application
@@ -895,7 +895,7 @@ function DeleteConfirmationDialog({
             <Trash2 className="size-6" />
           </div>
           <DialogTitle className="text-xl font-bold text-foreground">
-            Delete {isTech ? "Technician" : "Application"}?
+            <AdminText k="Delete" /> {isTech ? "Technician" : "Application"}?
           </DialogTitle>
           <DialogDescription className="text-xs text-muted-foreground leading-relaxed">
             Are you sure you want to permanently delete <strong className="text-foreground font-bold">{name || "this account"}</strong> ({email})?
@@ -912,7 +912,7 @@ function DeleteConfirmationDialog({
             onClick={onClose}
             className="w-full sm:w-auto h-10 rounded-xl border-border text-foreground font-bold text-xs hover:bg-muted"
           >
-            Cancel
+            <AdminText k="Cancel" />
           </Button>
           <Button
             type="button"
@@ -998,7 +998,7 @@ function ManualResetPasswordDialog({
         <form onSubmit={handleSubmit} className="space-y-4 pt-2">
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <Label className="text-xs font-semibold text-foreground">New Password</Label>
+              <Label className="text-xs font-semibold text-foreground"><AdminText k="New Password" /></Label>
               <button
                 type="button"
                 onClick={handleAutoGenerate}
@@ -1052,7 +1052,7 @@ function ManualResetPasswordDialog({
               disabled={busy}
               className="h-10 rounded-xl border-border text-xs font-bold"
             >
-              Cancel
+              <AdminText k="Cancel" />
             </Button>
             <Button
               type="submit"
@@ -1060,7 +1060,7 @@ function ManualResetPasswordDialog({
               className="h-10 rounded-xl bg-cyan-600 dark:bg-[#00f5c4] hover:bg-cyan-500 dark:hover:bg-[#00d8a7] text-white dark:text-[#0b0f14] font-extrabold text-xs px-6 shadow-sm"
             >
               {busy ? <Loader2 className="size-4 mr-2 animate-spin" /> : <KeyRound className="size-4 mr-2" />}
-              Update Password
+              <AdminText k="Update Password" />
             </Button>
           </DialogFooter>
         </form>
@@ -1426,7 +1426,7 @@ export default function AdminTechniciansPage() {
 
         <div className="flex items-center gap-2">
           <Button size="sm" onClick={() => setCreateDialogOpen(true)} className="bg-[#00f5c4] text-[#0b0f14] font-extrabold hover:bg-[#00d8a7] shadow-lg shadow-[#00f5c4]/20 h-9 rounded-xl">
-            <UserPlus className="size-4 mr-1.5" /> Create Account
+            <UserPlus className="size-4 mr-1.5" /> <AdminText k="Create Account" />
           </Button>
 
           <DropdownMenu>
@@ -1436,8 +1436,8 @@ export default function AdminTechniciansPage() {
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>Technician workspace</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onSelect={() => setCreateDialogOpen(true)}><UserPlus />Add new technician</DropdownMenuItem>
-              <DropdownMenuItem disabled={!search && statusFilter === "all"} onSelect={() => { setSearch(""); setStatusFilter("all") }}><FilterX />Clear filters</DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setCreateDialogOpen(true)}><UserPlus /><AdminText k="Add new technician" /></DropdownMenuItem>
+              <DropdownMenuItem disabled={!search && statusFilter === "all"} onSelect={() => { setSearch(""); setStatusFilter("all") }}><FilterX /><AdminText k="Clear filters" /></DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onSelect={() => window.location.reload()}><RefreshCw />Reload live data</DropdownMenuItem>
             </DropdownMenuContent>
@@ -1469,8 +1469,8 @@ export default function AdminTechniciansPage() {
       {/* Tabs Layout */}
       <Tabs defaultValue="directory" className="gap-4">
         <TabsList className="h-10 rounded-xl bg-muted/70 p-1">
-          <TabsTrigger value="directory" className="min-w-32 rounded-lg"><UsersRound />Directory <span className="ml-1 rounded-md bg-background/70 px-1.5 py-0.5 text-[10px] tabular-nums">{technicians.length}</span></TabsTrigger>
-          <TabsTrigger value="applications" className="min-w-36 rounded-lg"><ClipboardCheck />Applications <span className="ml-1 rounded-md bg-background/70 px-1.5 py-0.5 text-[10px] tabular-nums">{applicationsList.length}</span></TabsTrigger>
+          <TabsTrigger value="directory" className="min-w-32 rounded-lg"><UsersRound /><AdminText k="Directory" /> <span className="ml-1 rounded-md bg-background/70 px-1.5 py-0.5 text-[10px] tabular-nums">{technicians.length}</span></TabsTrigger>
+          <TabsTrigger value="applications" className="min-w-36 rounded-lg"><ClipboardCheck /><AdminText k="Applications" /> <span className="ml-1 rounded-md bg-background/70 px-1.5 py-0.5 text-[10px] tabular-nums">{applicationsList.length}</span></TabsTrigger>
           <TabsTrigger value="gps" className="min-w-36 rounded-lg"><Navigation />Live GPS Radar</TabsTrigger>
         </TabsList>
 
@@ -1490,10 +1490,10 @@ export default function AdminTechniciansPage() {
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
                   <SelectTrigger size="sm" className="w-full border-input bg-background/65 shadow-none sm:w-40" aria-label="Filter technicians"><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All profiles</SelectItem>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="inactive">Inactive</SelectItem>
-                    <SelectItem value="online">Online</SelectItem>
+                    <SelectItem value="all"><AdminText k="All profiles" /></SelectItem>
+                    <SelectItem value="active"><AdminText k="Active" /></SelectItem>
+                    <SelectItem value="inactive"><AdminText k="Inactive" /></SelectItem>
+                    <SelectItem value="online"><AdminText k="Online" /></SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -1506,11 +1506,11 @@ export default function AdminTechniciansPage() {
                 <Table>
                   <TableHeader className="bg-muted/25">
                     <TableRow className="hover:bg-transparent">
-                      <TableHead className="h-9 pl-4 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Technician</TableHead>
+                      <TableHead className="h-9 pl-4 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground"><AdminText k="Technician" /></TableHead>
                       <TableHead className="hidden h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground min-[1440px]:table-cell">ID</TableHead>
-                      <TableHead className="hidden h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground lg:table-cell">Specialty</TableHead>
-                      <TableHead className="h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Status</TableHead>
-                      <TableHead className="hidden h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground md:table-cell">Availability</TableHead>
+                      <TableHead className="hidden h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground lg:table-cell"><AdminText k="Specialty" /></TableHead>
+                      <TableHead className="h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground"><AdminText k="Status" /></TableHead>
+                      <TableHead className="hidden h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground md:table-cell"><AdminText k="Availability" /></TableHead>
                       <TableHead className="h-9 w-12 pr-4 text-right"><span className="sr-only"><AdminText k="Actions" /></span></TableHead>
                     </TableRow>
                   </TableHeader>
@@ -1553,8 +1553,8 @@ export default function AdminTechniciansPage() {
                             <DropdownMenuContent align="end" className="w-56">
                               <DropdownMenuLabel>{recorded(technician.name)}</DropdownMenuLabel>
                               <DropdownMenuSeparator />
-                              <DropdownMenuItem onSelect={() => setSelectedProfile(technician)}><Eye className="size-4 mr-2" />Inspect profile</DropdownMenuItem>
-                              <DropdownMenuItem onSelect={() => setEditingProfile(technician)}><Pencil className="size-4 mr-2 text-[#00f5c4]" />Edit profile</DropdownMenuItem>
+                              <DropdownMenuItem onSelect={() => setSelectedProfile(technician)}><Eye className="size-4 mr-2" /><AdminText k="Inspect profile" /></DropdownMenuItem>
+                              <DropdownMenuItem onSelect={() => setEditingProfile(technician)}><Pencil className="size-4 mr-2 text-[#00f5c4]" /><AdminText k="Edit profile" /></DropdownMenuItem>
                               <DropdownMenuSeparator />
                               <DropdownMenuItem onSelect={() => runAccountAction(technician.id, technician.isActive ? "SUSPEND" : "ACTIVATE")}>
                                 {technician.isActive ? <AlertTriangle className="size-4 mr-2 text-amber-400" /> : <CheckCircle2 className="size-4 mr-2 text-emerald-400" />}
@@ -1585,7 +1585,7 @@ export default function AdminTechniciansPage() {
                                 }}
                                 className="text-rose-400 focus:text-rose-300 focus:bg-rose-950/40 cursor-pointer"
                               >
-                                <Trash2 className="size-4 mr-2 text-rose-400" />Delete technician
+                                <Trash2 className="size-4 mr-2 text-rose-400" /><AdminText k="Delete technician" />
                               </DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>
@@ -1597,7 +1597,7 @@ export default function AdminTechniciansPage() {
               )}
               <div className="flex items-center justify-between border-t border-border/70 px-4 py-2.5 text-xs text-muted-foreground">
                 <span>Showing {filteredTechnicians.length} <AdminText k="of" /> {technicians.length}</span>
-                <span className="hidden items-center gap-1.5 sm:flex"><span className="size-1.5 rounded-full bg-emerald-400" />Live sync</span>
+                <span className="hidden items-center gap-1.5 sm:flex"><span className="size-1.5 rounded-full bg-emerald-400" /><AdminText k="Live sync" /></span>
               </div>
             </CardContent>
           </Card>
@@ -1606,7 +1606,7 @@ export default function AdminTechniciansPage() {
         <TabsContent value="applications">
           <Card className="min-w-0 gap-0 overflow-hidden bg-card/85 py-0 shadow-xl shadow-black/10 ring-border/80">
             <CardHeader className="border-b border-border/70 px-4 py-4">
-              <CardTitle className="flex items-center gap-2.5 text-base"><span className="flex size-7 items-center justify-center rounded-lg bg-amber-400/10 text-amber-300"><ClipboardCheck className="size-4" /></span>Applications</CardTitle>
+              <CardTitle className="flex items-center gap-2.5 text-base"><span className="flex size-7 items-center justify-center rounded-lg bg-amber-400/10 text-amber-300"><ClipboardCheck className="size-4" /></span><AdminText k="Applications" /></CardTitle>
               <CardDescription className="pl-9">Review applicant data before enabling account access.</CardDescription>
               <CardAction><Badge variant={applicationsList.length ? "secondary" : "ghost"}>{applicationsList.length} pending</Badge></CardAction>
             </CardHeader>
@@ -1614,15 +1614,15 @@ export default function AdminTechniciansPage() {
               {requestsLoading ? (
                 <div className="space-y-2 p-4">{Array.from({ length: 4 }).map((_, index) => <Skeleton key={index} className="h-11 w-full" />)}</div>
               ) : applicationsList.length === 0 ? (
-                <Empty className="min-h-52 border-0"><EmptyHeader><EmptyMedia variant="icon"><UserCheck /></EmptyMedia><EmptyTitle>No applications</EmptyTitle><EmptyDescription>Technician applications will appear here automatically.</EmptyDescription></EmptyHeader></Empty>
+                <Empty className="min-h-52 border-0"><EmptyHeader><EmptyMedia variant="icon"><UserCheck /></EmptyMedia><EmptyTitle><AdminText k="No applications" /></EmptyTitle><EmptyDescription>Technician applications will appear here automatically.</EmptyDescription></EmptyHeader></Empty>
               ) : (
                 <Table>
                   <TableHeader className="bg-muted/25">
                     <TableRow className="hover:bg-transparent">
-                      <TableHead className="h-9 pl-4 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Applicant</TableHead>
-                      <TableHead className="hidden h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground md:table-cell">Specialty</TableHead>
-                      <TableHead className="hidden h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground lg:table-cell">Service areas</TableHead>
-                      <TableHead className="h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Status</TableHead>
+                      <TableHead className="h-9 pl-4 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground"><AdminText k="Applicant" /></TableHead>
+                      <TableHead className="hidden h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground md:table-cell"><AdminText k="Specialty" /></TableHead>
+                      <TableHead className="hidden h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground lg:table-cell"><AdminText k="Service areas" /></TableHead>
+                      <TableHead className="h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground"><AdminText k="Status" /></TableHead>
                       <TableHead className="h-9 w-12 pr-4 text-right"><span className="sr-only"><AdminText k="Actions" /></span></TableHead>
                     </TableRow>
                   </TableHeader>
@@ -1649,14 +1649,14 @@ export default function AdminTechniciansPage() {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end" className="w-48">
-                                <DropdownMenuLabel>Application</DropdownMenuLabel>
+                                <DropdownMenuLabel><AdminText k="Application" /></DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem onSelect={() => setSelectedProfile(item)}><Eye className="size-4 mr-2" />Review details</DropdownMenuItem>
-                                <DropdownMenuItem onSelect={() => setEditingProfile(item)}><Pencil className="size-4 mr-2 text-[#00f5c4]" />Edit profile</DropdownMenuItem>
+                                <DropdownMenuItem onSelect={() => setSelectedProfile(item)}><Eye className="size-4 mr-2" /><AdminText k="Review details" /></DropdownMenuItem>
+                                <DropdownMenuItem onSelect={() => setEditingProfile(item)}><Pencil className="size-4 mr-2 text-[#00f5c4]" /><AdminText k="Edit profile" /></DropdownMenuItem>
                                 {item.kind === "request" && (
                                   <>
-                                    <DropdownMenuItem onSelect={() => runAction(item, "approve")}><CheckCircle2 className="size-4 mr-2 text-emerald-400" />Approve</DropdownMenuItem>
-                                    <DropdownMenuItem onSelect={() => runAction(item, "reject")} className="text-rose-400"><CircleAlert className="size-4 mr-2 text-rose-400" />Reject</DropdownMenuItem>
+                                    <DropdownMenuItem onSelect={() => runAction(item, "approve")}><CheckCircle2 className="size-4 mr-2 text-emerald-400" /><AdminText k="Approve" /></DropdownMenuItem>
+                                    <DropdownMenuItem onSelect={() => runAction(item, "reject")} className="text-rose-400"><CircleAlert className="size-4 mr-2 text-rose-400" /><AdminText k="Reject" /></DropdownMenuItem>
                                   </>
                                 )}
                                 <DropdownMenuSeparator />
@@ -1741,7 +1741,7 @@ export default function AdminTechniciansPage() {
         <DialogContent className="bg-card border-border text-foreground rounded-2xl sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="text-lg font-bold flex items-center gap-2">
-              <UserPlus className="size-5 text-cyan-600 dark:text-[#00f5c4]" /> Create Technician Account
+              <UserPlus className="size-5 text-cyan-600 dark:text-[#00f5c4]" /> <AdminText k="Create Technician Account" />
             </DialogTitle>
             <DialogDescription className="text-xs text-muted-foreground">
               Generate a new technician profile and credentials.
@@ -1794,7 +1794,7 @@ export default function AdminTechniciansPage() {
 
             <DialogFooter className="pt-2">
               <Button type="button" variant="outline" onClick={() => setCreateDialogOpen(false)} className="h-10 rounded-xl border-border text-xs font-bold">
-                Cancel
+                <AdminText k="Cancel" />
               </Button>
               <Button type="submit" disabled={savingId === "new"} className="h-10 rounded-xl bg-cyan-600 dark:bg-[#00f5c4] text-white dark:text-[#0b0f14] font-extrabold text-xs px-5 hover:bg-cyan-500 dark:hover:bg-[#00d8a7]">
                 {savingId === "new" ? "Creating…" : "Create Profile"}
@@ -1864,7 +1864,7 @@ export default function AdminTechniciansPage() {
               }}
               className="h-10 rounded-xl bg-cyan-600 dark:bg-[#00f5c4] text-white dark:text-[#0b0f14] font-extrabold text-xs w-full shadow-sm"
             >
-              Done & Close
+              <AdminText k="Done & Close" />
             </Button>
           </DialogFooter>
         </DialogContent>

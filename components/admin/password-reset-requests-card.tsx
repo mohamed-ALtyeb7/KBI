@@ -151,7 +151,7 @@ export function PasswordResetRequestsCard() {
             </div>
             <div>
               <h3 className="text-sm font-bold text-foreground">
-                Password Reset Requests
+                <AdminText k="Password Reset Requests" />
               </h3>
               <p className="text-xs text-muted-foreground mt-0.5">
                 Technicians requesting administrator help to regain account access.
@@ -195,7 +195,7 @@ export function PasswordResetRequestsCard() {
                 className="h-9 px-4 bg-primary text-primary-foreground font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition cursor-pointer hover:brightness-110 shadow-xs shrink-0"
               >
                 <KeyRound className="size-3.5" />
-                Set New Password
+                <AdminText k="Set New Password" />
               </Button>
             </div>
           ))}
@@ -207,7 +207,7 @@ export function PasswordResetRequestsCard() {
           <DialogHeader>
             <DialogTitle className="text-base font-bold flex items-center gap-2 text-foreground">
               <ShieldCheck className="size-5 text-primary" />
-              Reset Technician Password
+              <AdminText k="Reset Technician Password" />
             </DialogTitle>
             <DialogDescription className="text-xs text-muted-foreground">
               Set a temporary password for <strong>{selected?.name}</strong> ({selected?.email}).
@@ -247,12 +247,12 @@ export function PasswordResetRequestsCard() {
 
           <DialogFooter className="gap-2 sm:gap-0 pt-2 border-t border-border">
             <Button variant="outline" size="sm" onClick={closeDialog} disabled={submitting} className="rounded-xl">
-              Cancel
+              <AdminText k="Cancel" />
             </Button>
             <Button size="sm" onClick={submitReset} disabled={submitting} className="rounded-xl bg-primary text-primary-foreground font-bold hover:brightness-110">
               {submitting ? (
                 <>
-                  <Loader2 className="size-3.5 animate-spin mr-1.5" /> Updating...
+                  <Loader2 className="size-3.5 animate-spin mr-1.5" /> <AdminText k="Updating..." />
                 </>
               ) : (
                 "Save Password"

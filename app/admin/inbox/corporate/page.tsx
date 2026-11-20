@@ -171,7 +171,7 @@ export default function CorporateInboxPage() {
       <section className="grid gap-3 sm:grid-cols-4" aria-label="Corporate request statistics">
         <div className="rounded-2xl bg-card border border-border/80 p-4 shadow-xs flex items-center justify-between">
           <div>
-            <p className="text-xs font-semibold text-muted-foreground">Total Inquiries</p>
+            <p className="text-xs font-semibold text-muted-foreground"><AdminText k="Total Inquiries" /></p>
             <p className="text-2xl font-black text-foreground mt-1 tabular-nums font-mono">{loading ? "—" : requests.length}</p>
           </div>
           <span className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20">
@@ -181,7 +181,7 @@ export default function CorporateInboxPage() {
 
         <div className="rounded-2xl bg-card border border-border/80 p-4 shadow-xs flex items-center justify-between">
           <div>
-            <p className="text-xs font-semibold text-muted-foreground">New Leads</p>
+            <p className="text-xs font-semibold text-muted-foreground"><AdminText k="New Leads" /></p>
             <p className="text-2xl font-black text-primary mt-1 tabular-nums font-mono">{loading ? "—" : newCount}</p>
           </div>
           <span className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20">
@@ -217,7 +217,7 @@ export default function CorporateInboxPage() {
           <CardHeader className="border-b border-border/60 bg-muted/30 p-4 space-y-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-base font-extrabold text-foreground flex items-center gap-2">
-                <MessageSquare className="size-4 text-primary" /> Corporate Leads Inbox
+                <MessageSquare className="size-4 text-primary" /> <AdminText k="Corporate Leads Inbox" />
               </CardTitle>
               <Badge variant="outline" className="bg-primary/10 border-primary/20 text-xs font-mono text-primary">
                 {filteredRequests.length} Item{filteredRequests.length === 1 ? "" : "s"}
@@ -393,7 +393,7 @@ export default function CorporateInboxPage() {
 
                   <div className="p-4 rounded-xl bg-muted/20 border border-border/70 space-y-1">
                     <span className="text-[11px] font-bold text-muted-foreground flex items-center gap-1">
-                      <Laptop className="size-3 text-primary" /> Device Scope
+                      <Laptop className="size-3 text-primary" /> <AdminText k="Device Scope" />
                     </span>
                     <p className="text-sm font-bold text-foreground">{selectedRequest.deviceCount || "Custom Quantity"}</p>
                   </div>
@@ -416,7 +416,7 @@ export default function CorporateInboxPage() {
                   onClick={() => deleteRequest(selectedRequest.id)}
                   className="rounded-xl border-destructive/30 text-destructive hover:bg-destructive/10 text-xs"
                 >
-                  <Trash2 className="size-3.5 mr-1.5" /> Delete Inquiry
+                  <Trash2 className="size-3.5 mr-1.5" /> <AdminText k="Delete Inquiry" />
                 </Button>
 
                 <div className="flex items-center gap-2">
@@ -430,7 +430,7 @@ export default function CorporateInboxPage() {
                   {selectedRequest.email && (
                     <Button asChild size="sm" className="rounded-xl bg-primary text-primary-foreground text-xs font-bold hover:brightness-110">
                       <a href={`mailto:${selectedRequest.email}?subject=KBI Corporate Repair Solutions Proposal`}>
-                        <Mail className="size-3.5 mr-1.5" /> Reply by Email
+                        <Mail className="size-3.5 mr-1.5" /> <AdminText k="Reply by Email" />
                       </a>
                     </Button>
                   )}

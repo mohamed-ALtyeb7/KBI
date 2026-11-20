@@ -1,5 +1,6 @@
 "use client";
 
+import { T as AdminText } from "@/components/i18n-text";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -481,7 +482,7 @@ export default function LiveTrackingPage() {
             </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-                Command Center
+                <AdminText k="Command Center" />
               </h1>
               <p className="text-xs text-muted-foreground mt-0.5">
                 Dispatch, monitoring, and telemetry operations
@@ -500,7 +501,7 @@ export default function LiveTrackingPage() {
             onClick={() => window.location.reload()}
             className="px-4 py-2 bg-muted hover:bg-muted/80 text-foreground border border-border text-xs font-bold rounded-xl flex items-center gap-2 transition cursor-pointer"
           >
-            <RefreshCw className="w-4 h-4" /> Reconnect
+            <RefreshCw className="w-4 h-4" /> <AdminText k="Reconnect" />
           </button>
         </div>
       </div>
@@ -513,7 +514,7 @@ export default function LiveTrackingPage() {
           </div>
           <div>
             <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400">{onlineCount}</div>
-            <div className="text-[11px] text-muted-foreground font-medium">Online</div>
+            <div className="text-[11px] text-muted-foreground font-medium"><AdminText k="Online" /></div>
           </div>
         </div>
 
@@ -523,7 +524,7 @@ export default function LiveTrackingPage() {
           </div>
           <div>
             <div className="text-xl font-bold text-primary">{availableCount}</div>
-            <div className="text-[11px] text-muted-foreground font-medium">Available</div>
+            <div className="text-[11px] text-muted-foreground font-medium"><AdminText k="Available" /></div>
           </div>
         </div>
 
@@ -533,7 +534,7 @@ export default function LiveTrackingPage() {
           </div>
           <div>
             <div className="text-xl font-bold text-amber-600 dark:text-amber-400">{onJobCount}</div>
-            <div className="text-[11px] text-muted-foreground font-medium">On Job</div>
+            <div className="text-[11px] text-muted-foreground font-medium"><AdminText k="On Job" /></div>
           </div>
         </div>
 
@@ -543,7 +544,7 @@ export default function LiveTrackingPage() {
           </div>
           <div>
             <div className="text-xl font-bold text-foreground">{offlineCount}</div>
-            <div className="text-[11px] text-muted-foreground font-medium">Offline</div>
+            <div className="text-[11px] text-muted-foreground font-medium"><AdminText k="Offline" /></div>
           </div>
         </div>
 
@@ -553,7 +554,7 @@ export default function LiveTrackingPage() {
           </div>
           <div>
             <div className="text-xl font-bold text-amber-600 dark:text-amber-400">{unassignedBookings.length}</div>
-            <div className="text-[11px] text-muted-foreground font-medium">Unassigned Orders</div>
+            <div className="text-[11px] text-muted-foreground font-medium"><AdminText k="Unassigned Orders" /></div>
           </div>
         </div>
       </div>
@@ -584,7 +585,7 @@ export default function LiveTrackingPage() {
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                All
+                <AdminText k="All" />
               </button>
               <button
                 onClick={() => setStatusFilter("ON_JOB")}
@@ -594,7 +595,7 @@ export default function LiveTrackingPage() {
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                On Job
+                <AdminText k="On Job" />
               </button>
               <button
                 onClick={() => setStatusFilter("OFFLINE")}
@@ -604,7 +605,7 @@ export default function LiveTrackingPage() {
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                Offline
+                <AdminText k="Offline" />
               </button>
             </div>
           </div>
@@ -691,7 +692,7 @@ export default function LiveTrackingPage() {
         <div className="bg-card border border-border rounded-2xl p-4 shadow-sm">
           <div className="flex items-center justify-between gap-3 mb-3">
             <div>
-              <h2 className="text-sm font-extrabold text-foreground">Technicians</h2>
+              <h2 className="text-sm font-extrabold text-foreground"><AdminText k="Technicians" /></h2>
               <p className="text-[11px] text-muted-foreground">Select a technician to view or request their current location.</p>
             </div>
             <span className="text-[11px] font-bold text-muted-foreground bg-muted/50 border border-border rounded-full px-3 py-1">
@@ -849,7 +850,7 @@ export default function LiveTrackingPage() {
                           <Wrench className="w-4 h-4" />
                         </div>
                         <div className="min-w-0 flex-1">
-                          <span className="text-[10px] text-muted-foreground block font-medium">Current Job</span>
+                          <span className="text-[10px] text-muted-foreground block font-medium"><AdminText k="Current Job" /></span>
                           <p className="font-bold text-foreground truncate">{selectedEnrichedTech.currentJobTitle || "No Active Job"}</p>
                           <span className="text-[10px] text-muted-foreground truncate block">{selectedEnrichedTech.currentJobArea || "Standby"}</span>
                         </div>
@@ -886,7 +887,7 @@ export default function LiveTrackingPage() {
                         rel="noreferrer"
                         className="px-5 py-2.5 bg-[#0F2850] hover:bg-[#16386d] text-white text-xs font-bold rounded-2xl flex items-center gap-2 shadow-xs transition"
                       >
-                        <MessageCircle className="w-4 h-4" /> Message on WhatsApp
+                        <MessageCircle className="w-4 h-4" /> <AdminText k="Message on WhatsApp" />
                       </a>
 
                       {selectedEnrichedTech.phone && (
@@ -894,7 +895,7 @@ export default function LiveTrackingPage() {
                           href={`tel:${selectedEnrichedTech.phone}`}
                           className="px-4 py-2.5 bg-background border border-border hover:bg-muted text-foreground text-xs font-bold rounded-2xl flex items-center gap-1.5 shadow-2xs transition"
                         >
-                          <Phone className="w-3.5 h-3.5 text-primary" /> Call
+                          <Phone className="w-3.5 h-3.5 text-primary" /> <AdminText k="Call" />
                         </a>
                       )}
 
@@ -905,7 +906,7 @@ export default function LiveTrackingPage() {
                           rel="noreferrer"
                           className="px-4 py-2.5 bg-background border border-border hover:bg-muted text-foreground text-xs font-bold rounded-2xl flex items-center gap-1.5 shadow-2xs transition"
                         >
-                          <Navigation className="w-3.5 h-3.5 text-primary" /> Directions
+                          <Navigation className="w-3.5 h-3.5 text-primary" /> <AdminText k="Directions" />
                         </a>
                       )}
                     </div>

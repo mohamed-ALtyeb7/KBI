@@ -172,7 +172,7 @@ export function CreateOrderDialog({
                   <PlusCircle className="size-5" />
                 </div>
                 <DialogTitle className="text-xl font-bold tracking-tight text-foreground">
-                  Create New Order
+                  <AdminText k="Create New Order" />
                 </DialogTitle>
                 <Badge variant="outline" className="bg-primary/10 border-primary/25 text-primary text-xs font-mono font-semibold">
                   AUTO-DISPATCH
@@ -296,16 +296,16 @@ export function CreateOrderDialog({
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-muted-foreground">Priority</Label>
+                    <Label className="text-xs font-semibold text-muted-foreground"><AdminText k="Priority" /></Label>
                     <Select value={priority} onValueChange={(val) => setPriority(val as any)}>
                       <SelectTrigger className="h-10 text-xs bg-background border-border rounded-xl text-foreground">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-popover border-border text-popover-foreground">
-                        <SelectItem value="NORMAL" className="text-xs">Normal</SelectItem>
-                        <SelectItem value="HIGH" className="text-xs text-amber-600 dark:text-amber-400 font-bold">High</SelectItem>
+                        <SelectItem value="NORMAL" className="text-xs"><AdminText k="Normal" /></SelectItem>
+                        <SelectItem value="HIGH" className="text-xs text-amber-600 dark:text-amber-400 font-bold"><AdminText k="High" /></SelectItem>
                         <SelectItem value="URGENT" className="text-xs text-rose-600 dark:text-rose-400 font-bold">Urgent 🚨</SelectItem>
-                        <SelectItem value="LOW" className="text-xs text-muted-foreground">Low</SelectItem>
+                        <SelectItem value="LOW" className="text-xs text-muted-foreground"><AdminText k="Low" /></SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -336,7 +336,7 @@ export function CreateOrderDialog({
               <div className="space-y-4 bg-muted/20 border border-border/70 rounded-2xl p-5 shadow-xs">
                 <div className="flex items-center gap-2 text-sm font-bold text-foreground border-b border-border/70 pb-2.5">
                   <Smartphone className="size-4 text-primary" />
-                  <span>Device & Repair Details</span>
+                  <span><AdminText k="Device & Repair Details" /></span>
                 </div>
 
                 <div className="space-y-3.5">
@@ -478,7 +478,7 @@ export function CreateOrderDialog({
                 onClick={() => onOpenChange(false)}
                 className="h-10 px-4 rounded-xl border-border hover:bg-muted text-foreground"
               >
-                Cancel
+                <AdminText k="Cancel" />
               </Button>
               <Button
                 type="submit"

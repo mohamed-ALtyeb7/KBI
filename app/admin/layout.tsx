@@ -66,7 +66,7 @@ function AccessCard({
         <CardContent>
           <Alert>
             <AlertTriangle />
-            <AlertTitle>Admin access required</AlertTitle>
+            <AlertTitle><AdminText k="Admin access required" /></AlertTitle>
             <AlertDescription>Sign in with a verified KBI administrator account.</AlertDescription>
           </Alert>
         </CardContent>

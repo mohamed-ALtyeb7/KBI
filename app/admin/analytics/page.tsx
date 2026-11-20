@@ -1,5 +1,6 @@
 "use client"
 
+import { T as AdminText } from "@/components/i18n-text";
 import { useEffect, useState } from "react"
 import nextDynamic from "next/dynamic"
 import {
@@ -180,7 +181,7 @@ export default function AdminAnalyticsPage() {
         {/* Card 1: Revenue */}
         <Card className="bg-card border-border/80 p-5 shadow-xs space-y-3 rounded-2xl relative overflow-hidden">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Total Revenue</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground"><AdminText k="Total Revenue" /></span>
             <span className="flex size-9 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20">
               <DollarSign className="size-4" />
             </span>
@@ -194,7 +195,7 @@ export default function AdminAnalyticsPage() {
         {/* Card 2: Orders */}
         <Card className="bg-card border-border/80 p-5 shadow-xs space-y-3 rounded-2xl relative overflow-hidden">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Total Work Orders</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground"><AdminText k="Total Work Orders" /></span>
             <span className="flex size-9 items-center justify-center rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
               <ShoppingCart className="size-4" />
             </span>
@@ -210,7 +211,7 @@ export default function AdminAnalyticsPage() {
         {/* Card 3: Completion Rate */}
         <Card className="bg-card border-border/80 p-5 shadow-xs space-y-3 rounded-2xl relative overflow-hidden">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Completion Rate</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground"><AdminText k="Completion Rate" /></span>
             <span className="flex size-9 items-center justify-center rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20">
               <TrendingUp className="size-4" />
             </span>
@@ -224,7 +225,7 @@ export default function AdminAnalyticsPage() {
         {/* Card 4: Average Order Value */}
         <Card className="bg-card border-border/80 p-5 shadow-xs space-y-3 rounded-2xl relative overflow-hidden">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Avg Order Value</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground"><AdminText k="Avg Order Value" /></span>
             <span className="flex size-9 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
               <Wrench className="size-4" />
             </span>

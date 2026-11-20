@@ -1,5 +1,6 @@
 "use client"
 
+import { T as AdminText } from "@/components/i18n-text";
 import { useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { auth } from "@/firebase/authClient"
@@ -109,7 +110,7 @@ export default function AdminResetPasswordPage() {
                 <Input value={email} readOnly className="bg-white/5 border-white/10 text-white" />
               </div>
               <div className="space-y-2">
-                <Label className="text-white">New Password</Label>
+                <Label className="text-white"><AdminText k="New Password" /></Label>
                 <Input
                   type="password"
                   placeholder="Minimum 8 characters"

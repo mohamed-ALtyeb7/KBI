@@ -36,7 +36,7 @@ export function OrderInvoiceModal({ order, open, onOpenChange }: Props) {
           </DialogTitle>
           <div className="flex items-center gap-2">
             <Button size="sm" onClick={handlePrint} className="bg-cyan-600 hover:bg-cyan-500 text-white font-bold gap-2 text-xs h-9 rounded-xl shadow-xs">
-              <Printer className="w-4 h-4" /> Print / Save PDF
+              <Printer className="w-4 h-4" /> <AdminText k="Print / Save PDF" />
             </Button>
           </div>
         </DialogHeader>
@@ -66,7 +66,7 @@ export function OrderInvoiceModal({ order, open, onOpenChange }: Props) {
             {/* Bill To / Details Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 my-6 text-xs">
               <div className="p-4 rounded-xl bg-muted/30 border border-border space-y-1.5">
-                <p className="font-bold text-muted-foreground uppercase tracking-wider text-[10px]">Client / Recipient</p>
+                <p className="font-bold text-muted-foreground uppercase tracking-wider text-[10px]"><AdminText k="Client / Recipient" /></p>
                 <p className="font-bold text-sm text-foreground">{order.customerName || "Customer"}</p>
                 {order.customerPhone && <p className="text-muted-foreground flex items-center gap-1.5"><Phone className="w-3 h-3" /> {order.customerPhone}</p>}
                 {order.customerEmail && <p className="text-muted-foreground flex items-center gap-1.5"><Mail className="w-3 h-3" /> {order.customerEmail}</p>}

@@ -1,5 +1,6 @@
 "use client";
 
+import { T as AdminText } from "@/components/i18n-text";
 import React, { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -339,25 +340,25 @@ export default function InteractiveMap({
           <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span className="text-slate-900 dark:text-white font-bold">{liveGpsCount}</span>
-            <span className="text-slate-500 dark:text-slate-400">Live GPS</span>
+            <span className="text-slate-500 dark:text-slate-400"><AdminText k="Live GPS" /></span>
           </div>
           <span className="text-slate-300 dark:text-slate-700">|</span>
           <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-cyan-500"></span>
             <span className="text-slate-900 dark:text-white font-bold">{freeCount}</span>
-            <span className="text-slate-500 dark:text-slate-400">Available</span>
+            <span className="text-slate-500 dark:text-slate-400"><AdminText k="Available" /></span>
           </div>
           <span className="text-slate-300 dark:text-slate-700">|</span>
           <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-amber-500"></span>
             <span className="text-slate-900 dark:text-white font-bold">{onJobCount}</span>
-            <span className="text-slate-500 dark:text-slate-400">On Job</span>
+            <span className="text-slate-500 dark:text-slate-400"><AdminText k="On Job" /></span>
           </div>
           <span className="text-slate-300 dark:text-slate-700">|</span>
           <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-slate-400"></span>
             <span className="text-slate-900 dark:text-white font-bold">{offlineCount}</span>
-            <span className="text-slate-500 dark:text-slate-400">Offline</span>
+            <span className="text-slate-500 dark:text-slate-400"><AdminText k="Offline" /></span>
           </div>
         </div>
 
@@ -366,7 +367,7 @@ export default function InteractiveMap({
           className="bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-700/80 px-3 py-1.5 rounded-xl shadow-md flex items-center gap-1.5 text-xs text-slate-800 dark:text-slate-200 hover:bg-slate-50 font-bold backdrop-blur-sm cursor-pointer transition"
         >
           <span>🎯</span>
-          <span>Fit All</span>
+          <span><AdminText k="Fit All" /></span>
         </button>
       </div>
     </div>

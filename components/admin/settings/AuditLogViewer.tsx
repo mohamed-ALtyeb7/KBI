@@ -1,5 +1,6 @@
 "use client"
 
+import { T as AdminText } from "@/components/i18n-text";
 import { useEffect, useState, useRef } from "react"
 import { getAuditLogsAction } from "@/app/actions/admin-audit"
 import { Loader2, User, Clock, Monitor, Activity } from "lucide-react"
@@ -47,7 +48,7 @@ export function AuditLogViewer() {
               <Activity className="size-4" />
             </div>
             <div>
-              <CardTitle className="text-base font-bold text-foreground">System Audit Logs</CardTitle>
+              <CardTitle className="text-base font-bold text-foreground"><AdminText k="System Audit Logs" /></CardTitle>
               <CardDescription className="text-xs text-muted-foreground">
                 Immutable records of administrative security operations and configuration updates.
               </CardDescription>
@@ -55,7 +56,7 @@ export function AuditLogViewer() {
           </div>
 
           <Badge variant="outline" className="text-[11px] font-bold">
-            {logs.length} Logged Events
+            {logs.length} <AdminText k="Logged Events" />
           </Badge>
         </div>
       </CardHeader>

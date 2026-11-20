@@ -388,7 +388,7 @@ export default function SecuritySettingsPage() {
             <ShieldCheck className="size-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-black tracking-tight text-foreground">Security & Access Control</h1>
+            <h1 className="text-2xl font-black tracking-tight text-foreground"><AdminText k="Security & Access Control" /></h1>
             <p className="text-xs text-muted-foreground mt-0.5">
               Manage personal credentials, administrator access levels, and security policies.
             </p>
@@ -431,7 +431,7 @@ export default function SecuritySettingsPage() {
             <CardContent className="p-6">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-semibold text-foreground">Current Password</Label>
+                  <Label className="text-xs font-semibold text-foreground"><AdminText k="Current Password" /></Label>
                   <div className="relative">
                     <Input
                       type={showCurrent ? "text" : "password"}
@@ -453,7 +453,7 @@ export default function SecuritySettingsPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-foreground">New Password</Label>
+                    <Label className="text-xs font-semibold text-foreground"><AdminText k="New Password" /></Label>
                     <div className="relative">
                       <Input
                         type={showNew ? "text" : "password"}
@@ -474,7 +474,7 @@ export default function SecuritySettingsPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-foreground">Confirm New Password</Label>
+                    <Label className="text-xs font-semibold text-foreground"><AdminText k="Confirm New Password" /></Label>
                     <div className="relative">
                       <Input
                         type={showConfirm ? "text" : "password"}
@@ -516,7 +516,7 @@ export default function SecuritySettingsPage() {
                     className="h-10 rounded-xl bg-cyan-600 dark:bg-[#00f5c4] hover:bg-cyan-500 dark:hover:bg-[#00d8a7] text-white dark:text-[#0b0f14] font-extrabold text-xs px-6 shadow-sm"
                   >
                     {loading ? <Loader2 className="size-4 mr-2 animate-spin" /> : <Lock className="size-4 mr-2" />}
-                    Update Password
+                    <AdminText k="Update Password" />
                   </Button>
                 </div>
               </form>
@@ -532,7 +532,7 @@ export default function SecuritySettingsPage() {
                     <KeyRound className="size-4" />
                   </div>
                   <div>
-                    <CardTitle className="text-base font-bold text-foreground">Reset User Password</CardTitle>
+                    <CardTitle className="text-base font-bold text-foreground"><AdminText k="Reset User Password" /></CardTitle>
                     <CardDescription className="text-xs text-muted-foreground">
                       Override password for any existing administrator account.
                     </CardDescription>
@@ -543,7 +543,7 @@ export default function SecuritySettingsPage() {
               <CardContent className="p-6 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-foreground">Select Admin Account</Label>
+                    <Label className="text-xs font-semibold text-foreground"><AdminText k="Select Admin Account" /></Label>
                     <AppSelect
                       items={adminUsers.map((u) => ({ value: u.uid, label: u.email }))}
                       value={selectedUserUid}
@@ -555,7 +555,7 @@ export default function SecuritySettingsPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-foreground">New Temporary Password</Label>
+                    <Label className="text-xs font-semibold text-foreground"><AdminText k="New Temporary Password" /></Label>
                     <Input
                       type="password"
                       placeholder="At least 8 characters"
@@ -593,7 +593,7 @@ export default function SecuritySettingsPage() {
                     className="h-10 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-xs px-6"
                   >
                     {targetLoading ? <Loader2 className="size-4 mr-2 animate-spin" /> : <KeyRound className="size-4 mr-2" />}
-                    Reset User Password
+                    <AdminText k="Reset User Password" />
                   </Button>
                 </div>
               </CardContent>
@@ -612,7 +612,7 @@ export default function SecuritySettingsPage() {
                     <User className="size-4" />
                   </div>
                   <div>
-                    <CardTitle className="text-base font-bold text-foreground">Admin Accounts</CardTitle>
+                    <CardTitle className="text-base font-bold text-foreground"><AdminText k="Admin Accounts" /></CardTitle>
                     <CardDescription className="text-xs text-muted-foreground">
                       {adminEmails.length} authorized administrators
                     </CardDescription>
@@ -620,7 +620,7 @@ export default function SecuritySettingsPage() {
                 </div>
 
                 <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 text-[11px] font-bold">
-                  {adminEmails.length} Active
+                  {adminEmails.length} <AdminText k="Active" />
                 </Badge>
               </div>
             </CardHeader>
@@ -785,7 +785,7 @@ export default function SecuritySettingsPage() {
 
           <AlertDialogFooter className="pt-4 border-t border-border mt-4 flex flex-col-reverse sm:flex-row gap-2">
             <AlertDialogCancel className="h-10 rounded-xl border-border text-xs font-bold">
-              Cancel
+              <AdminText k="Cancel" />
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={doChangePassword}

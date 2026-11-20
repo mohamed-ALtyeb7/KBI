@@ -145,7 +145,7 @@ export function OrderEditorDialog({
               {/* Order Reference & Timestamps */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-muted/20 border border-border/70 rounded-2xl p-4">
                 <div>
-                  <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Source</span>
+                  <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider"><AdminText k="Source" /></span>
                   <p className="text-xs font-bold text-foreground uppercase mt-0.5">{order.source}</p>
                 </div>
                 <div>
@@ -158,7 +158,7 @@ export function OrderEditorDialog({
                 </div>
                 <div>
                   <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Assigned Techs</span>
-                  <p className="text-xs font-bold text-foreground mt-0.5">{technicianIds.length} Assigned</p>
+                  <p className="text-xs font-bold text-foreground mt-0.5">{technicianIds.length} <AdminText k="Assigned" /></p>
                 </div>
               </div>
 
@@ -237,17 +237,17 @@ export function OrderEditorDialog({
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="space-y-1">
-                    <Label className="text-[11px] font-semibold text-muted-foreground">Requested Service</Label>
+                    <Label className="text-[11px] font-semibold text-muted-foreground"><AdminText k="Requested Service" /></Label>
                     <p className="text-sm font-bold text-primary">{order.service}</p>
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-[11px] font-semibold text-muted-foreground">Device Model</Label>
+                    <Label className="text-[11px] font-semibold text-muted-foreground"><AdminText k="Device Model" /></Label>
                     <p className="text-sm font-bold text-foreground">{order.device || "—"}</p>
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-[11px] font-semibold text-muted-foreground">Reported Issue</Label>
+                    <Label className="text-[11px] font-semibold text-muted-foreground"><AdminText k="Reported Issue" /></Label>
                     <p className="text-xs font-semibold text-muted-foreground leading-relaxed">{order.issue || "General diagnostic & repair"}</p>
                   </div>
                 </div>
@@ -309,7 +309,7 @@ export function OrderEditorDialog({
                       >
                         <span className="truncate mr-2">{testKey}</span>
                         <span className="px-2 py-0.5 rounded-md text-[11px] font-bold uppercase bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-                          PASS
+                          <AdminText k="PASS" />
                         </span>
                       </div>
                     ))}
@@ -495,7 +495,7 @@ export function OrderEditorDialog({
                     <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">Operations & Dispatch Controls</h3>
                   </div>
                   <span className="text-[11px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded-full border border-primary/20">
-                    {technicianIds.length} Tech{technicianIds.length === 1 ? "" : "s"} Assigned
+                    {technicianIds.length} Tech{technicianIds.length === 1 ? "" : "s"} <AdminText k="Assigned" />
                   </span>
                 </div>
 
@@ -615,7 +615,7 @@ export function OrderEditorDialog({
                     onClick={() => setConfirmDelete(false)}
                     className="h-10 rounded-xl text-xs font-semibold text-muted-foreground hover:text-foreground"
                   >
-                    Cancel
+                    <AdminText k="Cancel" />
                   </Button>
                 </div>
               ) : (
@@ -636,7 +636,7 @@ export function OrderEditorDialog({
             {/* Save & Cancel Controls (Right Side) */}
             <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
               <Button variant="outline" size="sm" onClick={() => onOpenChange(false)} disabled={saving} className="h-10 rounded-xl border-border bg-background text-xs font-semibold text-muted-foreground px-5 hover:bg-muted hover:text-foreground">
-                Cancel
+                <AdminText k="Cancel" />
               </Button>
 
               <Button
@@ -674,7 +674,7 @@ export function OrderEditorDialog({
                 <UserCheck className="size-5 text-primary" /> Assign Technicians to {order?.reference}
               </DialogTitle>
               <Badge className="bg-primary/10 text-primary border-primary/30 text-[11px] font-bold">
-                {technicianIds.length} Selected
+                {technicianIds.length} <AdminText k="Selected" />
               </Badge>
             </div>
             <DialogDescription className="text-xs text-muted-foreground">
@@ -742,7 +742,7 @@ export function OrderEditorDialog({
                   onClick={clearAllTechnicians}
                   className="text-[11px] font-bold text-rose-500 hover:underline cursor-pointer"
                 >
-                  Clear All
+                  <AdminText k="Clear All" />
                 </button>
               </div>
             </div>
