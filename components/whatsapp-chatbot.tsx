@@ -94,7 +94,7 @@ export function WhatsAppChatbot({
 
   return (
     <div
-      className="fixed right-6 bottom-24 md:bottom-8 z-[100]"
+      className="fixed right-4 bottom-[calc(7.5rem+env(safe-area-inset-bottom)*2)] lg:right-6 lg:bottom-8 z-[100]"
       dir="ltr"
     >
       <AnimatePresence>

@@ -58,7 +58,7 @@ export function Footer({ contact }: FooterProps) {
   }
 
   return (
-    <footer className="relative pt-20 pb-10 overflow-hidden">
+    <footer className="relative pt-20 pb-[calc(9rem+env(safe-area-inset-bottom)*2)] lg:pb-10 overflow-hidden">
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-20 justify-items-center items-center text-center w-full" style={{ textAlign: "center" }}>
@@ -203,7 +203,7 @@ export function Footer({ contact }: FooterProps) {
             <p className="text-muted-foreground text-sm">
               © {new Date().getFullYear()} {t("KBI Services")}. {t("All rights reserved.")}
             </p>
-            <p className="mt-1 text-xs text-muted-foreground">KBI Services, operated by KBI GLOBAL TECHNOLOGIES · {contact.email || "support@kbi.services"}</p>
+            <p className="mt-2 max-w-md text-xs leading-relaxed text-muted-foreground">{isAr ? "خدمات KBI، بإدارة KBI GLOBAL TECHNOLOGIES" : "KBI Services, operated by KBI GLOBAL TECHNOLOGIES"} · <a href={`mailto:${contact.email || "support@kbi.services"}`} className="inline-block underline-offset-4 hover:underline" dir="ltr">{contact.email || "support@kbi.services"}</a></p>
           </div>
 
           {/* Center Circular Text - Absolute centered on Desktop */}
