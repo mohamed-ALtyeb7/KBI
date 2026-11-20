@@ -22,6 +22,11 @@ import {
   Monitor,
   Gamepad2,
   Cctv,
+  Tablet,
+  Watch,
+  Wifi,
+  Headset,
+  MonitorUp,
   Wrench,
   Check,
   ChevronRight,
@@ -86,9 +91,37 @@ type DeviceConfig = {
   serviceOptions?: DeviceServiceOption[]
 }
 
-const GAMING_PC_ISSUES_AR: Record<string, string> = {
+const BOOKING_ISSUES_AR: Record<string, string> = {
   Other: "أخرى",
   "Not Sure": "لست متأكداً",
+  "Screen Replacement": "استبدال الشاشة",
+  "Battery Replacement": "استبدال البطارية",
+  "Charging Port Repair": "إصلاح منفذ الشحن",
+  "Camera Replacement": "استبدال الكاميرا",
+  "Software Issues": "مشكلات البرامج",
+  "Water Damage": "ضرر بسبب السوائل",
+  "Not Turning On": "لا يعمل",
+  "Crown Repair": "إصلاح التاج الجانبي",
+  "Sensor Issues": "مشكلات المستشعرات",
+  "Pairing Issues": "مشكلات الاقتران",
+  "LAN & Wi-Fi Installation": "تركيب الشبكة السلكية والواي فاي",
+  "Router & Switch Configuration": "إعداد جهاز التوجيه والمبدّل",
+  "Network Speed & Stability Optimization": "تحسين سرعة الشبكة واستقرارها",
+  "Signal Strength Improvement": "تحسين قوة الإشارة",
+  "Connection Drop / Interruption Fix": "إصلاح انقطاع الاتصال",
+  "VPN / Remote Access Setup": "إعداد VPN أو الوصول عن بُعد",
+  "Cabling & Infrastructure (Cat6/Fiber)": "تمديد الكابلات والبنية التحتية (Cat6/ألياف ضوئية)",
+  "Remote Technical Support": "دعم فني عن بُعد",
+  "Hardware & Software Diagnostics": "تشخيص الأجهزة والبرامج",
+  "System & Network Setup": "إعداد النظام والشبكة",
+  "Virus Removal & Optimization": "إزالة الفيروسات وتحسين الأداء",
+  "Data Recovery": "استعادة البيانات",
+  "Email & Cloud Setup": "إعداد البريد الإلكتروني والخدمات السحابية",
+  "TV Wall Mount Installation": "تركيب التلفزيون على الحائط",
+  "Smart TV Setup": "إعداد التلفزيون الذكي",
+  "Cable Management": "تنظيم الكابلات",
+  "Soundbar Installation": "تركيب مكبر الصوت",
+  "Full Home Theater Setup": "إعداد نظام المسرح المنزلي بالكامل",
   "No Power / Won't Start": "لا يعمل أو لا يبدأ التشغيل",
   "No Display / No Signal": "لا توجد صورة أو إشارة",
   "GPU / Graphics Card Issue": "مشكلة في بطاقة الرسومات",
@@ -247,6 +280,46 @@ const DEVICE_CONFIGS: DeviceConfig[] = [
     ],
   },
   {
+    id: "tablet",
+    name: "Tablet",
+    nameAr: "جهاز لوحي",
+    icon: Tablet,
+    quickBrands: ["Apple iPad", "Samsung Galaxy Tab"],
+    issues: ["Screen Replacement", "Battery Replacement", "Charging Port Repair", "Camera Replacement", "Software Issues", "Water Damage", "Not Turning On", "Other", "Not Sure"],
+  },
+  {
+    id: "apple-watch",
+    name: "Apple Watch",
+    nameAr: "ساعة Apple Watch",
+    icon: Watch,
+    quickBrands: ["Apple"],
+    issues: ["Screen Replacement", "Battery Replacement", "Crown Repair", "Sensor Issues", "Water Damage", "Pairing Issues", "Other", "Not Sure"],
+  },
+  {
+    id: "networking",
+    name: "Network Installation & Setup",
+    nameAr: "تركيب الشبكات وإعدادها",
+    icon: Wifi,
+    quickBrands: ["TP-Link", "Ubiquiti", "Cisco", "Netgear"],
+    issues: ["LAN & Wi-Fi Installation", "Router & Switch Configuration", "Network Speed & Stability Optimization", "Signal Strength Improvement", "Connection Drop / Interruption Fix", "VPN / Remote Access Setup", "Cabling & Infrastructure (Cat6/Fiber)", "Other", "Not Sure"],
+  },
+  {
+    id: "tech-support",
+    name: "IT Support",
+    nameAr: "دعم تقنية المعلومات",
+    icon: Headset,
+    quickBrands: ["Windows", "macOS", "Microsoft 365"],
+    issues: ["Remote Technical Support", "Hardware & Software Diagnostics", "System & Network Setup", "Virus Removal & Optimization", "Data Recovery", "Email & Cloud Setup", "Other", "Not Sure"],
+  },
+  {
+    id: "tv-install",
+    name: "TV Installation",
+    nameAr: "تركيب التلفزيون",
+    icon: MonitorUp,
+    quickBrands: ["Samsung", "Sony", "LG", "Other"],
+    issues: ["TV Wall Mount Installation", "Smart TV Setup", "Cable Management", "Soundbar Installation", "Full Home Theater Setup", "Other", "Not Sure"],
+  },
+  {
     id: "gaming-pc",
     name: "Gaming PC Repair & Upgrade",
     nameAr: "إصلاح وترقية كمبيوتر الألعاب",
@@ -402,6 +475,11 @@ export function BookingForm() {
       else if (devParam.includes("gaming pc") || devParam.includes("gaming-pc") || devParam.includes("gamingpc")) matchedId = "gaming-pc"
       else if (devParam.includes("pc") || devParam.includes("desktop")) matchedId = "pc"
       else if (devParam.includes("print")) matchedId = "printer"
+      else if (devParam.includes("tablet") || devParam.includes("ipad")) matchedId = "tablet"
+      else if (devParam.includes("watch")) matchedId = "apple-watch"
+      else if (devParam.includes("network")) matchedId = "networking"
+      else if (devParam.includes("it support") || devParam.includes("tech-support")) matchedId = "tech-support"
+      else if (devParam.includes("tv install") || devParam.includes("tv-install")) matchedId = "tv-install"
       else if (devParam.includes("tv")) matchedId = "tv"
       else if (devParam.includes("monitor") || devParam.includes("screen")) matchedId = "monitor"
       else if (devParam.includes("game") || devParam.includes("playstation") || devParam.includes("xbox")) matchedId = "gaming"
@@ -498,8 +576,8 @@ export function BookingForm() {
   const selectedServiceOption = selectedDeviceConfig?.serviceOptions?.find((option) => option.id === state.serviceOption)
   const visibleIssues = selectedServiceOption?.issues ?? selectedDeviceConfig?.issues ?? []
   const getProblemLabel = (problem: string) =>
-    isAr && selectedDeviceConfig?.id === "gaming-pc"
-      ? GAMING_PC_ISSUES_AR[problem] || problem
+    isAr
+      ? BOOKING_ISSUES_AR[problem] || t(problem)
       : t(problem)
 
   // Validation
