@@ -192,11 +192,11 @@ export async function assignOrderToTechnician(
 
         try {
             await setDoc(doc(db, "bookings", orderId), fullPayload, { merge: true });
-        } catch (_) {}
+        } catch {}
 
         try {
             await setDoc(doc(db, "service_requests", orderId), fullPayload, { merge: true });
-        } catch (_) {}
+        } catch {}
 
         try {
             await setDoc(
@@ -210,7 +210,7 @@ export async function assignOrderToTechnician(
                 },
                 { merge: true }
             );
-        } catch (_) {}
+        } catch {}
     } catch (error: any) {
         console.error("Assign order error:", error);
         throw new Error(error.message || "Failed to assign order");

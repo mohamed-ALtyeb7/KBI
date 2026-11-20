@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react"
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } from "firebase/auth"
-import { AlertCircle, ArrowRight, CalendarDays, CheckCircle2, Clock3, LogOut, MapPin, MessageCircle, Phone, RefreshCw, Settings2, Truck, UserRound, Wrench } from "lucide-react"
+import { AlertCircle, ArrowRight, CalendarDays, CheckCircle2, Clock3, LogOut, MapPin, Phone, RefreshCw, Settings2, Truck, UserRound, Wrench } from "lucide-react"
 import { auth } from "@/firebase/authClient"
 
 type Job = {
@@ -81,7 +81,7 @@ export default function TechnicianAppPage() {
     </div></main>
 }
 
-function JobCard({ job, featured = false, actionId, onAction }: { job: Job; featured?: boolean; actionId?: string | null; onAction?: (job: Job, action: "accept" | "status", nextStatus?: string) => void }) {
+function JobCard({ job, featured = false, actionId, onAction }: { job: Job; featured?: boolean; actionId?: string | null; onAction?: (_job: Job, _action: "accept" | "status", _nextStatus?: string) => void }) {
   const status = String(job.status || "PENDING").toUpperCase()
   const customer = job.customer?.name || "Customer"
   const location = job.address || job.customer?.address || "Customer location"

@@ -26,7 +26,7 @@ export function Navbar({ contact }: NavbarProps) {
   const t = useT()
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
-  const hasArabicUrls = pathname === "/ar" || pathname?.startsWith("/ar/")
+  const normalizedPathname = pathname?.replace(/^\/ar(?=\/|$)/, "") || "/"
 
   const [supportReady, setSupportReady] = useState(false)
   const isExcluded = pathname?.startsWith("/admin") || pathname?.startsWith("/tech")
@@ -59,7 +59,7 @@ export function Navbar({ contact }: NavbarProps) {
   }, [isBookingPage, isExcluded])
 
   const desktopLogo = (
-    <Link href={hasArabicUrls ? "/ar" : "/"} className="hidden md:flex items-center gap-2 group" dir="ltr" aria-label="KBI home">
+    <Link href="/" className="hidden md:flex items-center gap-2 group" dir="ltr" aria-label="KBI home">
       <span className="text-2xl font-bold tracking-tighter text-foreground dark:text-white inline-flex items-center" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }}>
         <span>KBI</span><span className="text-cyan-500 dark:text-cyan-400">.</span>
       </span>
@@ -87,13 +87,13 @@ export function Navbar({ contact }: NavbarProps) {
   }
 
   const navLinks = [
-    { name: t("Home"), raw: "Home", href: hasArabicUrls ? "/ar" : "/" },
-    { name: t("Services"), raw: "Services", href: hasArabicUrls ? "/ar/services" : "/services" },
-    { name: t("Book Now"), raw: "Book Now", href: hasArabicUrls ? "/ar/book" : "/book" },
-    { name: t("Corporate Services"), raw: "Corporate Services", href: hasArabicUrls ? "/ar/corporate" : "/corporate" },
-    { name: t("About"), raw: "About", href: hasArabicUrls ? "/ar/about" : "/about" },
-    { name: t("Contact"), raw: "Contact", href: hasArabicUrls ? "/ar/contact" : "/contact" },
-    { name: t("Track Order"), raw: "Track Order", href: hasArabicUrls ? "/ar/track" : "/track" },
+    { name: t("Home"), raw: "Home", href: "/" },
+    { name: t("Services"), raw: "Services", href: "/services" },
+    { name: t("Book Now"), raw: "Book Now", href: "/book" },
+    { name: t("Corporate Services"), raw: "Corporate Services", href: "/corporate" },
+    { name: t("About"), raw: "About", href: "/about" },
+    { name: t("Contact"), raw: "Contact", href: "/contact" },
+    { name: t("Track Order"), raw: "Track Order", href: "/track" },
   ]
 
   return (
@@ -119,7 +119,7 @@ export function Navbar({ contact }: NavbarProps) {
 
           {/* Mobile Centered Logo */}
           <div className="md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-auto" dir="ltr">
-            <Link href={hasArabicUrls ? "/ar" : "/"} className="flex items-center justify-center py-1 group" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }} aria-label="KBI home">
+    <Link href="/" className="flex items-center justify-center py-1 group" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }} aria-label="KBI home">
               <span className="text-[1.35rem] sm:text-2xl font-black tracking-tight text-foreground dark:text-white inline-flex items-center leading-none" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }}>
                 <span>KBI</span><span className="text-cyan-500 dark:text-cyan-400">.</span>
               </span>
@@ -134,9 +134,9 @@ export function Navbar({ contact }: NavbarProps) {
 
           {/* Desktop Menu */}
           <nav aria-label="Primary" className="hidden md:flex items-center justify-center flex-1">
-            <ul className="flex items-center justify-center gap-1 xl:gap-2">
+            <ul className={cn("flex items-center justify-center gap-1 xl:gap-2", lang === "ar" && "flex-row-reverse")}>
               {navLinks.map((link) => {
-                const active = link.href === "/" || link.href === "/ar" ? pathname === link.href : pathname.startsWith(link.href)
+                const active = link.href === "/" ? normalizedPathname === "/" : normalizedPathname.startsWith(link.href)
                 return (
                   <li key={link.raw}>
                     <Link
@@ -192,14 +192,14 @@ export function Navbar({ contact }: NavbarProps) {
       </nav>
       <nav className="lg:hidden fixed inset-x-0 bottom-0 z-40 pb-[env(safe-area-inset-bottom)]">
         <div className="apple-nav">
-          <div className="apple-nav-items">
+          <div className={cn("apple-nav-items", lang === "ar" && "flex-row-reverse")}>
             {[
-              { href: hasArabicUrls ? "/ar" : "/", label: "Home", icon: Home },
-              { href: hasArabicUrls ? "/ar/book" : "/book", label: "Book Now", icon: CalendarDays },
-              { href: hasArabicUrls ? "/ar/corporate" : "/corporate", label: "Corporate", icon: Building2 },
-              { href: hasArabicUrls ? "/ar/track" : "/track", label: "Track Order", icon: Search },
+              { href: "/", label: "Home", icon: Home },
+              { href: "/book", label: "Book Now", icon: CalendarDays },
+              { href: "/corporate", label: "Corporate", icon: Building2 },
+              { href: "/track", label: "Track Order", icon: Search },
             ].map((item) => {
-              const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
+              const active = item.href === "/" ? normalizedPathname === "/" : normalizedPathname.startsWith(item.href)
               const Icon = item.icon as any
               return (
                 <Link

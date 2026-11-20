@@ -3,13 +3,10 @@
 import { GlassCard } from "@/components/ui/glass-card"
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/animations"
 import { CalendarClock, ClipboardList, Truck, CheckCircle2 } from "lucide-react"
-import { useLanguage, useT } from "@/components/language-provider"
+import { useT } from "@/components/language-provider"
 
 export function CorporateContractsSection() {
   const t = useT()
-  const { lang } = useLanguage()
-  const isAr = lang === "ar"
-
   const plans = [
     {
       title: t("Monthly Contract"),

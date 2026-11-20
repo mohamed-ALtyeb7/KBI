@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { useLanguage, useT } from "@/components/language-provider"
+import { useT } from "@/components/language-provider"
 import { useSiteContact } from "@/components/contact-provider"
 import { 
   MessageCircle, 
@@ -30,9 +30,7 @@ export function WhatsAppChatbot({
   currentDevice,
   currentIssue
 }: WhatsAppChatbotProps) {
-  const { lang } = useLanguage()
   const t = useT()
-  const isAr = lang === "ar"
 
   const [open, setOpen] = useState(false)
   const [message, setMessage] = useState("")

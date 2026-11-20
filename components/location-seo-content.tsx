@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { Clock, MapPin, ShieldCheck, Star } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
 import { Button } from "@/components/ui/button"
@@ -29,9 +28,7 @@ export function LocationSeoContent({
   schemaJson: string
 }) {
   const { lang } = useLanguage()
-  const pathname = usePathname()
   const isAr = lang === "ar"
-  const pathPrefix = pathname === "/ar" || pathname?.startsWith("/ar/") ? "/ar" : ""
   const locationName = isAr ? location.nameAr : location.name
   const emirateName = isAr ? emirateAr : emirateEn
 
@@ -54,12 +51,12 @@ export function LocationSeoContent({
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button asChild size="lg" className="h-14 px-8 text-lg rounded-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold w-full sm:w-auto">
-              <Link href={`${pathPrefix}/book?address=${encodeURIComponent(isAr ? `${location.nameAr}، ${emirateAr}` : location.name)}`}>
+              <Link href={`/book?address=${encodeURIComponent(isAr ? `${location.nameAr}، ${emirateAr}` : location.name)}`}>
                 {isAr ? `احجز فنيًا في ${locationName}` : `Book Technician in ${location.name}`}
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="h-14 px-8 text-lg rounded-full border-white/20 hover:bg-white/10 w-full sm:w-auto">
-              <Link href={`${pathPrefix}/services`}>{isAr ? "عرض جميع الخدمات" : "View All Services"}</Link>
+              <Link href="/services">{isAr ? "عرض جميع الخدمات" : "View All Services"}</Link>
             </Button>
           </div>
         </div>
@@ -99,7 +96,7 @@ export function LocationSeoContent({
         <h2 className="mb-7 text-center text-2xl font-bold">{isAr ? "مناطق خدمة أخرى" : "Other Service Areas"}</h2>
         <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-3">
           {nearbyLocations.map((item) => (
-            <Link key={item.slug} href={`${pathPrefix}/locations/${item.slug}`} className="rounded-full border border-white/15 px-5 py-2.5 text-white/70 hover:border-cyan-400 hover:text-cyan-400">
+            <Link key={item.slug} href={`/locations/${item.slug}`} className="rounded-full border border-white/15 px-5 py-2.5 text-white/70 hover:border-cyan-400 hover:text-cyan-400">
               {isAr ? item.nameAr : item.name}
             </Link>
           ))}

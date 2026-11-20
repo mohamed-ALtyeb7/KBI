@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import {
   ArrowRight,
   CheckCircle,
@@ -60,10 +59,7 @@ export function ServiceSeoContent({
   arabicRequests: string[]
 }) {
   const { lang } = useLanguage()
-  const pathname = usePathname()
   const isAr = lang === "ar"
-  const isArabicPath = pathname === "/ar" || pathname?.startsWith("/ar/")
-  const pathPrefix = isArabicPath ? "/ar" : ""
   const serviceName = isAr ? service.arabic.name : service.name
   const problems = isAr
     ? arabicRequests.map((title) => ({ title, description: "يحدد الفني سبب المشكلة وخيارات الإصلاح المناسبة بعد فحص الجهاز." }))
@@ -74,9 +70,9 @@ export function ServiceSeoContent({
     <main className="adaptive-theme-page min-h-screen bg-black pb-16 pt-24 text-white">
       <nav aria-label={isAr ? "مسار الصفحة" : "Breadcrumb"} className="container mx-auto mb-8 px-6">
         <ol className="flex flex-wrap items-center gap-2 text-sm text-white/60">
-          <li><Link className="transition-colors hover:text-cyan-400" href={pathPrefix || "/"}>{isAr ? "الرئيسية" : "Home"}</Link></li>
+          <li><Link className="transition-colors hover:text-cyan-400" href="/">{isAr ? "الرئيسية" : "Home"}</Link></li>
           <li aria-hidden="true"><ChevronRight className="h-4 w-4" /></li>
-          <li><Link className="transition-colors hover:text-cyan-400" href={`${pathPrefix}/services`}>{isAr ? "الخدمات" : "Services"}</Link></li>
+          <li><Link className="transition-colors hover:text-cyan-400" href="/services">{isAr ? "الخدمات" : "Services"}</Link></li>
           <li aria-hidden="true"><ChevronRight className="h-4 w-4" /></li>
           <li aria-current="page" className="text-white/90">{serviceName}</li>
         </ol>
@@ -96,10 +92,10 @@ export function ServiceSeoContent({
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button asChild size="lg" className="h-14 w-full rounded-full bg-cyan-500 px-8 text-lg font-bold text-black hover:bg-cyan-400 sm:w-auto">
-              <Link href={`${pathPrefix}/book?device=${service.bookingParam}`}>{isAr ? `احجز ${serviceName}` : service.ctaText}</Link>
+              <Link href={`/book?device=${service.bookingParam}`}>{isAr ? `احجز ${serviceName}` : service.ctaText}</Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="h-14 w-full rounded-full border-white/20 px-8 text-lg hover:bg-white/10 sm:w-auto">
-              <Link href={`${pathPrefix}/contact`}>{isAr ? "اسألنا" : "Ask a Question"}</Link>
+              <Link href="/contact">{isAr ? "اسألنا" : "Ask a Question"}</Link>
             </Button>
           </div>
         </div>
@@ -179,7 +175,7 @@ export function ServiceSeoContent({
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           {UAE_LOCATIONS.map(([nameEn, nameAr, locationSlug]) => (
-            <Link key={locationSlug} href={`${pathPrefix}/locations/${locationSlug}`} className="rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold transition-colors hover:border-cyan-400 hover:text-cyan-400">
+            <Link key={locationSlug} href={`/locations/${locationSlug}`} className="rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold transition-colors hover:border-cyan-400 hover:text-cyan-400">
               {isAr ? nameAr : nameEn}
             </Link>
           ))}
@@ -191,13 +187,13 @@ export function ServiceSeoContent({
           <h2 className="mb-6 text-2xl font-bold">{isAr ? "خدمات ذات صلة" : "Related Services"}</h2>
           <div className="mb-8 flex flex-wrap justify-center gap-3">
             {relatedServices.map((related) => (
-              <Link key={related.slug} href={`${pathPrefix}/services/${related.slug}`} className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/20 px-5 py-3 text-sm font-semibold transition-colors hover:border-cyan-400 hover:text-cyan-400">
+              <Link key={related.slug} href={`/services/${related.slug}`} className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/20 px-5 py-3 text-sm font-semibold transition-colors hover:border-cyan-400 hover:text-cyan-400">
                 {isAr ? related.nameAr : related.nameEn}<ArrowRight className="h-4 w-4" />
               </Link>
             ))}
           </div>
           <Button asChild size="lg" className="rounded-full bg-cyan-500 px-8 font-bold text-black hover:bg-cyan-400">
-            <Link href={`${pathPrefix}/book?device=${service.bookingParam}`}>{isAr ? `احجز ${serviceName}` : service.ctaText}</Link>
+            <Link href={`/book?device=${service.bookingParam}`}>{isAr ? `احجز ${serviceName}` : service.ctaText}</Link>
           </Button>
         </div>
       </section>

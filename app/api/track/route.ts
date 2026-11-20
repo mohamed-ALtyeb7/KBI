@@ -6,7 +6,6 @@ import type { DocumentSnapshot } from "firebase-admin/firestore"
 export const dynamic = "force-dynamic"
 
 const normalizeOrderId = (value: string) => value.trim().replace(/^#/, "").toUpperCase()
-const lastFour = (value: unknown) => String(value || "").replace(/\D/g, "").slice(-4)
 
 const safeDate = (value: any) => {
   try {
