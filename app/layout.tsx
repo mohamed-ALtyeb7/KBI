@@ -8,8 +8,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 const cairo = Cairo({
   subsets: ["latin", "arabic"],
-  variable: "--font-cairo",
-  display: "swap",
+  variable: "--font-sans",
+  display: "optional",
 })
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -71,7 +71,6 @@ export default function RootLayout({
       <body
         suppressHydrationWarning
         className={cn("min-h-screen font-sans antialiased selection:bg-cyan-500/20", cairo.variable)}
-        style={{ fontFamily: "var(--font-cairo), Arial, sans-serif" }}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="kbi-theme">
           <LanguageProvider>

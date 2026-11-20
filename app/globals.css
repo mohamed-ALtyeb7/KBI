@@ -1631,21 +1631,3 @@ html:not(.dark) :is(.site-shell, .admin-theme) :focus-visible {
     max-height: 64px;
   }
 }
-
-html[lang="ar"] .brand-hero h1 {
-  letter-spacing: 0;
-  line-height: 1.55;
-  font-weight: 800;
-}
-html[lang="ar"] .brand-hero p {
-  letter-spacing: 0;
-  line-height: 1.95;
-}
-@media (max-width: 639px) {
-  .brand-hero { padding-top: 100px; padding-bottom: 32px; }
-  .brand-hero h1 { font-size: clamp(1.7rem, 6.5vw, 2.25rem); }
-  .brand-hero p { font-size: 0.95rem; }
-  .brand-hero + .home-deferred { padding-top: 40px; }
-  .brand-hero a { min-height: 54px; }
-  .brand-hero .max-w-xs { max-width: 360px; }
-}
