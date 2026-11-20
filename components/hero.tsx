@@ -51,10 +51,10 @@ export function Hero({ contact }: { contact: SiteContact }) {
                 href={`https://wa.me/${contact.whatsappRaw}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full border border-emerald-500/60 bg-emerald-500/10 px-7 text-base font-bold text-emerald-700 shadow-sm backdrop-blur-md transition-[transform,box-shadow,background-color,border-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-emerald-500/50 hover:bg-emerald-500/20 hover:shadow-[0_14px_30px_rgba(16,185,129,0.12)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:text-emerald-300 sm:w-auto sm:min-w-[208px] sm:px-6 sm:text-lg"
+                className="group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full border border-emerald-600 bg-emerald-600 px-7 text-base font-bold text-white shadow-sm backdrop-blur-md transition-[transform,box-shadow,background-color,border-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-emerald-700 hover:bg-emerald-700 hover:shadow-[0_14px_30px_rgba(16,185,129,0.12)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:text-white sm:w-auto sm:min-w-[208px] sm:px-6 sm:text-lg"
               >
-                <span className="grid size-8 shrink-0 place-items-center rounded-full border border-emerald-500/60 bg-emerald-500/10">
-                  <MessageCircle className="h-5 w-5 fill-emerald-500/20 text-emerald-700 dark:text-emerald-300" />
+                <span className="grid size-8 shrink-0 place-items-center rounded-full border border-white/30 bg-white/10">
+                  <MessageCircle className="h-5 w-5 text-white" />
                 </span>
                 <span>{t("Chat on WhatsApp")}</span>
               </a>

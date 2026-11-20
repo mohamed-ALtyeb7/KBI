@@ -420,7 +420,7 @@ export const DICTIONARY: Record<string, string> = {
   "Gaming Console Repair": "صيانة PlayStation وXbox",
   "Services We Offer": "الخدمات المتاحة",
   "View Service": "عرض تفاصيل الخدمة",
-  "Brands We Service": "الععلامات التجارية التي نخدمها",
+  "Brands We Service": "العلامات التجارية التي نخدمها",
   "Popular models we repair:": "نماذج شائعة نقوم بإصلاحها:",
   "+ many more": "+ المزيد",
   "Book a technician now and get your device repaired at your doorstep. Fast, reliable, and guaranteed.": "احجز فنيًا الآن ليصل إليك ويصلح جهازك في موقعك. خدمة سريعة، موثوقة، ومضمونة.",
