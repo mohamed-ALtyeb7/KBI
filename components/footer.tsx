@@ -1,5 +1,6 @@
 "use client"
 
+import { BrandLogo } from "@/components/brand-logo"
 import type React from "react"
 import { usePathname } from "next/navigation"
 import { Phone, Mail, MapPin, MessageCircle, ArrowRight, Instagram } from "lucide-react"
@@ -65,9 +66,7 @@ export function Footer({ contact }: FooterProps) {
           <div className="lg:col-span-4 w-full flex flex-col items-center justify-center text-center mx-auto" style={{ textAlign: "center" }}>
             <Link href="/" className="inline-block mb-6 group relative" dir="ltr">
               <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <div className="relative text-5xl font-bold tracking-tighter text-foreground group-hover:text-cyan-500 transition-all duration-300 inline-flex items-center" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }}>
-                <span>KBI</span><span className="text-cyan-500 group-hover:text-blue-400 transition-colors">.</span>
-              </div>
+              <BrandLogo className="px-4 py-3" />
             </Link>
 
             <div className="px-4 mb-8 w-full flex justify-center">

@@ -1,5 +1,6 @@
 "use client"
 
+import { BrandLogo } from "@/components/brand-logo"
 import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import { Phone, MessageCircle, CalendarDays, Search, Home, Building2, Globe } from "lucide-react"
@@ -60,9 +61,7 @@ export function Navbar({ contact }: NavbarProps) {
 
   const desktopLogo = (
     <Link href="/" className="hidden md:flex shrink-0 items-center gap-2 group pr-4 xl:pr-6" dir="ltr" aria-label="KBI home">
-      <span className="text-[1.9rem] font-black leading-none tracking-[-0.07em] text-foreground dark:text-white inline-flex items-baseline" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }}>
-        <span>KBI</span><span className="ml-0.5 text-cyan-500 dark:text-cyan-400">.</span>
-      </span>
+      <BrandLogo />
     </Link>
   )
 
@@ -120,9 +119,7 @@ export function Navbar({ contact }: NavbarProps) {
           {/* Mobile Centered Logo */}
           <div className="md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-auto" dir="ltr">
     <Link href="/" className="flex items-center justify-center py-1 group" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }} aria-label="KBI home">
-              <span className="text-[1.6rem] sm:text-[1.8rem] font-black tracking-[-0.07em] text-foreground dark:text-white inline-flex items-center leading-none" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }}>
-                <span>KBI</span><span className="ml-0.5 text-cyan-500 dark:text-cyan-400">.</span>
-              </span>
+              <BrandLogo className="px-2 py-1.5" />
             </Link>
           </div>
 

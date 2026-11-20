@@ -1,5 +1,6 @@
 "use client";
 
+import { BrandLogo } from "@/components/brand-logo"
 import { T as AdminText } from "@/components/i18n-text";
 import * as React from "react";
 import Link from "next/link";
@@ -110,17 +111,15 @@ export function AdminAppSidebar(props: React.ComponentProps<typeof Sidebar>) {
           href="/admin"
           className="flex items-center gap-3 p-1.5 rounded-2xl transition hover:bg-sidebar-accent/60"
         >
-          <div className="flex aspect-square size-10 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-blue-700 text-white font-extrabold text-sm tracking-tight shadow-[0_8px_20px_rgba(0,112,239,.24)] ring-1 ring-white/70">
-            KBI.
-          </div>
+          <BrandLogo className="px-2 py-2" />
           <div className="flex flex-col gap-0.5 leading-none">
               <span className="font-bold text-[15px] tracking-tight text-sidebar-foreground">
-              KBI Admin
+              {t("KBI Admin")}
             </span>
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               <span className="text-[9px] font-semibold tracking-wide text-muted-foreground uppercase">
-                Live workspace
+                {t("Live workspace")}
               </span>
             </div>
           </div>
@@ -128,9 +127,9 @@ export function AdminAppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
 
       {/* Navigation Content */}
-      <SidebarContent className="px-3 py-2 space-y-5">
+      <SidebarContent className="px-3 py-2 space-y-3">
         {navigation.map((group) => (
-          <SidebarGroup key={group.label} className="p-0">
+          <SidebarGroup key={t(group.label)} className="p-0">
             <SidebarGroupLabel className="px-3 py-1.5 text-[9px] font-bold tracking-[0.13em] text-muted-foreground uppercase">
               {group.label}
             </SidebarGroupLabel>
