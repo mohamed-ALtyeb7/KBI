@@ -2,6 +2,8 @@
 
 import { T as AdminText } from "@/components/i18n-text";
 import { useState } from "react"
+import { UAE_EMIRATES } from "@/lib/locations"
+import { useLanguage } from "@/components/language-provider"
 import {
   CheckCircle2,
   DollarSign,
@@ -55,16 +57,6 @@ const POPULAR_SERVICES = [
   "Full Diagnostic & Performance Overhaul",
 ]
 
-const ABU_DHABI_AREAS = [
-  { name: "Al Reem Island", lat: 24.498, lng: 54.406 },
-  { name: "Al Maryah Island", lat: 24.502, lng: 54.391 },
-  { name: "Downtown Abu Dhabi", lat: 24.482, lng: 54.358 },
-  { name: "Khalifa City", lat: 24.425, lng: 54.582 },
-  { name: "Yas Island", lat: 24.499, lng: 54.604 },
-  { name: "Saadiyat Island", lat: 24.542, lng: 54.442 },
-  { name: "Al Raha Beach", lat: 24.446, lng: 54.558 },
-  { name: "Corniche & Khalidiyah", lat: 24.471, lng: 54.336 },
-]
 
 export function CreateOrderDialog({
   open,
@@ -79,12 +71,16 @@ export function CreateOrderDialog({
   onOpenChange: (_open: boolean) => void
   onCreate: (_data: Record<string, unknown>) => Promise<boolean>
 }) {
+  const { lang } = useLanguage()
+  const isAr = lang === "ar"
+  const [emirateId, setEmirateId] = useState("")
+  const emirate = UAE_EMIRATES.find(item => item.id === emirateId)
   // Form State
   const [customerName, setCustomerName] = useState("")
   const [customerPhone, setCustomerPhone] = useState("")
   const [customerEmail, setCustomerEmail] = useState("")
   
-  const [selectedArea, setSelectedArea] = useState(ABU_DHABI_AREAS[0].name)
+  const [selectedArea, setSelectedArea] = useState("")
   const [address, setAddress] = useState("")
   
   const [device, setDevice] = useState("")
@@ -102,7 +98,8 @@ export function CreateOrderDialog({
     setCustomerName("")
     setCustomerPhone("")
     setCustomerEmail("")
-    setSelectedArea(ABU_DHABI_AREAS[0].name)
+    setSelectedArea("")
+    setEmirateId("")
     setAddress("")
     setDevice("")
     setService("")
@@ -127,21 +124,23 @@ export function CreateOrderDialog({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const parsedPrice = Number(price)
-    if (!customerName.trim() || !customerPhone.trim() || !address.trim() || !device.trim() || !service.trim() || !Number.isFinite(parsedPrice) || parsedPrice <= 0) {
+    if (!emirate || !selectedArea.trim() || !customerName.trim() || !customerPhone.trim() || !address.trim() || !device.trim() || !service.trim() || !Number.isFinite(parsedPrice) || parsedPrice <= 0) {
       return
     }
 
-    const matchedArea = ABU_DHABI_AREAS.find((a) => a.name === selectedArea)
+    const matchedArea = emirate?.areas.find(a => a.nameEn === selectedArea || a.nameAr === selectedArea)
     const selectedTechs = technicians.filter((t) => selectedTechIds.includes(t.id))
 
     const created = await onCreate({
       customerName: customerName.trim(),
       customerPhone: customerPhone.trim(),
       customerEmail: customerEmail.trim(),
-      area: selectedArea,
+      area: selectedArea.trim(),
+      emirate: emirate?.nameEn,
+      emirateId,
       address: address.trim(),
-      latitude: matchedArea?.lat,
-      longitude: matchedArea?.lng,
+      latitude: matchedArea?.latitude,
+      longitude: matchedArea?.longitude,
       device: device.trim(),
       service: service.trim(),
       price: parsedPrice,
@@ -226,19 +225,14 @@ export function CreateOrderDialog({
 
                 <div className="grid gap-3.5 sm:grid-cols-2">
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-muted-foreground">City / Area *</Label>
-                    <Select value={selectedArea} onValueChange={handleAreaChange}>
-                      <SelectTrigger className="h-10 text-xs bg-background border-border rounded-xl text-foreground">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-popover border-border text-popover-foreground">
-                        {ABU_DHABI_AREAS.map((a) => (
-                          <SelectItem key={a.name} value={a.name} className="text-xs">
-                            {a.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
+                    <Label className="text-xs font-semibold text-muted-foreground">{isAr ? "الإمارة والمنطقة *" : "Emirate & area *"}</Label>
+                    <Select value={emirateId} onValueChange={value => { setEmirateId(value); setSelectedArea("") }}>
+                      <SelectTrigger className="h-11 rounded-xl"><SelectValue placeholder={isAr ? "اختر الإمارة" : "Select emirate"} /></SelectTrigger>
+                      <SelectContent>{UAE_EMIRATES.map(item => <SelectItem key={item.id} value={item.id}>{isAr ? item.nameAr : item.nameEn}</SelectItem>)}</SelectContent>
                     </Select>
+                    <Input required disabled={!emirate} list="admin-order-areas" value={selectedArea} onChange={event => handleAreaChange(event.target.value)} placeholder={isAr ? "اختر المنطقة أو اكتب اسمها" : "Select or enter an area"} className="h-11 rounded-xl" />
+                    <datalist id="admin-order-areas">{emirate?.areas.map(area => <option key={area.id} value={isAr ? area.nameAr : area.nameEn} />)}</datalist>
+                    <p className="text-xs leading-relaxed text-muted-foreground">{isAr ? "يمكنك إدخال أي منطقة داخل الإمارة، ثم إضافة العنوان التفصيلي أدناه." : "Enter any area in the selected emirate, then add the full address below."}</p>
                   </div>
 
                   <div className="space-y-1.5">
