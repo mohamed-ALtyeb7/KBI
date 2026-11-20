@@ -1082,7 +1082,7 @@ export default function AdminTechniciansPage() {
   const [statusFilter, setStatusFilter] = useState("all")
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null)
   const [createDialogOpen, setCreateDialogOpen] = useState(false)
-  const [newTechData, setNewTechData] = useState({ name: "", email: "", phone: "", specialization: "", password: "" })
+  const [newTechData, setNewTechData] = useState({ name: "", email: "", phone: "", specialization: "", password: "", whatsapp: "", nationality: "", dob: "", gender: "", language: "", emirate: "", service_areas: "", skills: "" })
   const [tempPasswordModal, setTempPasswordModal] = useState<string | null>(null)
   const [copiedPassword, setCopiedPassword] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState<Profile | null>(null)
@@ -1378,7 +1378,7 @@ export default function AdminTechniciansPage() {
     const created = await runAccountAction("", "CREATE", newTechData)
     if (created) {
       setCreateDialogOpen(false)
-      setNewTechData({ name: "", email: "", phone: "", specialization: "", password: "" })
+      setNewTechData({ name: "", email: "", phone: "", specialization: "", password: "", whatsapp: "", nationality: "", dob: "", gender: "", language: "", emirate: "", service_areas: "", skills: "" })
     }
   }
 
@@ -1738,7 +1738,7 @@ export default function AdminTechniciansPage() {
 
       {/* Create Technician Account Dialog */}
       <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
-        <DialogContent className="bg-card border-border text-foreground rounded-2xl sm:max-w-md">
+        <DialogContent className="bg-card border-border text-foreground rounded-2xl sm:max-w-2xl max-h-[90svh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-lg font-bold flex items-center gap-2">
               <UserPlus className="size-5 text-cyan-600 dark:text-[#00f5c4]" /> <AdminText k="Create Technician Account" />
@@ -1748,7 +1748,7 @@ export default function AdminTechniciansPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <form onSubmit={handleCreateTechnician} className="space-y-4 py-2">
+          <form onSubmit={handleCreateTechnician} className="grid grid-cols-1 gap-4 py-2 sm:grid-cols-2">
             <div className="space-y-1.5">
               <Label className="text-xs font-semibold text-foreground"><AdminText k="Full Name" /></Label>
               <Input
@@ -1792,7 +1792,14 @@ export default function AdminTechniciansPage() {
               />
             </div>
 
-            <DialogFooter className="pt-2">
+            <div className="sm:col-span-2 border-t border-border pt-4"><p className="mb-4 text-sm font-semibold">{t("Work Profile & Skills")}</p></div><div className="space-y-1.5"><Label htmlFor="create-tech-whatsapp">{t("WhatsApp")}</Label><Input id="create-tech-whatsapp" type="tel" value={newTechData.whatsapp} onChange={event => setNewTechData({ ...newTechData, whatsapp: event.target.value })} className="h-11 rounded-xl" /></div>
+<div className="space-y-1.5"><Label htmlFor="create-tech-nationality">{t("Nationality")}</Label><Input id="create-tech-nationality" type="text" value={newTechData.nationality} onChange={event => setNewTechData({ ...newTechData, nationality: event.target.value })} className="h-11 rounded-xl" /></div>
+<div className="space-y-1.5"><Label htmlFor="create-tech-dob">{t("Date of Birth")}</Label><Input id="create-tech-dob" type="date" value={newTechData.dob} onChange={event => setNewTechData({ ...newTechData, dob: event.target.value })} className="h-11 rounded-xl" /></div>
+<div className="space-y-1.5"><Label htmlFor="create-tech-gender">{t("Gender")}</Label><Input id="create-tech-gender" type="text" value={newTechData.gender} onChange={event => setNewTechData({ ...newTechData, gender: event.target.value })} className="h-11 rounded-xl" /></div>
+<div className="space-y-1.5"><Label htmlFor="create-tech-language">{t("Spoken Languages")}</Label><Input id="create-tech-language" type="text" value={newTechData.language} onChange={event => setNewTechData({ ...newTechData, language: event.target.value })} className="h-11 rounded-xl" /></div>
+<div className="space-y-1.5"><Label htmlFor="create-tech-emirate">{t("Emirate")}</Label><Input id="create-tech-emirate" type="text" value={newTechData.emirate} onChange={event => setNewTechData({ ...newTechData, emirate: event.target.value })} className="h-11 rounded-xl" /></div>
+<div className="space-y-1.5"><Label htmlFor="create-tech-service_areas">{t("Service Areas (comma separated)")}</Label><Input id="create-tech-service_areas" type="text" value={newTechData.service_areas} onChange={event => setNewTechData({ ...newTechData, service_areas: event.target.value })} className="h-11 rounded-xl" /></div>
+<div className="space-y-1.5"><Label htmlFor="create-tech-skills">{t("Skills (comma separated)")}</Label><Input id="create-tech-skills" type="text" value={newTechData.skills} onChange={event => setNewTechData({ ...newTechData, skills: event.target.value })} className="h-11 rounded-xl" /></div><DialogFooter className="sm:col-span-2 border-t border-border pt-4">
               <Button type="button" variant="outline" onClick={() => setCreateDialogOpen(false)} className="h-10 rounded-xl border-border text-xs font-bold">
                 <AdminText k="Cancel" />
               </Button>

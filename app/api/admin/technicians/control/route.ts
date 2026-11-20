@@ -136,6 +136,7 @@ export async function POST(request: Request) {
           updatedAt: now,
         })
         batch.set(db.collection("technicians").doc(user.uid), {
+          ...approvedProfile({ ...data, skills: String(data.skills || "").split(",").map(item => item.trim()).filter(Boolean) }, user.uid),
           uid: user.uid,
           userId: user.uid,
           employeeId: String(data.employeeId || `KBI-${user.uid.slice(0, 6).toUpperCase()}`),
