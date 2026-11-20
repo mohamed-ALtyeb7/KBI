@@ -206,14 +206,14 @@ export default function AdminSettingsPage() {
         <div className="pt-6 border-t border-border space-y-6">
           <div className="flex items-center gap-2">
             <ShieldCheck className="size-5 text-purple-600 dark:text-purple-400" />
-            <h2 className="text-lg font-black text-foreground">Super Administrator Controls</h2>
+            <h2 className="text-lg font-black text-foreground">{t("Super Administrator Controls")}</h2>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div className="lg:col-span-6">
-              <UserManagement accounts={accounts} />
+              <details className="rounded-2xl border border-border bg-card p-4"><summary className="cursor-pointer py-2 text-sm font-bold text-foreground">{t("Global Account Directory")}</summary><div className="mt-4"><UserManagement accounts={accounts} /></div></details>
             </div>
             <div className="lg:col-span-6">
-              <AuditLogViewer />
+              <details className="rounded-2xl border border-border bg-card p-4"><summary className="cursor-pointer py-2 text-sm font-bold text-foreground">{t("System Audit Logs")}</summary><div className="mt-4"><AuditLogViewer /></div></details>
             </div>
           </div>
         </div>

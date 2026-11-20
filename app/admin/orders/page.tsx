@@ -475,9 +475,7 @@ function OrderInspector({ order, onCopy, onEdit, onReassign }: {
             <a href={`https://wa.me/${phoneDigits}?text=${defaultMsg}`} target="_blank" rel="noreferrer">
               <MessageCircle /><AdminText k="Message" />
             </a>
-          ) : (
-            <button type="button" disabled><MessageCircle /><AdminText k="Message" /></button>
-          )}
+          ) : null}
           <button type="button" onClick={() => setInvoiceOpen(true)}><FileText /><AdminText k="Invoice" /></button>
           <button type="button" onClick={() => onReassign(order)}><UserRoundCog /><AdminText k="Reassign" /></button>
           <button type="button" className={styles.primaryAction} onClick={() => onEdit(order)}><AdminText k="Open Order" /><ArrowRight /></button>
