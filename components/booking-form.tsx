@@ -928,13 +928,13 @@ export function BookingForm() {
 
                           <div
                             className={cn(
-                              "p-2.5 rounded-xl transition-all duration-300",
+                              "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border transition-colors duration-200",
                               isSelected
-                                ? "bg-cyan-400 text-black shadow-lg shadow-cyan-400/40"
-                                : "bg-muted/70 text-foreground group-hover:bg-cyan-500/20 group-hover:text-cyan-400",
+                                ? "border-cyan-400/50 bg-cyan-400/15 text-cyan-700 dark:text-cyan-300"
+                                : "border-slate-200 bg-slate-100 text-slate-700 group-hover:border-cyan-300 group-hover:bg-cyan-50 group-hover:text-cyan-700 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300 dark:group-hover:border-cyan-500/30 dark:group-hover:bg-cyan-500/10 dark:group-hover:text-cyan-300",
                             )}
                           >
-                            <Icon className="w-5 h-5" />
+                            <Icon className="h-5 w-5 stroke-[1.75]" aria-hidden="true" />
                           </div>
 
                           <span className="text-xs sm:text-sm font-bold tracking-tight mt-2.5 line-clamp-1">
