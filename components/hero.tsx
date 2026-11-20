@@ -30,7 +30,7 @@ export function Hero({ contact }: { contact: SiteContact }) {
 
             {/* Headings */}
             <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-slate-900 via-slate-800 to-slate-600 dark:from-white dark:via-blue-50 dark:to-white/60 mb-5 sm:mb-6 tracking-tighter text-balance leading-[1.1]" suppressHydrationWarning>
-              <span>{lang === "en" ? <>Tech Repair at<br />Your Doorstep</> : t("Tech Repair at Your Doorstep")}<br /><span className="text-cyan-600 dark:text-cyan-400 inline-block mt-1.5 sm:mt-2">{t("Across the UAE")}</span></span>
+              <span>{lang === "en" ? <>Tech Repair at<br />Your Doorstep</> : t("Tech Repair at Your Doorstep")}<br /><span className="text-cyan-600 dark:text-cyan-400 inline-block mt-1.5 sm:mt-2">{lang === "ar" ? "في جميع أنحاء الإمارات" : "Across the UAE"}</span></span>
             </h1>
 
             <p className="text-sm sm:text-base md:text-xl text-slate-600 dark:text-gray-300 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed font-normal dark:font-light tracking-wide px-2 sm:px-0" suppressHydrationWarning>
