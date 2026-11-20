@@ -29,7 +29,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       onClick={() => setTheme(isDark ? "light" : "dark")}
       className={cn(
         "relative h-9 w-9 md:h-10 md:w-10 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300 cursor-pointer group shadow-sm",
-        "bg-white/10 hover:bg-white/20 border border-white/15 text-white/80 hover:text-white",
+        "bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 hover:text-slate-950",
         "dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/10 dark:text-white/80",
         className
       )}
@@ -39,7 +39,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       {isDark ? (
         <Sun className="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-400 group-hover:rotate-45 group-hover:scale-110 transition-transform duration-300" />
       ) : (
-        <Moon className="w-3.5 h-3.5 md:w-4 md:h-4 text-cyan-300 group-hover:-rotate-12 group-hover:scale-110 transition-transform duration-300" />
+        <Moon className="w-3.5 h-3.5 md:w-4 md:h-4 text-cyan-700 dark:text-cyan-300 group-hover:-rotate-12 group-hover:scale-110 transition-transform duration-300" />
       )}
     </button>
   );

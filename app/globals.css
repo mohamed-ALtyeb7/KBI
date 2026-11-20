@@ -1578,3 +1578,33 @@ html:not(.dark) .adaptive-theme-page [class*="from-white"][class*="text-transpar
   border: none !important;
   overflow: visible !important;
 }
+
+/* Accessible light surfaces shared by public pages, forms and admin dialogs. */
+html:not(.dark) .site-shell,
+html:not(.dark) .admin-theme {
+  --muted-foreground: 215 16% 35%;
+  --border: 214 23% 82%;
+  --input: 214 23% 76%;
+}
+html:not(.dark) :is(.site-shell, .admin-theme) :is(input, textarea)::placeholder,
+html:not(.dark) [data-slot="dialog-content"] :is(input, textarea)::placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+html:not(.dark) :is(.site-shell, .admin-theme, [data-slot="dialog-content"]) :is(input, textarea, [data-slot="select-trigger"]) {
+  border-color: #b8c5d3;
+}
+html:not(.dark) .adaptive-theme-page :is(.text-cyan-400, .text-cyan-500) {
+  color: #0e7490;
+}
+html:not(.dark) .adaptive-theme-page .text-white\/45 {
+  color: #526173;
+}
+html:not(.dark) .site-shell .glass-nav {
+  border-color: #cbd5e1;
+  background-color: rgba(255,255,255,.96);
+}
+html:not(.dark) :is(.site-shell, .admin-theme) :focus-visible {
+  outline: 2px solid #0e7490;
+  outline-offset: 3px;
+}
