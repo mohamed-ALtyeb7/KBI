@@ -1,5 +1,6 @@
 "use client"
 
+import { RotatingBrand } from "@/components/rotating-brand"
 import { BrandLogo } from "@/components/brand-logo"
 import type React from "react"
 import { usePathname } from "next/navigation"
@@ -205,6 +206,8 @@ export function Footer({ contact }: FooterProps) {
             </p>
             <p className="mt-2 max-w-md text-xs leading-relaxed text-muted-foreground">{isAr ? "خدمات KBI، بإدارة KBI GLOBAL TECHNOLOGIES" : "KBI Services, operated by KBI GLOBAL TECHNOLOGIES"} · <a href={`mailto:${contact.email || "support@kbi.services"}`} className="inline-block underline-offset-4 hover:underline" dir="ltr">{contact.email || "support@kbi.services"}</a></p>
           </div>
+
+          <RotatingBrand />
 
           <div className="flex gap-6 text-sm text-muted-foreground">
             <Link href="/terms" className="hover:text-foreground transition-colors">
