@@ -54,7 +54,7 @@ export function Services() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {devices.slice(0, 9).map((device) => {
+          {devices.slice(0, 9).filter(device => !["tv", "monitor", "apple-watch", "cctv"].includes(device.id)).map((device) => {
             const colors = colorMap[device.id] || colorMap.mobile
             return (
               <div
