@@ -37,18 +37,22 @@ export function Hero({ contact }: { contact: SiteContact }) {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 w-full max-w-xs sm:max-w-none mx-auto">
               <Link
                 href="/book"
-                className="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-base sm:text-lg hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 flex items-center justify-center gap-2.5 group shadow-[0_0_25px_rgba(6,182,212,0.35)] hover:shadow-[0_0_35px_rgba(6,182,212,0.6)] hover:-translate-y-0.5 active:translate-y-0"
+                className="group relative inline-flex min-h-16 w-full items-center justify-center gap-3 overflow-hidden rounded-[1.35rem] border border-white/20 bg-gradient-to-r from-cyan-500 to-blue-600 px-7 text-base font-bold text-white shadow-[0_14px_32px_rgba(6,182,212,0.28)] transition-[transform,box-shadow,filter] duration-200 ease-out hover:-translate-y-0.5 hover:from-cyan-400 hover:to-blue-500 hover:shadow-[0_18px_38px_rgba(6,182,212,0.38)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto sm:min-w-[248px] sm:px-8 sm:text-lg"
               >
                 <span>Book a Technician</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-white/20 bg-white/10">
+                  <ArrowRight className="h-4.5 w-4.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+                </span>
               </Link>
               <a
                 href={`https://wa.me/${contact.whatsappRaw}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold text-base sm:text-lg border border-emerald-500/30 hover:border-emerald-500/50 transition-all duration-300 flex items-center justify-center gap-2.5 shadow-sm backdrop-blur-md hover:-translate-y-0.5 active:translate-y-0"
+                className="group inline-flex min-h-16 w-full items-center justify-center gap-3 rounded-[1.35rem] border border-emerald-500/30 bg-emerald-500/10 px-7 text-base font-bold text-emerald-600 shadow-sm backdrop-blur-md transition-[transform,box-shadow,background-color,border-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-emerald-500/50 hover:bg-emerald-500/20 hover:shadow-[0_14px_30px_rgba(16,185,129,0.12)] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:text-emerald-400 sm:w-auto sm:min-w-[248px] sm:px-8 sm:text-lg"
               >
-                <MessageCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400 fill-emerald-500/20" />
+                <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-emerald-500/30 bg-emerald-500/10">
+                  <MessageCircle className="h-4.5 w-4.5 fill-emerald-500/20 text-emerald-600 dark:text-emerald-400" />
+                </span>
                 <span>Chat on WhatsApp</span>
               </a>
             </div>

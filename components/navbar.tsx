@@ -164,23 +164,29 @@ export function Navbar({ contact }: NavbarProps) {
           </nav>
 
           <div className="hidden md:flex items-center gap-3" dir="ltr">
-            <Button asChild variant="secondary" size="sm">
+            <Button asChild variant="secondary" size="sm" className="h-11 rounded-2xl px-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0">
               <a
                 href={`https://wa.me/${contact.whatsappRaw}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2"
+                aria-label={t("WhatsApp")}
+                className="inline-flex items-center gap-2.5"
               >
-                <MessageCircle className="w-4 h-4" />
+                <span className="grid size-8 shrink-0 place-items-center rounded-xl border border-current/15">
+                  <MessageCircle className="h-4 w-4" />
+                </span>
                 <span className="hidden xl:inline" suppressHydrationWarning>{t("WhatsApp")}</span>
               </a>
             </Button>
-            <Button asChild variant="primary" size="sm">
+            <Button asChild variant="primary" size="sm" className="h-11 rounded-2xl px-4 shadow-[0_8px_20px_rgba(6,182,212,0.18)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(6,182,212,0.24)] active:translate-y-0">
               <a
                 href={`tel:${contact.phone}`}
-                className="inline-flex items-center gap-2"
+                aria-label={t("Call Now")}
+                className="inline-flex items-center gap-2.5"
               >
-                <Phone className="w-4 h-4" />
+                <span className="grid size-8 shrink-0 place-items-center rounded-xl border border-current/15">
+                  <Phone className="h-4 w-4" />
+                </span>
                 <span className="hidden xl:inline" suppressHydrationWarning>{t("Call Now")}</span>
               </a>
             </Button>
