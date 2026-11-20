@@ -30,7 +30,6 @@ import {
   Landmark,
   Coins,
   Briefcase,
-  School,
 } from "lucide-react"
 import { CorporateContractsSection } from "@/components/corporate-contracts"
 import { T } from "@/components/i18n-text"
@@ -146,16 +145,16 @@ export default async function CorporatePage() {
               <div className="absolute inset-x-0 bottom-0 p-3 sm:p-8">
                 <div className="grid grid-cols-3 divide-x divide-white/10 rounded-2xl border border-white/10 bg-black/35 p-2 backdrop-blur-md sm:p-4">
                   <div className="min-w-0 px-1 text-center sm:px-2">
-                    <div className="mb-1 break-words text-lg font-bold leading-tight text-cyan-400 sm:text-3xl">Priority</div>
-                    <div className="break-words text-[9px] font-medium uppercase leading-tight tracking-[0.06em] text-white/75 sm:text-xs sm:tracking-wider">SLA targets</div>
+                    <div className="mb-1 break-words text-lg font-bold leading-tight text-cyan-400 sm:text-3xl"><T k="Priority" /></div>
+                    <div className="break-words text-[9px] font-medium uppercase leading-tight tracking-[0.06em] text-white/75 sm:text-xs sm:tracking-wider"><T k="SLA targets" /></div>
                   </div>
                   <div className="min-w-0 px-1 text-center sm:px-2">
-                    <div className="mb-1 break-words text-lg font-bold leading-tight text-cyan-400 sm:text-3xl">Multi-site</div>
-                    <div className="break-words text-[9px] font-medium uppercase leading-tight tracking-[0.06em] text-white/75 sm:text-xs sm:tracking-wider">Coverage</div>
+                    <div className="mb-1 break-words text-lg font-bold leading-tight text-cyan-400 sm:text-3xl"><T k="Multi-site" /></div>
+                    <div className="break-words text-[9px] font-medium uppercase leading-tight tracking-[0.06em] text-white/75 sm:text-xs sm:tracking-wider"><T k="Coverage" /></div>
                   </div>
                   <div className="min-w-0 px-1 text-center sm:px-2">
-                    <div className="mb-1 break-words text-lg font-bold leading-tight text-cyan-400 sm:text-3xl">Flexible</div>
-                    <div className="break-words text-[9px] font-medium uppercase leading-tight tracking-[0.06em] text-white/75 sm:text-xs sm:tracking-wider">Service plans</div>
+                    <div className="mb-1 break-words text-lg font-bold leading-tight text-cyan-400 sm:text-3xl"><T k="Flexible" /></div>
+                    <div className="break-words text-[9px] font-medium uppercase leading-tight tracking-[0.06em] text-white/75 sm:text-xs sm:tracking-wider"><T k="Service plans" /></div>
                   </div>
                 </div>
               </div>
@@ -165,13 +164,13 @@ export default async function CorporatePage() {
       </section>
 
       {/* Critical Industries */}
-      <section className="deferred-section py-24 relative overflow-hidden bg-slate-50/70 dark:bg-black/80 transition-colors">
+      <section className="deferred-section py-16 md:py-20 relative overflow-hidden bg-slate-50/70 dark:bg-black/80 transition-colors">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-cyan-950/5 dark:via-cyan-950/20 to-background pointer-events-none" />
         <div className="absolute right-0 top-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute left-0 bottom-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="container mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10 md:mb-12">
             <FadeIn>
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
                 <span><T k="Built for" /></span>{" "}
@@ -217,42 +216,13 @@ export default async function CorporatePage() {
         </div>
       </section>
 
-      {/* Organizations we support */}
-      <section className="deferred-section container mx-auto px-6 py-12 md:py-16">
-        <FadeIn>
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 text-foreground">
-            <span><T k="The entities we deal with" /></span>
-          </h2>
-        </FadeIn>
-        <StaggerContainer className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
-          {[
-            { icon: Landmark, label: "Government", color: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-500/10" },
-            { icon: Stethoscope, label: "Hospitals", color: "text-rose-600 dark:text-rose-400", bg: "bg-rose-500/10" },
-            { icon: GraduationCap, label: "Universities", color: "text-amber-600 dark:text-amber-400", bg: "bg-amber-500/10" },
-            { icon: Coins, label: "Banks", color: "text-cyan-600 dark:text-cyan-400", bg: "bg-cyan-500/10" },
-            { icon: School, label: "Schools", color: "text-indigo-600 dark:text-indigo-400", bg: "bg-indigo-500/10" },
-          ].map((entity) => (
-            <StaggerItem key={entity.label} className="h-full sm:last:col-span-2 md:last:col-span-1">
-              <div className="group flex min-h-28 h-full items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-md sm:min-h-32 sm:flex-col sm:justify-center sm:text-center">
-                <div className={`flex size-11 shrink-0 items-center justify-center rounded-xl ring-1 ring-border ${entity.bg} ${entity.color}`}>
-                  <entity.icon className="size-5" aria-hidden="true" />
-                </div>
-                <h3 className="min-w-0 text-base font-semibold leading-snug text-foreground sm:text-lg">
-                  <T k={entity.label} />
-                </h3>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      </section>
-
       {/* Comprehensive Device Support */}
-      <section className="deferred-section py-24 relative bg-slate-100/60 dark:bg-black/60 transition-colors">
+      <section className="deferred-section py-16 md:py-20 relative bg-slate-100/60 dark:bg-black/60 transition-colors">
         <div className="absolute inset-0 bg-slate-200/20 dark:bg-white/5 skew-y-3 transform origin-top-left -z-10" />
 
         <div className="container mx-auto px-6">
           <FadeIn>
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-10 text-foreground">
               <span><T k="Comprehensive Device Support" /></span>
             </h2>
           </FadeIn>
@@ -447,7 +417,7 @@ export default async function CorporatePage() {
       </section>
 
       {/* Corporate Booking Form Section */}
-      <section id="corporate-form" className="deferred-section py-24 relative overflow-hidden bg-slate-50/50 dark:bg-black/60">
+      <section id="corporate-form" className="deferred-section py-16 md:py-20 relative overflow-hidden bg-slate-50/50 dark:bg-black/60">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-cyan-950/5 dark:via-cyan-950/15 to-background pointer-events-none" />
         <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
         <div className="absolute right-0 bottom-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
