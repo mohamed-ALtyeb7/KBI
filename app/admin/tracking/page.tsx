@@ -17,7 +17,6 @@ import {
   Search,
   Users,
   Activity,
-  Layers,
   Phone,
   ArrowRight,
   Wrench,
@@ -170,7 +169,6 @@ export default function LiveTrackingPage() {
   const [lastSync, setLastSync] = useState<Date>(new Date());
   const [notice, setNotice] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [emirateFilter, setEmirateFilter] = useState<"ALL" | "abu-dhabi" | "dubai" | "sharjah" | "ajman">("ALL");
   const [statusFilter, setStatusFilter] = useState<"ALL" | "ONLINE" | "AVAILABLE" | "ON_JOB" | "OFFLINE">("ALL");
   const [trackingNow, setTrackingNow] = useState(() => Date.now());
   const [requestingLocation, setRequestingLocation] = useState(false);
@@ -393,9 +391,7 @@ export default function LiveTrackingPage() {
       (statusFilter === "AVAILABLE" && t.status === "AVAILABLE") ||
       (statusFilter === "ON_JOB" && t.status === "ON_JOB") ||
       (statusFilter === "OFFLINE" && !t.isOnline);
-    const normalizedEmirate = String(t.emirateId || "").toLowerCase().replace(/\s+/g, "-");
-    const matchesEmirate = emirateFilter === "ALL" || normalizedEmirate === emirateFilter;
-    return matchesSearch && matchesStatus && matchesEmirate;
+    return matchesSearch && matchesStatus;
   });
 
   const selectedEnrichedTech = enrichedTechnicians.find((t) => t.id === selectedTech?.id) || selectedTech;
@@ -507,8 +503,8 @@ export default function LiveTrackingPage() {
       </div>
 
       {/* Stats Bar */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5">
-        <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3.5 shadow-xs">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
+        <div className="bg-card border border-border rounded-2xl p-4 flex items-center gap-3.5 shadow-xs">
           <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
             <Radio className="w-5 h-5" />
           </div>
@@ -610,82 +606,6 @@ export default function LiveTrackingPage() {
             </div>
           </div>
 
-          {/* Multi-Emirate Filter Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 scrollbar-none border-b border-border/50 pb-2">
-            <span className="text-xs font-bold text-muted-foreground shrink-0 mr-1">Emirate:</span>
-            {[
-              { id: "ALL", name: "All Emirates" },
-              { id: "abu-dhabi", name: "Abu Dhabi (أبوظبي)" },
-              { id: "dubai", name: "Dubai (دبي)" },
-              { id: "sharjah", name: "Sharjah (الشارقة)" },
-              { id: "ajman", name: "Ajman (عجمان)" },
-            ].map((em) => {
-              const active = emirateFilter === em.id
-              return (
-                <button
-                  key={em.id}
-                  onClick={() => setEmirateFilter(em.id as any)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 ${
-                    active
-                      ? "bg-cyan-500 text-black shadow-xs font-extrabold"
-                      : "bg-background border border-border text-foreground hover:bg-muted"
-                  }`}
-                >
-                  {em.name}
-                </button>
-              )
-            })}
-          </div>
-
-          {/* Filter Status Pills (All, Available, On Job, Busy, Offline) */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 scrollbar-none">
-            <button
-              onClick={() => setStatusFilter("ALL")}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-bold transition shrink-0 ${
-                statusFilter === "ALL"
-                  ? "bg-[#0F2850] text-white shadow-xs"
-                  : "bg-background border border-border text-foreground hover:bg-muted"
-              }`}
-            >
-              <Layers className="w-3.5 h-3.5" /> All ({technicians.length})
-            </button>
-            <button
-              onClick={() => setStatusFilter("AVAILABLE")}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-bold transition shrink-0 ${
-                statusFilter === "AVAILABLE"
-                  ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40"
-                  : "bg-background border border-border text-foreground hover:bg-muted"
-              }`}
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-500" /> Available ({availableCount})
-            </button>
-            <button
-              onClick={() => setStatusFilter("ON_JOB")}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-bold transition shrink-0 ${
-                statusFilter === "ON_JOB"
-                  ? "bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-500/40"
-                  : "bg-background border border-border text-foreground hover:bg-muted"
-              }`}
-            >
-              <span className="w-2 h-2 rounded-full bg-blue-500" /> On Job ({onJobCount})
-            </button>
-            <button
-              onClick={() => setStatusFilter("ON_JOB")}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-bold bg-background border border-border text-foreground hover:bg-muted shrink-0"
-            >
-              <span className="w-2 h-2 rounded-full bg-amber-500" /> Busy ({onJobCount})
-            </button>
-            <button
-              onClick={() => setStatusFilter("OFFLINE")}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-bold transition shrink-0 ${
-                statusFilter === "OFFLINE"
-                  ? "bg-slate-500/15 text-slate-700 dark:text-slate-300 border border-slate-500/40"
-                  : "bg-background border border-border text-foreground hover:bg-muted"
-              }`}
-            >
-              <span className="w-2 h-2 rounded-full bg-slate-400" /> Offline ({offlineCount})
-            </button>
-          </div>
         </div>
 
         {/* Every technician remains directly selectable, including technicians without GPS. */}
@@ -701,7 +621,7 @@ export default function LiveTrackingPage() {
           </div>
 
           {filteredTechnicians.length > 0 ? (
-            <div className="flex gap-2.5 overflow-x-auto pb-1 scrollbar-none">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
               {filteredTechnicians.map((tech) => {
                 const isSelected = selectedTech?.id === tech.id;
                 const locationState = technicianLocationState({
