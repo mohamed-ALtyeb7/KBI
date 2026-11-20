@@ -1654,3 +1654,22 @@ html[lang="ar"] .home-page p { line-height: 1.9; letter-spacing: 0; }
   .home-page .brand-hero a { min-width: 0; width: 100%; }
   .home-page .home-deferred .glass { padding: 24px; }
 }
+
+/* Scale the hero naturally between compact phones and wide desktops. */
+.home-page .brand-hero h1 {
+  font-size: clamp(2.25rem, 6.7vw, 6rem);
+  line-height: 1.12;
+}
+.home-page .brand-hero h1 > span {
+  display: block;
+  max-width: 100%;
+}
+html[lang="ar"] .home-page .brand-hero h1 {
+  font-size: clamp(1.8rem, 5.2vw, 4.75rem);
+  line-height: 1.5;
+}
+@media (max-width: 639px) {
+  .home-page .brand-hero h1 { font-size: clamp(2.25rem, 8.2vw, 3rem); }
+  html[lang="ar"] .home-page .brand-hero h1 { font-size: clamp(1.8rem, 6.3vw, 2.35rem); }
+  .home-page .brand-hero h1 + p { max-width: 34rem; margin-top: 20px; }
+}
