@@ -1616,3 +1616,18 @@ html:not(.dark) :is(.site-shell, .admin-theme) :focus-visible {
 .dark .brand-hero {
   background: linear-gradient(180deg, rgba(10,26,34,.65) 0%, rgba(3,4,5,.25) 72%, transparent 100%);
 }
+
+.brand-logo-strip .sliding-marquee-item svg {
+  width: 112px;
+  height: 76px;
+  max-width: 144px;
+  max-height: 76px;
+}
+@media (max-width: 767px) {
+  .brand-logo-strip .sliding-marquee-item svg {
+    width: 96px;
+    height: 64px;
+    max-width: 112px;
+    max-height: 64px;
+  }
+}

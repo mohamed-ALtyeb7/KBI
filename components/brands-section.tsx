@@ -13,6 +13,7 @@ export function BrandsSection() {
         {t("Brands We Service")}
       </h2>
       <SlidingLogoMarquee
+        className="brand-logo-strip"
         items={[
           { id: "apple", label: "Apple", content: <SiApple aria-hidden="true" className="w-12 h-12 sm:w-14 sm:h-14 text-foreground fill-current hover:text-cyan-400 transition-colors" />, href: "https://www.apple.com" },
           { id: "samsung", label: "Samsung", content: <SiSamsung aria-hidden="true" className="w-32 h-10 sm:w-36 sm:h-12 text-foreground fill-current hover:text-cyan-400 transition-colors" />, href: "https://www.samsung.com" },
