@@ -421,6 +421,7 @@ export function BookingForm() {
   const [confirmedOrderId, setConfirmedOrderId] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
   const [draftReady, setDraftReady] = useState(false)
+  const issueSectionRef = useRef<HTMLDivElement>(null)
   const submittingRef = useRef(false)
   const bookingAttemptRef = useRef("")
 
@@ -898,6 +899,9 @@ export function BookingForm() {
                               serviceOption: "",
                               problem: "", // fresh selection
                             }))
+                            window.requestAnimationFrame(() => {
+                              issueSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+                            })
                           }}
                           className={cn(
                             "relative group flex flex-col items-start justify-between p-4 rounded-2xl border text-left transition-all duration-300 cursor-pointer min-h-[88px] sm:min-h-[98px] overflow-hidden backdrop-blur-xl",
@@ -944,9 +948,10 @@ export function BookingForm() {
                   {/* Immediate Problem Chips with Neon Edge */}
                   {selectedDeviceConfig ? (
                     <motion.div
+                      ref={issueSectionRef}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="space-y-3 pt-3 border-t border-white/10"
+                      className="scroll-mt-28 space-y-3 pt-3 border-t border-white/10 sm:scroll-mt-32"
                     >
                       <div className="flex items-center justify-between">
                         <label className="text-xs sm:text-sm font-bold text-foreground flex items-center gap-1.5">
