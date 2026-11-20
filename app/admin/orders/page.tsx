@@ -1,5 +1,6 @@
 "use client"
 
+import { T as AdminText } from "@/components/i18n-text";
 import { useEffect, useMemo, useState } from "react"
 import { collection, limit, onSnapshot, query } from "firebase/firestore"
 import {
@@ -279,8 +280,8 @@ export default function OrdersPage() {
   return (
     <main className={styles.workspace}>
       <section className={styles.titleRow}>
-        <div><p className={styles.eyebrow}>Operations workspace</p><h1>Orders</h1><p>Dispatch, monitor, and complete field repairs.</p></div>
-        <Button className={styles.newOrderButton} onClick={() => setCreateModalOpen(true)}><Plus />New Order</Button>
+        <div><p className={styles.eyebrow}>Operations workspace</p><h1><AdminText k="Orders" /></h1><p>Dispatch, monitor, and complete field repairs.</p></div>
+        <Button className={styles.newOrderButton} onClick={() => setCreateModalOpen(true)}><Plus /><AdminText k="New Order" /></Button>
       </section>
 
       <section className={styles.metrics} aria-label="Order summary">
@@ -328,7 +329,7 @@ export default function OrdersPage() {
 
         <div className={styles.contentGrid}>
           <div className={styles.orderList}>
-            <div className={styles.tableHeader} aria-hidden="true"><span>Reference</span><span>Customer</span><span>Service</span><span>Technician</span><span>ETA</span><span>Status</span><span>Price</span></div>
+            <div className={styles.tableHeader} aria-hidden="true"><span>Reference</span><span>Customer</span><span>Service</span><span>Technician</span><span><AdminText k="ETA" /></span><span>Status</span><span>Price</span></div>
             <div className={styles.rows} aria-live="polite">
               {loading ? Array.from({ length: PAGE_SIZE }).map((_, index) => <Skeleton key={index} className={styles.skeleton} />)
                 : visible.length === 0 ? <div className={styles.emptyState}><span><Clipboard /></span><h2>No matching orders</h2><p>Try another search or clear the active filters.</p><button type="button" onClick={clearFilters}>Clear filters</button></div>
@@ -472,12 +473,12 @@ function OrderInspector({ order, onCopy, onEdit, onReassign }: {
         <div className={styles.inspectorActions}>
           {phoneDigits ? (
             <a href={`https://wa.me/${phoneDigits}?text=${defaultMsg}`} target="_blank" rel="noreferrer">
-              <MessageCircle />Message
+              <MessageCircle /><AdminText k="Message" />
             </a>
           ) : (
-            <button type="button" disabled><MessageCircle />Message</button>
+            <button type="button" disabled><MessageCircle /><AdminText k="Message" /></button>
           )}
-          <button type="button" onClick={() => setInvoiceOpen(true)}><FileText />Invoice</button>
+          <button type="button" onClick={() => setInvoiceOpen(true)}><FileText /><AdminText k="Invoice" /></button>
           <button type="button" onClick={() => onReassign(order)}><UserRoundCog />Reassign</button>
           <button type="button" className={styles.primaryAction} onClick={() => onEdit(order)}>Open Order<ArrowRight /></button>
         </div>

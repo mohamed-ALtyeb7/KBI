@@ -1,5 +1,6 @@
 "use client"
 
+import { T as AdminText } from "@/components/i18n-text";
 import { useEffect, useState } from "react"
 import {
   AlertCircle,
@@ -148,11 +149,11 @@ export function OrderEditorDialog({
                   <p className="text-xs font-bold text-foreground uppercase mt-0.5">{order.source}</p>
                 </div>
                 <div>
-                  <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Order ID</span>
+                  <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider"><AdminText k="Order ID" /></span>
                   <p className="text-xs font-bold text-primary font-mono truncate mt-0.5">{order.id}</p>
                 </div>
                 <div>
-                  <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Created</span>
+                  <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider"><AdminText k="Created" /></span>
                   <p className="text-xs font-bold text-foreground mt-0.5">{order.createdAt ? order.createdAt.toLocaleDateString() : "—"}</p>
                 </div>
                 <div>
@@ -165,12 +166,12 @@ export function OrderEditorDialog({
               <div className="bg-muted/20 border border-border/70 rounded-2xl p-5 space-y-4">
                 <div className="flex items-center gap-2 border-b border-border/70 pb-3">
                   <User className="size-4 text-primary" />
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">Customer Information</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-foreground"><AdminText k="Customer Information" /></h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <Label className="text-[11px] font-semibold text-muted-foreground">Full Name</Label>
+                    <Label className="text-[11px] font-semibold text-muted-foreground"><AdminText k="Full Name" /></Label>
                     <p className="text-sm font-bold text-foreground">{order.customerName}</p>
                   </div>
 
@@ -202,7 +203,7 @@ export function OrderEditorDialog({
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-[11px] font-semibold text-muted-foreground">Email Address</Label>
+                    <Label className="text-[11px] font-semibold text-muted-foreground"><AdminText k="Email Address" /></Label>
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-bold text-foreground truncate">{order.customerEmail || "—"}</p>
                       {order.customerEmail && (
@@ -502,7 +503,7 @@ export function OrderEditorDialog({
                   {/* Status Selector */}
                   <div className="space-y-2">
                     <Label htmlFor="order-status" className="text-xs font-semibold text-muted-foreground">
-                      Order Status
+                      <AdminText k="Order Status" />
                     </Label>
                     <Select value={status} onValueChange={(value) => setStatus(value as OrderStatus)}>
                       <SelectTrigger id="order-status" className="h-11 rounded-xl bg-background border-border text-xs font-bold text-foreground focus:border-primary">
@@ -625,7 +626,7 @@ export function OrderEditorDialog({
                   onClick={() => setConfirmDelete(true)}
                   className="h-10 w-full sm:w-auto rounded-xl border-rose-500/30 bg-rose-500/10 text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 px-4 transition-all"
                 >
-                  <Trash2 className="size-4 mr-1.5 text-rose-500" /> Delete Order
+                  <Trash2 className="size-4 mr-1.5 text-rose-500" /> <AdminText k="Delete Order" />
                 </Button>
               )
             ) : (

@@ -1,5 +1,6 @@
 "use client"
 
+import { T as AdminText } from "@/components/i18n-text";
 import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { collection, deleteDoc, doc, onSnapshot, setDoc, Timestamp, updateDoc } from "firebase/firestore"
@@ -292,7 +293,7 @@ function EditTechnicianDialog({
         <form onSubmit={handleSubmit} className="space-y-4 py-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <Label className="text-xs text-muted-foreground font-semibold">Full Name</Label>
+              <Label className="text-xs text-muted-foreground font-semibold"><AdminText k="Full Name" /></Label>
               <Input
                 required
                 value={formData.name}
@@ -302,7 +303,7 @@ function EditTechnicianDialog({
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-xs text-muted-foreground font-semibold">Email Address</Label>
+              <Label className="text-xs text-muted-foreground font-semibold"><AdminText k="Email Address" /></Label>
               <Input
                 type="email"
                 required
@@ -313,7 +314,7 @@ function EditTechnicianDialog({
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-xs text-muted-foreground font-semibold">Phone Number</Label>
+              <Label className="text-xs text-muted-foreground font-semibold"><AdminText k="Phone Number" /></Label>
               <Input
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -322,7 +323,7 @@ function EditTechnicianDialog({
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-xs text-muted-foreground font-semibold">WhatsApp Number</Label>
+              <Label className="text-xs text-muted-foreground font-semibold"><AdminText k="WhatsApp Number" /></Label>
               <Input
                 value={formData.whatsapp}
                 onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
@@ -1430,7 +1431,7 @@ export default function AdminTechniciansPage() {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="sm" className="shadow-sm h-9 rounded-xl"><Settings2 /> Actions <ChevronDown /></Button>
+              <Button variant="secondary" size="sm" className="shadow-sm h-9 rounded-xl"><Settings2 /> <AdminText k="Actions" /> <ChevronDown /></Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>Technician workspace</DropdownMenuLabel>
@@ -1500,7 +1501,7 @@ export default function AdminTechniciansPage() {
               {techniciansLoading ? (
                 <div className="space-y-2 p-4">{Array.from({ length: 4 }).map((_, index) => <Skeleton key={index} className="h-11 w-full" />)}</div>
               ) : filteredTechnicians.length === 0 ? (
-                <Empty className="min-h-52 border-0"><EmptyHeader><EmptyMedia variant="icon"><Users /></EmptyMedia><EmptyTitle>No technicians found</EmptyTitle><EmptyDescription>Try a different search or status filter.</EmptyDescription></EmptyHeader></Empty>
+                <Empty className="min-h-52 border-0"><EmptyHeader><EmptyMedia variant="icon"><Users /></EmptyMedia><EmptyTitle><AdminText k="No technicians found" /></EmptyTitle><EmptyDescription>Try a different search or status filter.</EmptyDescription></EmptyHeader></Empty>
               ) : (
                 <Table>
                   <TableHeader className="bg-muted/25">
@@ -1510,7 +1511,7 @@ export default function AdminTechniciansPage() {
                       <TableHead className="hidden h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground lg:table-cell">Specialty</TableHead>
                       <TableHead className="h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Status</TableHead>
                       <TableHead className="hidden h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground md:table-cell">Availability</TableHead>
-                      <TableHead className="h-9 w-12 pr-4 text-right"><span className="sr-only">Actions</span></TableHead>
+                      <TableHead className="h-9 w-12 pr-4 text-right"><span className="sr-only"><AdminText k="Actions" /></span></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -1595,7 +1596,7 @@ export default function AdminTechniciansPage() {
                 </Table>
               )}
               <div className="flex items-center justify-between border-t border-border/70 px-4 py-2.5 text-xs text-muted-foreground">
-                <span>Showing {filteredTechnicians.length} of {technicians.length}</span>
+                <span>Showing {filteredTechnicians.length} <AdminText k="of" /> {technicians.length}</span>
                 <span className="hidden items-center gap-1.5 sm:flex"><span className="size-1.5 rounded-full bg-emerald-400" />Live sync</span>
               </div>
             </CardContent>
@@ -1622,7 +1623,7 @@ export default function AdminTechniciansPage() {
                       <TableHead className="hidden h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground md:table-cell">Specialty</TableHead>
                       <TableHead className="hidden h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground lg:table-cell">Service areas</TableHead>
                       <TableHead className="h-9 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Status</TableHead>
-                      <TableHead className="h-9 w-12 pr-4 text-right"><span className="sr-only">Actions</span></TableHead>
+                      <TableHead className="h-9 w-12 pr-4 text-right"><span className="sr-only"><AdminText k="Actions" /></span></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -1749,7 +1750,7 @@ export default function AdminTechniciansPage() {
 
           <form onSubmit={handleCreateTechnician} className="space-y-4 py-2">
             <div className="space-y-1.5">
-              <Label className="text-xs font-semibold text-foreground">Full Name</Label>
+              <Label className="text-xs font-semibold text-foreground"><AdminText k="Full Name" /></Label>
               <Input
                 required
                 value={newTechData.name}
@@ -1760,7 +1761,7 @@ export default function AdminTechniciansPage() {
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-xs font-semibold text-foreground">Email Address</Label>
+              <Label className="text-xs font-semibold text-foreground"><AdminText k="Email Address" /></Label>
               <Input
                 required
                 type="email"
@@ -1772,7 +1773,7 @@ export default function AdminTechniciansPage() {
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-xs font-semibold text-foreground">Phone Number</Label>
+              <Label className="text-xs font-semibold text-foreground"><AdminText k="Phone Number" /></Label>
               <Input
                 value={newTechData.phone}
                 onChange={(e) => setNewTechData({ ...newTechData, phone: e.target.value })}

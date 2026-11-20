@@ -1,5 +1,6 @@
 "use client";
 
+import { T as AdminText } from "@/components/i18n-text";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { collection, limit, onSnapshot, query } from "firebase/firestore";
@@ -547,7 +548,7 @@ export default function AdminDashboardPage() {
             </div>
             <div>
               <h4 className="text-xs font-bold text-foreground group-hover:text-primary transition">
-                Add Technician
+                <AdminText k="Add Technician" />
               </h4>
               <p className="text-[11px] text-muted-foreground">
                 Create new technician profile
@@ -565,7 +566,7 @@ export default function AdminDashboardPage() {
             </div>
             <div>
               <h4 className="text-xs font-bold text-foreground group-hover:text-primary transition">
-                Create Order
+                <AdminText k="Create Order" />
               </h4>
               <p className="text-[11px] text-muted-foreground">
                 Add new service order

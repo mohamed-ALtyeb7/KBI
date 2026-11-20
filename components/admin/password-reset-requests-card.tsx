@@ -1,5 +1,6 @@
 "use client";
 
+import { T as AdminText } from "@/components/i18n-text";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { Clock3, KeyRound, Loader2, ShieldCheck, Key } from "lucide-react";
@@ -159,7 +160,7 @@ export function PasswordResetRequestsCard() {
           </div>
           <div className="self-start sm:self-auto">
             <Badge variant="outline" className="bg-primary/10 border-primary/20 text-primary font-mono text-xs">
-              {requests.length} Pending
+              {requests.length} <AdminText k="Pending" />
             </Badge>
           </div>
         </div>

@@ -1,5 +1,6 @@
 "use client"
 
+import { T as AdminText } from "@/components/i18n-text";
 import { useState } from "react"
 import {
   CheckCircle2,
@@ -193,7 +194,7 @@ export function CreateOrderDialog({
               <div className="space-y-4 bg-muted/20 border border-border/70 rounded-2xl p-5 shadow-xs">
                 <div className="flex items-center gap-2 text-sm font-bold text-foreground border-b border-border/70 pb-2.5">
                   <User className="size-4 text-primary" />
-                  <span>Customer Information</span>
+                  <span><AdminText k="Customer Information" /></span>
                 </div>
 
                 <div className="grid gap-3.5 sm:grid-cols-2">
@@ -310,7 +311,7 @@ export function CreateOrderDialog({
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-muted-foreground">Preferred Time</Label>
+                    <Label className="text-xs font-semibold text-muted-foreground"><AdminText k="Preferred Time" /></Label>
                     <Select value={timeSlot} onValueChange={setTimeSlot}>
                       <SelectTrigger className="h-10 text-xs bg-background border-border rounded-xl text-foreground">
                         <SelectValue />

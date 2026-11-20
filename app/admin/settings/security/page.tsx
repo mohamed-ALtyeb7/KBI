@@ -1,5 +1,6 @@
 "use client"
 
+import { T as AdminText } from "@/components/i18n-text";
 import { useCallback, useEffect, useMemo, useState, useRef } from "react"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "@/firebase/authClient"
@@ -691,7 +692,7 @@ export default function SecuritySettingsPage() {
 
               <CardContent className="p-6 space-y-4">
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-semibold text-foreground">Email Address</Label>
+                  <Label className="text-xs font-semibold text-foreground"><AdminText k="Email Address" /></Label>
                   <Input
                     type="email"
                     value={newSuperEmail}

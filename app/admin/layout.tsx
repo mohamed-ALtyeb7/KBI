@@ -1,5 +1,6 @@
 "use client"
 
+import { T as AdminText } from "@/components/i18n-text";
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react"
 import { onAuthStateChanged, signOut, type User } from "firebase/auth"
 import {
@@ -279,7 +280,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <DropdownMenuLabel className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 p-2">{t("Language")}</DropdownMenuLabel>
                     <DropdownMenuSeparator className="my-1 border-slate-100 dark:border-slate-800" />
                     <DropdownMenuRadioGroup value={lang} onValueChange={(value) => setLang(value as "en" | "ar")}>
-                      <DropdownMenuRadioItem value="en" className="rounded-xl cursor-pointer py-2 text-xs">English</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="en" className="rounded-xl cursor-pointer py-2 text-xs"><AdminText k="English" /></DropdownMenuRadioItem>
                       <DropdownMenuRadioItem value="ar" className="rounded-xl cursor-pointer py-2 text-xs">العربية</DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>
                   </DropdownMenuContent>

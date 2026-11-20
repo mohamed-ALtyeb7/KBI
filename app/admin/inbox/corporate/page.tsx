@@ -1,5 +1,6 @@
 "use client"
 
+import { T as AdminText } from "@/components/i18n-text";
 import { useEffect, useState } from "react"
 import {
   Building2,
@@ -136,7 +137,7 @@ export default function CorporateInboxPage() {
             <Building2 className="size-5" />
           </span>
           <div>
-            <h1 className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">Corporate Requests</h1>
+            <h1 className="text-2xl font-black tracking-tight text-foreground sm:text-3xl"><AdminText k="Corporate Requests" /></h1>
             <p className="mt-1 text-xs text-muted-foreground">
               Corporate B2B lead inquiries, bulk fleet repair proposals, and enterprise contracts.
             </p>
@@ -361,14 +362,14 @@ export default function CorporateInboxPage() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="p-4 rounded-xl bg-muted/20 border border-border/70 space-y-1">
                     <span className="text-[11px] font-bold text-muted-foreground flex items-center gap-1">
-                      <User className="size-3 text-primary" /> Contact Person
+                      <User className="size-3 text-primary" /> <AdminText k="Contact Person" />
                     </span>
                     <p className="text-sm font-bold text-foreground">{selectedRequest.contactPerson || "Not Provided"}</p>
                   </div>
 
                   <div className="p-4 rounded-xl bg-muted/20 border border-border/70 space-y-1">
                     <span className="text-[11px] font-bold text-muted-foreground flex items-center gap-1">
-                      <Mail className="size-3 text-primary" /> Email Address
+                      <Mail className="size-3 text-primary" /> <AdminText k="Email Address" />
                     </span>
                     <a
                       href={`mailto:${selectedRequest.email}`}
@@ -380,7 +381,7 @@ export default function CorporateInboxPage() {
 
                   <div className="p-4 rounded-xl bg-muted/20 border border-border/70 space-y-1">
                     <span className="text-[11px] font-bold text-muted-foreground flex items-center gap-1">
-                      <Phone className="size-3 text-primary" /> Phone Number
+                      <Phone className="size-3 text-primary" /> <AdminText k="Phone Number" />
                     </span>
                     <a
                       href={`tel:${selectedRequest.phone}`}

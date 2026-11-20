@@ -1,5 +1,6 @@
 "use client"
 
+import { T as AdminText } from "@/components/i18n-text";
 import React, { useRef } from "react"
 import { Printer, ShieldCheck, Building2, Phone, Mail, MapPin } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
@@ -86,10 +87,10 @@ export function OrderInvoiceModal({ order, open, onOpenChange }: Props) {
               <table className="w-full text-xs text-left">
                 <thead className="bg-muted/50 border-b border-border text-muted-foreground font-semibold">
                   <tr>
-                    <th className="p-3">Description</th>
-                    <th className="p-3 text-center">Qty</th>
-                    <th className="p-3 text-right">Unit Price (AED)</th>
-                    <th className="p-3 text-right">Total (AED)</th>
+                    <th className="p-3"><AdminText k="Description" /></th>
+                    <th className="p-3 text-center"><AdminText k="Qty" /></th>
+                    <th className="p-3 text-right"><AdminText k="Unit Price (AED)" /></th>
+                    <th className="p-3 text-right"><AdminText k="Total (AED)" /></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
