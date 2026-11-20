@@ -59,9 +59,9 @@ export function Navbar({ contact }: NavbarProps) {
   }, [isBookingPage, isExcluded])
 
   const desktopLogo = (
-    <Link href="/" className="hidden md:flex items-center gap-2 group" dir="ltr" aria-label="KBI home">
-      <span className="text-2xl font-bold tracking-tighter text-foreground dark:text-white inline-flex items-center" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }}>
-        <span>KBI</span><span className="text-cyan-500 dark:text-cyan-400">.</span>
+    <Link href="/" className="hidden md:flex shrink-0 items-center gap-2 group pr-4 xl:pr-6" dir="ltr" aria-label="KBI home">
+      <span className="text-[1.9rem] font-black leading-none tracking-[-0.07em] text-foreground dark:text-white inline-flex items-baseline" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }}>
+        <span>KBI</span><span className="ml-0.5 text-cyan-500 dark:text-cyan-400">.</span>
       </span>
     </Link>
   )
@@ -120,8 +120,8 @@ export function Navbar({ contact }: NavbarProps) {
           {/* Mobile Centered Logo */}
           <div className="md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-auto" dir="ltr">
     <Link href="/" className="flex items-center justify-center py-1 group" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }} aria-label="KBI home">
-              <span className="text-[1.35rem] sm:text-2xl font-black tracking-tight text-foreground dark:text-white inline-flex items-center leading-none" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }}>
-                <span>KBI</span><span className="text-cyan-500 dark:text-cyan-400">.</span>
+              <span className="text-[1.6rem] sm:text-[1.8rem] font-black tracking-[-0.07em] text-foreground dark:text-white inline-flex items-center leading-none" dir="ltr" style={{ direction: "ltr", unicodeBidi: "isolate" }}>
+                <span>KBI</span><span className="ml-0.5 text-cyan-500 dark:text-cyan-400">.</span>
               </span>
             </Link>
           </div>
@@ -133,7 +133,7 @@ export function Navbar({ contact }: NavbarProps) {
           </div>
 
           {/* Desktop Menu */}
-          <nav aria-label="Primary" className="hidden md:flex items-center justify-center flex-1">
+          <nav aria-label="Primary" className="hidden md:flex min-w-0 items-center justify-center flex-1">
             <ul className={cn("flex items-center justify-center gap-1 xl:gap-2", lang === "ar" && "flex-row-reverse")}>
               {navLinks.map((link) => {
                 const active = link.href === "/" ? normalizedPathname === "/" : normalizedPathname.startsWith(link.href)
@@ -163,7 +163,7 @@ export function Navbar({ contact }: NavbarProps) {
             </ul>
           </nav>
 
-          <div className="hidden md:flex items-center gap-3" dir="ltr">
+          <div className="hidden md:flex shrink-0 items-center gap-2 pl-3 xl:gap-3 xl:pl-5" dir="ltr">
             <Button asChild variant="secondary" size="sm" className="h-11 rounded-full border border-emerald-500/60 bg-emerald-500/10 px-4 text-sm font-bold text-emerald-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-500/20 hover:shadow-md active:translate-y-0 dark:text-emerald-300">
               <a
                 href={`https://wa.me/${contact.whatsappRaw}`}
