@@ -50,6 +50,7 @@ import {
 export interface BookingState {
   deviceId: string
   deviceName: string
+  serviceOption: string
   problem: string
   brand: string
   model: string
@@ -67,7 +68,44 @@ export interface BookingState {
   notes: string
 }
 
-const DEVICE_CONFIGS = [
+type DeviceServiceOption = {
+  id: string
+  name: string
+  nameAr: string
+  issues: string[]
+}
+
+type DeviceConfig = {
+  id: string
+  name: string
+  nameAr: string
+  icon: typeof Smartphone
+  popular?: boolean
+  quickBrands?: string[]
+  issues: string[]
+  serviceOptions?: DeviceServiceOption[]
+}
+
+const GAMING_PC_ISSUES_AR: Record<string, string> = {
+  "No Power / Won't Start": "لا يعمل أو لا يبدأ التشغيل",
+  "No Display / No Signal": "لا توجد صورة أو إشارة",
+  "GPU / Graphics Card Issue": "مشكلة في بطاقة الرسومات",
+  "CPU / Motherboard Issue": "مشكلة في المعالج أو اللوحة الأم",
+  "Overheating & Fan Noise": "ارتفاع الحرارة أو ضجيج المراوح",
+  "Game Crashes / Stuttering": "تعطل الألعاب أو تقطعها",
+  "Blue Screen / Windows Errors": "شاشة زرقاء أو أخطاء ويندوز",
+  "Power Supply / Sudden Shutdowns": "مشكلة في مزود الطاقة أو إيقاف مفاجئ",
+  "Graphics Card Upgrade": "ترقية بطاقة الرسومات",
+  "CPU Upgrade": "ترقية المعالج",
+  "RAM Upgrade": "ترقية ذاكرة RAM",
+  "SSD / NVMe Upgrade": "ترقية SSD أو NVMe",
+  "Power Supply Upgrade": "ترقية مزود الطاقة",
+  "Cooling / Fan Upgrade": "ترقية التبريد أو المراوح",
+  "Case / Airflow Upgrade": "ترقية الصندوق أو تدفق الهواء",
+  "Full Build Consultation": "استشارة لتجميعة كاملة",
+}
+
+const DEVICE_CONFIGS: DeviceConfig[] = [
   {
     id: "mobile",
     name: "Mobile Phone",
@@ -207,6 +245,28 @@ const DEVICE_CONFIGS = [
     ],
   },
   {
+    id: "gaming-pc",
+    name: "Gaming PC Repair & Upgrade",
+    nameAr: "إصلاح وترقية كمبيوتر الألعاب",
+    icon: PcCase,
+    quickBrands: ["Custom Build", "ASUS ROG", "MSI", "Alienware", "HP Omen"],
+    issues: [],
+    serviceOptions: [
+      {
+        id: "repair",
+        name: "Gaming PC Repair",
+        nameAr: "إصلاح كمبيوتر الألعاب",
+        issues: ["No Power / Won't Start", "No Display / No Signal", "GPU / Graphics Card Issue", "CPU / Motherboard Issue", "Overheating & Fan Noise", "Game Crashes / Stuttering", "Blue Screen / Windows Errors", "Power Supply / Sudden Shutdowns", "Other", "Not Sure"],
+      },
+      {
+        id: "upgrade",
+        name: "Gaming PC Upgrade",
+        nameAr: "ترقية كمبيوتر الألعاب",
+        issues: ["Graphics Card Upgrade", "CPU Upgrade", "RAM Upgrade", "SSD / NVMe Upgrade", "Power Supply Upgrade", "Cooling / Fan Upgrade", "Case / Airflow Upgrade", "Full Build Consultation", "Other", "Not Sure"],
+      },
+    ],
+  },
+  {
     id: "other",
     name: "Other",
     nameAr: "أجهزة أخرى",
@@ -244,6 +304,7 @@ function createInitialBookingState(): BookingState {
   return {
     deviceId: "",
     deviceName: "",
+    serviceOption: "",
     problem: "",
     brand: "",
     model: "",
@@ -336,6 +397,7 @@ export function BookingForm() {
       let matchedId = ""
       if (devParam.includes("mobile") || devParam.includes("phone")) matchedId = "mobile"
       else if (devParam.includes("laptop") || devParam.includes("macbook")) matchedId = "laptop"
+      else if (devParam.includes("gaming pc") || devParam.includes("gaming-pc") || devParam.includes("gamingpc")) matchedId = "gaming-pc"
       else if (devParam.includes("pc") || devParam.includes("desktop")) matchedId = "pc"
       else if (devParam.includes("print")) matchedId = "printer"
       else if (devParam.includes("tv")) matchedId = "tv"
@@ -351,6 +413,8 @@ export function BookingForm() {
             ...prev,
             deviceId: found.id,
             deviceName: found.name,
+            serviceOption: "",
+            problem: "",
           }))
         }
       }
@@ -429,9 +493,15 @@ export function BookingForm() {
 
   // Selected device object
   const selectedDeviceConfig = DEVICE_CONFIGS.find((d) => d.id === state.deviceId)
+  const selectedServiceOption = selectedDeviceConfig?.serviceOptions?.find((option) => option.id === state.serviceOption)
+  const visibleIssues = selectedServiceOption?.issues ?? selectedDeviceConfig?.issues ?? []
+  const getProblemLabel = (problem: string) =>
+    isAr && selectedDeviceConfig?.id === "gaming-pc"
+      ? GAMING_PC_ISSUES_AR[problem] || problem
+      : t(problem)
 
   // Validation
-  const isStep1Valid = Boolean(state.deviceId && state.problem)
+  const isStep1Valid = Boolean(state.deviceId && state.problem && (!selectedDeviceConfig?.serviceOptions || selectedServiceOption))
   const isStep2Valid = Boolean(state.emirateId && (state.area.trim().length >= 2 || state.latitude !== null))
   const isStep3Valid = Boolean(state.customerName.trim().length >= 2 && state.phone.replace(/\D/g, "").length >= 7)
 
@@ -531,10 +601,11 @@ export function BookingForm() {
             id: `dev-${Date.now()}`,
             deviceId: state.deviceId,
             deviceName: state.deviceName || "Device",
+            serviceOption: selectedServiceOption?.name || "",
             brandId: state.brand.trim() ? state.brand.toLowerCase() : "other",
             brandName: state.brand.trim() || "Standard",
             model: state.model.trim() || "Standard / Unspecified",
-            issues: [state.problem || "Inspection"],
+            issues: [state.problem ? `${selectedServiceOption ? `${selectedServiceOption.name}: ` : ""}${state.problem}` : "Inspection"],
           },
         ]
 
@@ -744,6 +815,7 @@ export function BookingForm() {
                               ...prev,
                               deviceId: dev.id,
                               deviceName: dev.name,
+                              serviceOption: "",
                               problem: "", // fresh selection
                             }))
                           }}
@@ -806,9 +878,35 @@ export function BookingForm() {
                         </span>
                       </div>
 
+                      {selectedDeviceConfig.serviceOptions ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                          {selectedDeviceConfig.serviceOptions.map((option) => {
+                            const isSelected = state.serviceOption === option.id
+                            return (
+                              <button
+                                key={option.id}
+                                type="button"
+                                onClick={() => setState((prev) => ({ ...prev, serviceOption: option.id, problem: "" }))}
+                                className={cn(
+                                  "flex min-h-14 items-center justify-between gap-3 rounded-xl border px-4 py-3 text-sm font-bold transition-all",
+                                  isAr ? "text-right" : "text-left",
+                                  isSelected
+                                    ? "border-cyan-400 bg-gradient-to-r from-cyan-400 to-teal-400 text-black shadow-lg shadow-cyan-400/20"
+                                    : "border-white/10 bg-card/60 text-muted-foreground hover:border-cyan-500/30 hover:text-foreground",
+                                )}
+                              >
+                                <span>{isAr ? option.nameAr : option.name}</span>
+                                {isSelected ? <Check className="h-4 w-4 shrink-0" /> : null}
+                              </button>
+                            )
+                          })}
+                        </div>
+                      ) : null}
+
                       {/* Issue Chips with Liquid Glow */}
+                      {(!selectedDeviceConfig.serviceOptions || selectedServiceOption) ? (
                       <div className="flex flex-wrap gap-2">
-                        {selectedDeviceConfig.issues.map((iss) => {
+                        {visibleIssues.map((iss) => {
                           const isSelected = state.problem === iss
                           const isNotSure = iss === "Not Sure"
                           return (
@@ -825,11 +923,12 @@ export function BookingForm() {
                                     : "border-white/10 bg-card/60 text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:border-cyan-500/30",
                               )}
                             >
-                              {t(iss)}
+                              {getProblemLabel(iss)}
                             </button>
                           )
                         })}
                       </div>
+                      ) : null}
 
                       {/* "Not Sure" Reassurance Prompt */}
                       {state.problem === "Not Sure" && (
@@ -1212,7 +1311,7 @@ export function BookingForm() {
                           {isAr ? "المشكلة" : "Issue"}
                         </span>
                         <div className="flex items-center justify-between mt-0.5">
-                          <span className="font-black text-foreground truncate">{t(state.problem)}</span>
+                          <span className="font-black text-foreground truncate">{getProblemLabel(state.problem)}</span>
                           <button
                             type="button"
                             onClick={() => setStep(1)}
@@ -1500,7 +1599,7 @@ export function BookingForm() {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">{isAr ? "المشكلة" : "Issue"}:</span>
-                        <span className="font-bold text-foreground">{t(state.problem)}</span>
+                        <span className="font-bold text-foreground">{getProblemLabel(state.problem)}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">{t("Location")}:</span>
