@@ -314,3 +314,16 @@
 @media (prefers-reduced-motion: reduce) {
   .newOrderButton, .orderRow, .segments button { transition: none; }
 }
+
+/* Improve scanability without changing order behavior. */
+.orderRow { min-height: 80px; }
+.orderRow > span { font-size: .85rem; line-height: 1.55; }
+.customerCell strong { font-size: .9rem; }
+.tableHeader > span { font-size: .75rem; }
+.techCell { color: hsl(var(--foreground) / .8); }
+.serviceCell { color: hsl(var(--foreground)); }
+.statusPill { font-size: .75rem; font-weight: 700; }
+.inspectorDetails { font-size: .875rem; }
+@media (max-width: 900px) {
+  .orderRow > span { font-size: .8rem; }
+}

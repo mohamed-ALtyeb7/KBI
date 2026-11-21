@@ -2,6 +2,8 @@
 
 import { T as AdminText } from "@/components/i18n-text";
 import { useState } from "react"
+import { devices } from "@/lib/data"
+import { useT } from "@/components/language-provider"
 import { UAE_EMIRATES } from "@/lib/locations"
 import { useLanguage } from "@/components/language-provider"
 import {
@@ -71,6 +73,9 @@ export function CreateOrderDialog({
   onOpenChange: (_open: boolean) => void
   onCreate: (_data: Record<string, unknown>) => Promise<boolean>
 }) {
+  const t = useT()
+  const [categoryId, setCategoryId] = useState("")
+  const category = devices.find(item => item.id === categoryId)
   const { lang } = useLanguage()
   const isAr = lang === "ar"
   const [emirateId, setEmirateId] = useState("")
@@ -101,6 +106,7 @@ export function CreateOrderDialog({
     setSelectedArea("")
     setEmirateId("")
     setAddress("")
+    setCategoryId("")
     setDevice("")
     setService("")
     setPrice("")
@@ -142,6 +148,8 @@ export function CreateOrderDialog({
       latitude: matchedArea?.latitude,
       longitude: matchedArea?.longitude,
       device: device.trim(),
+      deviceCategory: categoryId,
+      deviceType: category?.name || device.trim(),
       service: service.trim(),
       price: parsedPrice,
       totalAmount: parsedPrice,
@@ -334,6 +342,12 @@ export function CreateOrderDialog({
                 </div>
 
                 <div className="space-y-3.5">
+                  <div className="space-y-2"><Label>{isAr ? "نوع الجهاز" : "Device category"}</Label>
+                    <Select value={categoryId} onValueChange={value => { setCategoryId(value); setService("") }}>
+                      <SelectTrigger className="h-11 rounded-xl"><SelectValue placeholder={isAr ? "اختر الجهاز" : "Select a device"} /></SelectTrigger>
+                      <SelectContent>{devices.map(item => <SelectItem key={item.id} value={item.id}>{t(item.name)}</SelectItem>)}</SelectContent>
+                    </Select>
+                  </div>
                   <div className="space-y-1.5">
                     <Label className="text-xs font-semibold text-muted-foreground">Device Model *</Label>
                     <Input
@@ -345,7 +359,7 @@ export function CreateOrderDialog({
                     />
                     {/* Preset Chips */}
                     <div className="flex flex-wrap gap-1.5 pt-1">
-                      {POPULAR_DEVICES.slice(0, 5).map((d) => (
+                      {(category ? category.brands.flatMap(brand => brand.models || []).slice(0, 5) : POPULAR_DEVICES.slice(0, 5)).map((d) => (
                         <button
                           key={d}
                           type="button"
@@ -373,7 +387,7 @@ export function CreateOrderDialog({
                     />
                     {/* Preset Chips */}
                     <div className="flex flex-wrap gap-1.5 pt-1">
-                      {POPULAR_SERVICES.slice(0, 4).map((s) => (
+                      {(category?.issues || POPULAR_SERVICES).slice(0, 8).map((s) => (
                         <button
                           key={s}
                           type="button"
@@ -384,7 +398,7 @@ export function CreateOrderDialog({
                               : "bg-background hover:bg-muted text-muted-foreground border-border"
                           }`}
                         >
-                          {s.split(" & ")[0]}
+                          {t(s.split(" & ")[0])}
                         </button>
                       ))}
                     </div>

@@ -300,7 +300,7 @@ export default function OrdersPage() {
           </label>
           <div className={styles.segments} aria-label="Order segments">
             {segmentOptions.map((option) => <button type="button" key={option} className={segment === option ? styles.segmentActive : ""}
-              onClick={() => setSegment(option)} aria-pressed={segment === option}>{option.charAt(0) + option.slice(1).toLowerCase()}</button>)}
+              onClick={() => setSegment(option)} aria-pressed={segment === option}>{<AdminText k={option.charAt(0) + option.slice(1).toLowerCase()} />}</button>)}
           </div>
           <div className={styles.toolbarActions}>
             <button type="button" className={hasAdvancedFilters ? styles.controlActive : ""} onClick={() => setFiltersOpen((open) => !open)} aria-expanded={filtersOpen}>
@@ -380,7 +380,7 @@ function Metric({ icon, label, value, tone, wide = false }: {
 }
 
 function StatusPill({ status }: { status: OrderStatus }) {
-  return <span className={`${styles.statusPill} ${statusClass[orderStatusTone(status)]}`}>{orderStatusLabel(status)}</span>
+  return <span className={`${styles.statusPill} ${statusClass[orderStatusTone(status)]}`}>{<AdminText k={orderStatusLabel(status)} />}</span>
 }
 
 function InspectorDetail({ icon, label, children }: { icon: React.ReactNode; label: string; children: React.ReactNode }) {
