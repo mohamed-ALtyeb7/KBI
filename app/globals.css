@@ -1765,3 +1765,37 @@ html[lang="ar"] .corporate-page :is(input[type="email"], input[type="tel"]) {
 html[lang="ar"] .corporate-page .tracking-wider { letter-spacing: 0; }
 html[lang="ar"] .corporate-page .divide-x > :not(:last-child) { --tw-divide-x-reverse: 1; }
 html[lang="ar"] .corporate-page svg.lucide-arrow-right { transform: rotate(180deg); }
+
+/* Comfortable light palette: lower glare while preserving text contrast. */
+html:not(.dark),
+html:not(.dark) .site-shell,
+html:not(.dark) .admin-theme,
+html:not(.dark) [data-slot="dialog-content"],
+html:not(.dark) [data-slot="popover-content"],
+html:not(.dark) [data-slot="select-content"] {
+  --background: 210 18% 93%;
+  --foreground: 218 32% 16%;
+  --card: 210 18% 97%;
+  --card-foreground: 218 32% 16%;
+  --popover: 210 18% 97%;
+  --popover-foreground: 218 32% 16%;
+  --muted: 210 16% 89%;
+  --muted-foreground: 215 18% 35%;
+  --secondary: 205 23% 89%;
+  --secondary-foreground: 218 32% 20%;
+  --border: 212 18% 79%;
+  --input: 212 18% 73%;
+  --sidebar: 210 18% 95%;
+  --sidebar-foreground: 218 32% 18%;
+}
+html:not(.dark) body { background-color: hsl(var(--background)); }
+html:not(.dark) .site-shell .glass-nav {
+  background-color: hsl(210 18% 96% / .97);
+}
+html:not(.dark) .brand-hero {
+  background: radial-gradient(ellipse at 20% 0%, rgba(6,182,212,.045), transparent 65%), hsl(var(--background));
+}
+html:not(.dark) .brand-hero::before,
+html:not(.dark) .brand-hero::after { opacity: .25; }
+html:not(.dark) .corporate-page > section,
+html:not(.dark) .home-page > section { background-color: hsl(var(--background)); }
