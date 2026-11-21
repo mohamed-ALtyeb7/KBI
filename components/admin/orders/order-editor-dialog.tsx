@@ -1,5 +1,6 @@
 "use client"
 
+import { useLanguage } from "@/components/language-provider"
 import { T as AdminText } from "@/components/i18n-text";
 import { useEffect, useState } from "react"
 import {
@@ -68,6 +69,8 @@ export function OrderEditorDialog({
   const [confirmDelete, setConfirmDelete] = useState(false)
 
   // Sub-modal state for assigning technicians
+  const { lang } = useLanguage()
+  const [showAssignment, setShowAssignment] = useState(false)
   const [assignWindowOpen, setAssignWindowOpen] = useState(false)
   const [techSearch, setTechSearch] = useState("")
 
@@ -84,6 +87,7 @@ export function OrderEditorDialog({
       : []
     setTechnicianIds(initialIds)
     setConfirmDelete(false)
+    setShowAssignment(open && focusAssignment)
     setAssignWindowOpen(open && focusAssignment)
   }, [order, open, focusAssignment])
 
@@ -253,6 +257,11 @@ export function OrderEditorDialog({
                 </div>
               </div>
 
+              <label className="lg:col-span-2 flex cursor-pointer items-center gap-3 rounded-2xl border border-primary/25 bg-primary/5 p-4 text-sm font-semibold">
+                <input type="checkbox" checked={showAssignment} onChange={event => setShowAssignment(event.target.checked)} className="size-5 accent-cyan-600" />
+                {lang === "ar" ? "إظهار خيارات إسناد الفني والفحص والصور" : "Show technician assignment, diagnostics and photos"}
+              </label>
+              {showAssignment && <>
               {/* Diagnostics Quality Checklist & Hardware Inspection */}
               <div className="bg-muted/20 border border-border/70 rounded-2xl p-5 space-y-4">
                 <div className="flex items-center justify-between border-b border-border/70 pb-3">
@@ -412,6 +421,7 @@ export function OrderEditorDialog({
                 </div>
               </div>
 
+              </>}
               {/* Order Pricing & Financials (AED) Section */}
               <div className="bg-muted/20 border border-border/70 rounded-2xl p-5 space-y-4">
                 <div className="flex items-center justify-between border-b border-border/70 pb-3">
@@ -487,6 +497,7 @@ export function OrderEditorDialog({
                 </div>
               </div>
 
+              {showAssignment && <>
               {/* Dispatch & Technician Assignment Section */}
               <div className="bg-muted/20 border border-border/70 rounded-2xl p-5 space-y-4">
                 <div className="flex items-center justify-between border-b border-border/70 pb-3">
@@ -586,6 +597,7 @@ export function OrderEditorDialog({
                   )}
                 </div>
               </div>
+              </>}
             </div>
           )}
 
