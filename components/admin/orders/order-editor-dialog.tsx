@@ -260,7 +260,7 @@ export function OrderEditorDialog({
               <section className="lg:col-span-2 rounded-2xl border border-primary/30 bg-primary/5 p-5 space-y-3">
                 <h3 className="text-base font-bold">{lang === "ar" ? "مرحلة الطلب الظاهرة للعميل" : "Customer tracking stage"}</h3>
                 <p className="text-sm text-muted-foreground">{lang === "ar" ? "اختر المرحلة ثم اضغط تأكيد التغييرات لتحديث تتبع العميل." : "Choose a stage and confirm changes to update customer tracking."}</p>
-                <Select value={status} onValueChange={value => setStatus(value as OrderStatus)}><SelectTrigger className="h-12 rounded-xl"><SelectValue /></SelectTrigger><SelectContent>
+                <Select value={status === "ACCEPTED" ? "ASSIGNED" : status === "ARRIVED" ? "DIAGNOSING" : ["REVIEWING", "QUOTED", "APPROVED"].includes(status) ? "PENDING" : status} onValueChange={value => setStatus(value as OrderStatus)}><SelectTrigger className="h-12 rounded-xl"><SelectValue /></SelectTrigger><SelectContent>
                   {[
                     ["PENDING", "Order Created", "تم استلام الطلب"],
                     ["ASSIGNED", "Technician Assigned", "تم إسناد الفني"],
@@ -269,7 +269,6 @@ export function OrderEditorDialog({
                     ["IN_PROGRESS", "Repair in Progress", "جارٍ إصلاح الجهاز"],
                     ["QUALITY_CHECK", "Quality Check", "فحص الجودة"],
                     ["COMPLETED", "Completed / Delivered", "مكتمل / تم التسليم"],
-                    ...ORDER_STATUSES.filter(item => !["PENDING","ASSIGNED","ON_THE_WAY","DIAGNOSING","IN_PROGRESS","QUALITY_CHECK","COMPLETED"].includes(item)).map(item => [item, orderStatusLabel(item), orderStatusLabel(item)])
                   ].map(([value,en,ar]) => <SelectItem key={value} value={value}>{lang === "ar" ? ar : en}</SelectItem>)}
                 </SelectContent></Select>
               </section>
