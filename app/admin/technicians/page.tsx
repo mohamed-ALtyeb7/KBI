@@ -1,5 +1,7 @@
 "use client"
 
+import { UAE_EMIRATES } from "@/lib/locations"
+import { devices } from "@/lib/data"
 import { T as AdminText } from "@/components/i18n-text";
 import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
@@ -1738,7 +1740,7 @@ export default function AdminTechniciansPage() {
 
       {/* Create Technician Account Dialog */}
       <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
-        <DialogContent className="bg-card border-border text-foreground rounded-2xl sm:max-w-2xl max-h-[90svh] overflow-y-auto">
+        <DialogContent className="bg-card border-border text-foreground rounded-2xl w-[calc(100vw-1rem)] sm:w-[94vw] max-w-none sm:max-w-[1080px] max-h-[92dvh] overflow-y-auto p-5 sm:p-8">
           <DialogHeader>
             <DialogTitle className="text-lg font-bold flex items-center gap-2">
               <UserPlus className="size-5 text-cyan-600 dark:text-[#00f5c4]" /> <AdminText k="Create Technician Account" />
@@ -1748,7 +1750,7 @@ export default function AdminTechniciansPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <form onSubmit={handleCreateTechnician} className="grid grid-cols-1 gap-4 py-2 sm:grid-cols-2">
+          <form onSubmit={handleCreateTechnician} className="grid grid-cols-1 gap-5 py-3 sm:grid-cols-2 lg:grid-cols-3">
             <div className="space-y-1.5">
               <Label className="text-xs font-semibold text-foreground"><AdminText k="Full Name" /></Label>
               <Input
@@ -1792,14 +1794,14 @@ export default function AdminTechniciansPage() {
               />
             </div>
 
-            <div className="sm:col-span-2 border-t border-border pt-4"><p className="mb-4 text-sm font-semibold">{t("Work Profile & Skills")}</p></div><div className="space-y-1.5"><Label htmlFor="create-tech-whatsapp">{t("WhatsApp")}</Label><Input id="create-tech-whatsapp" type="tel" value={newTechData.whatsapp} onChange={event => setNewTechData({ ...newTechData, whatsapp: event.target.value })} className="h-11 rounded-xl" /></div>
+            <div className="sm:col-span-2 lg:col-span-3 border-t border-border pt-4"><p className="mb-4 text-sm font-semibold">{t("Work Profile & Skills")}</p></div><div className="space-y-1.5"><Label htmlFor="create-tech-whatsapp">{t("WhatsApp")}</Label><Input id="create-tech-whatsapp" type="tel" value={newTechData.whatsapp} onChange={event => setNewTechData({ ...newTechData, whatsapp: event.target.value })} className="h-11 rounded-xl" /></div>
 <div className="space-y-1.5"><Label htmlFor="create-tech-nationality">{t("Nationality")}</Label><Input id="create-tech-nationality" type="text" value={newTechData.nationality} onChange={event => setNewTechData({ ...newTechData, nationality: event.target.value })} className="h-11 rounded-xl" /></div>
-<div className="space-y-1.5"><Label htmlFor="create-tech-dob">{t("Date of Birth")}</Label><Input id="create-tech-dob" type="date" value={newTechData.dob} onChange={event => setNewTechData({ ...newTechData, dob: event.target.value })} className="h-11 rounded-xl" /></div>
-<div className="space-y-1.5"><Label htmlFor="create-tech-gender">{t("Gender")}</Label><Input id="create-tech-gender" type="text" value={newTechData.gender} onChange={event => setNewTechData({ ...newTechData, gender: event.target.value })} className="h-11 rounded-xl" /></div>
-<div className="space-y-1.5"><Label htmlFor="create-tech-language">{t("Spoken Languages")}</Label><Input id="create-tech-language" type="text" value={newTechData.language} onChange={event => setNewTechData({ ...newTechData, language: event.target.value })} className="h-11 rounded-xl" /></div>
-<div className="space-y-1.5"><Label htmlFor="create-tech-emirate">{t("Emirate")}</Label><Input id="create-tech-emirate" type="text" value={newTechData.emirate} onChange={event => setNewTechData({ ...newTechData, emirate: event.target.value })} className="h-11 rounded-xl" /></div>
+<div className="space-y-1.5"><Label htmlFor="create-tech-dob">{t("Date of Birth")}</Label><Input id="create-tech-dob" type="date" max={new Date().toISOString().slice(0,10)} value={newTechData.dob} onChange={event => setNewTechData({ ...newTechData, dob: event.target.value })} className="h-11 rounded-xl" /></div>
+<div className="space-y-1.5"><Label htmlFor="create-tech-gender">{t("Gender")}</Label><Select value={newTechData.gender} onValueChange={value => setNewTechData({ ...newTechData, gender: value })}><SelectTrigger id="create-tech-gender" className="h-11 rounded-xl"><SelectValue placeholder={t("Select")} /></SelectTrigger><SelectContent>{([["Male",t("Male")],["Female",t("Female")],["Other",t("Other")]]).map(([value,label]) => <SelectItem key={value} value={value}>{label}</SelectItem>)}</SelectContent></Select></div>
+<div className="space-y-1.5"><Label htmlFor="create-tech-language">{t("Spoken Languages")}</Label><Input id="create-tech-language" placeholder="العربية, English, हिन्दी" type="text" value={newTechData.language} onChange={event => setNewTechData({ ...newTechData, language: event.target.value })} className="h-11 rounded-xl" /></div>
+<div className="space-y-1.5"><Label htmlFor="create-tech-emirate">{t("Emirate")}</Label><Select value={newTechData.emirate} onValueChange={value => setNewTechData({ ...newTechData, emirate: value })}><SelectTrigger id="create-tech-emirate" className="h-11 rounded-xl"><SelectValue placeholder={t("Select")} /></SelectTrigger><SelectContent>{(UAE_EMIRATES.map(item => [item.nameEn,t(item.nameEn)])).map(([value,label]) => <SelectItem key={value} value={value}>{label}</SelectItem>)}</SelectContent></Select></div>
 <div className="space-y-1.5"><Label htmlFor="create-tech-service_areas">{t("Service Areas (comma separated)")}</Label><Input id="create-tech-service_areas" type="text" value={newTechData.service_areas} onChange={event => setNewTechData({ ...newTechData, service_areas: event.target.value })} className="h-11 rounded-xl" /></div>
-<div className="space-y-1.5"><Label htmlFor="create-tech-skills">{t("Skills (comma separated)")}</Label><Input id="create-tech-skills" type="text" value={newTechData.skills} onChange={event => setNewTechData({ ...newTechData, skills: event.target.value })} className="h-11 rounded-xl" /></div><DialogFooter className="sm:col-span-2 border-t border-border pt-4">
+<div className="space-y-1.5"><Label htmlFor="create-tech-skills">{t("Skills (comma separated)")}</Label><Input id="create-tech-skills" list="technician-skill-options" type="text" value={newTechData.skills} onChange={event => setNewTechData({ ...newTechData, skills: event.target.value })} className="h-11 rounded-xl" /></div><datalist id="technician-skill-options">{devices.map(item => <option key={item.id} value={t(item.name)} />)}</datalist><DialogFooter className="sm:col-span-2 lg:col-span-3 sticky bottom-0 z-10 border-t border-border bg-card py-4">
               <Button type="button" variant="outline" onClick={() => setCreateDialogOpen(false)} className="h-10 rounded-xl border-border text-xs font-bold">
                 <AdminText k="Cancel" />
               </Button>
