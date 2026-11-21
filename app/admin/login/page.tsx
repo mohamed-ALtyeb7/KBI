@@ -35,7 +35,8 @@ export default function AdminLogin() {
   const [confirmPassword, setConfirmPassword] = useState("")
 
   useEffect(() => {
-    const saved = localStorage.getItem("kbi_admin_remember_email_v1")
+    let saved: string | null = null
+    try { saved = localStorage.getItem("kbi_admin_remember_email_v1") } catch {}
     if (saved) {
       setEmail(saved)
       setRememberMe(true)
@@ -47,13 +48,13 @@ export default function AdminLogin() {
     if (!user) throw new Error("Authentication required")
     const token = await user.getIdToken(true)
     await establishAdminSession(token)
-    if (rememberMe) localStorage.setItem("kbi_admin_remember_email_v1", user.email || email)
-    else localStorage.removeItem("kbi_admin_remember_email_v1")
+    try { if (rememberMe) localStorage.setItem("kbi_admin_remember_email_v1", user.email || email); else localStorage.removeItem("kbi_admin_remember_email_v1") } catch {}
     window.location.assign("/admin")
   }
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault()
+    if (loading) return
     setLoading(true)
     setError("")
     setNotice("")
@@ -80,6 +81,8 @@ export default function AdminLogin() {
       const code = (cause as { code?: string }).code
       if (code === "auth/invalid-credential" || code === "auth/user-not-found" || code === "auth/wrong-password") {
         setError("Incorrect email or password.")
+      } else if (code === "auth/network-request-failed") {
+        setError("Connection failed. Check your internet connection and try again.")
       } else if (code === "auth/too-many-requests") {
         setError("Too many attempts. Try again later or reset your password.")
       } else {
