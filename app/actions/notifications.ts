@@ -32,13 +32,13 @@ export async function getNotificationsAction(role: "admin" | "technician", idTok
         }
         if (!forceRefresh && cached && now - cached.ts < ttlMs) return { notifications: cached.value }
 
-        let notificationQuery = adminDb.collection("notifications").where("role", "==", role)
-        if (role === "technician") notificationQuery = notificationQuery.where("userId", "==", actor.uid)
+        const notificationQuery = adminDb.collection("notifications")
         const snapshot = await notificationQuery
-            .limit(50)
+            .orderBy("createdAt", "desc")
+            .limit(200)
             .get()
 
-        const notifications = snapshot.docs.map((doc: any) => {
+        const notifications = snapshot.docs.filter((doc: any) => doc.data().role === role && (role === "admin" || doc.data().userId === actor.uid)).map((doc: any) => {
             const data = doc.data()
             const createdAt = data.createdAt?.toMillis ? data.createdAt.toMillis() : Date.now()
             return {
@@ -64,6 +64,7 @@ export async function markNotificationReadAction(notificationId: string, role: "
         if (!snapshot.exists || (role === "technician" && snapshot.data()?.userId !== actor.uid)) {
             return { success: false, error: "Notification not found" }
         }
+        delete (globalThis as any)[`__kbi_notifications_${role}_${actor.uid}_cache_v2`]
         await ref.update({
             read: true
         })

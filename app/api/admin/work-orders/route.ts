@@ -148,6 +148,7 @@ export async function POST(request: NextRequest) {
   createBatch.set(orderRef, newOrderDoc)
   createBatch.set(db.collection("bookings").doc(orderId), newOrderDoc)
   createBatch.set(db.collection("service_requests").doc(orderId), newOrderDoc)
+  createBatch.set(db.collection("notifications").doc(), { role: "admin", type: "order_created", title: "New order", message: orderNumber, orderId, link: "/admin/orders", read: false, createdAt: FieldValue.serverTimestamp() })
   await createBatch.commit()
 
   // 3. If technicians assigned, update technician status and dispatch real-time in-app & FCM push notifications

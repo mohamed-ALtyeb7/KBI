@@ -26,6 +26,8 @@ export function NotificationBell({ role = "admin" }: NotificationBellProps) {
     const [unreadCount, setUnreadCount] = useState(0)
     const [clearing, setClearing] = useState(false)
     const isMounted = useRef(true)
+    const revision = useRef(0)
+    const clearingRef = useRef(false)
 
     useEffect(() => {
         isMounted.current = true
@@ -33,12 +35,14 @@ export function NotificationBell({ role = "admin" }: NotificationBellProps) {
     }, [])
 
     const fetchNotifications = useCallback(async (forceRefresh = false) => {
+        if (clearingRef.current) return
+        const requestRevision = revision.current
         try {
             const token = await auth.currentUser?.getIdToken()
             if (!token) return
             const { notifications: data } = await getNotificationsAction(role, token, forceRefresh)
             if (!isMounted.current) return
-            if (data) {
+            if (data && requestRevision === revision.current && !clearingRef.current) {
                 setNotifications(data)
                 setUnreadCount(data.filter(n => !n.read).length)
             }
@@ -60,7 +64,7 @@ export function NotificationBell({ role = "admin" }: NotificationBellProps) {
         const refreshWhenVisible = () => {
             if (document.visibilityState === "visible") void fetchNotifications(true)
         }
-        const interval = window.setInterval(refreshWhenVisible, 60000)
+        const interval = window.setInterval(refreshWhenVisible, 10000)
         document.addEventListener("visibilitychange", refreshWhenVisible)
         return () => {
             window.clearInterval(interval)
@@ -92,6 +96,8 @@ export function NotificationBell({ role = "admin" }: NotificationBellProps) {
         const prevNotifications = notifications
         const prevUnreadCount = unreadCount
 
+        revision.current += 1
+        clearingRef.current = true
         setClearing(true)
         setNotifications([])
         setUnreadCount(0)
@@ -109,6 +115,7 @@ export function NotificationBell({ role = "admin" }: NotificationBellProps) {
             setNotifications(prevNotifications)
             setUnreadCount(prevUnreadCount)
         } finally {
+            clearingRef.current = false
             setClearing(false)
         }
     }

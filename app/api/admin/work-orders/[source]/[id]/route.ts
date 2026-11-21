@@ -96,6 +96,7 @@ export async function PATCH(
   for (const collectionName of ["orders", "bookings", "service_requests"]) {
     syncBatch.set(db.collection(collectionName).doc(id), orderPayload, { merge: true })
   }
+  syncBatch.set(db.collection("notifications").doc(), { role: "admin", type: "status_update", title: "Order updated", message: id + " · " + finalStatus, orderId: id, link: "/admin/orders", read: false, createdAt: FieldValue.serverTimestamp() })
   await syncBatch.commit()
 
   // Safely sync technicians' currentJob status in Firestore and send direct in-app alerts + push notifications
