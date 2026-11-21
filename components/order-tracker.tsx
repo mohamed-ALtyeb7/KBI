@@ -40,6 +40,8 @@ function resolveStatusStep(status: unknown) {
 
   const s = normalizeStatus(status)
   if (!s) return 1
+  const stages: Record<string, number> = { pending: 1, reviewing: 1, quoted: 1, approved: 1, assigned: 2, accepted: 2, "on the way": 3, "en route": 3, arrived: 4, inspection: 4, "in progress": 5, repairing: 5, "quality check": 6, completed: 7, delivered: 7 }
+  if (stages[s]) return stages[s]
   if (s.includes("completed") || s.includes("delivered")) return max
 
   const exact = orderStatuses.findIndex((st) => normalizeStatus(st.name) === s)
@@ -391,6 +393,12 @@ export function OrderTracker({ initialOrderId = "" }: { initialOrderId?: string 
                         </div>
                       </div>
 
+                      <div role="status" aria-live="polite" className="my-6 rounded-2xl border border-cyan-500/30 bg-cyan-500/10 p-5">
+                        <p className="text-sm font-semibold text-muted-foreground">{isAr ? "المرحلة الحالية للطلب" : "Current order stage"}</p>
+                        <h3 className="mt-2 text-xl font-bold text-foreground">{t(currentStatus?.name || "Order Created")}</h3>
+                        <p className="mt-2 text-sm text-muted-foreground">{t(currentStatus?.description || "Your order has been received")}</p>
+                        <p className="mt-3 text-xs font-semibold text-cyan-700 dark:text-cyan-300">{isAr ? "المرحلة" : "Stage"} {step} / {orderStatuses.length}</p>
+                      </div>
                       {/* Status Timeline Card */}
                       <div className="p-5 sm:p-6 rounded-2xl bg-muted/30 dark:bg-black/40 border border-border/70 my-6">
                         <div className="flex items-center justify-between gap-4 mb-6 pb-4 border-b border-border/60">
@@ -453,7 +461,7 @@ export function OrderTracker({ initialOrderId = "" }: { initialOrderId?: string 
                                       </p>
                                       {isCurrent && (
                                         <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30">
-                                          Current
+                                          {isAr ? "المرحلة الحالية" : "Current"}
                                         </span>
                                       )}
                                     </div>
