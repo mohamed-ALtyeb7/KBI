@@ -7,7 +7,9 @@ export const ORDER_STATUSES = [
   "ACCEPTED",
   "ON_THE_WAY",
   "ARRIVED",
+  "DIAGNOSING",
   "IN_PROGRESS",
+  "QUALITY_CHECK",
   "COMPLETED",
   "CANCELLED",
   "REJECTED",
@@ -21,7 +23,7 @@ const aliases: Record<string, OrderStatus> = {
   QUOTE_APPROVAL: "QUOTED",
   EN_ROUTE: "ON_THE_WAY",
   "ON THE WAY": "ON_THE_WAY",
-  INSPECTION: "IN_PROGRESS",
+  INSPECTION: "DIAGNOSING",
   REPAIRING: "IN_PROGRESS",
   ACTIVE: "IN_PROGRESS",
 }
@@ -39,7 +41,7 @@ export const orderStatusLabel = (status: OrderStatus) => status
   .join(" ")
 
 export const isActiveOrderStatus = (status: OrderStatus) => [
-  "ASSIGNED", "ACCEPTED", "ON_THE_WAY", "ARRIVED", "IN_PROGRESS",
+  "ASSIGNED", "ACCEPTED", "ON_THE_WAY", "ARRIVED", "DIAGNOSING", "IN_PROGRESS", "QUALITY_CHECK",
 ].includes(status)
 
 export const orderStatusTone = (status: OrderStatus) => {

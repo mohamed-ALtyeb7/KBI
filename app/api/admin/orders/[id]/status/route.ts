@@ -5,7 +5,7 @@ import { authenticateAdmin } from '@/lib/api-auth'
 const allowedStatuses = new Set([
   'PENDING', 'CREATED', 'SEARCHING', 'REVIEWING', 'QUOTED', 'APPROVED',
   'ASSIGNED', 'ON_THE_WAY', 'EN_ROUTE', 'ARRIVED', 'INSPECTION',
-  'QUOTE_APPROVAL', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED',
+  'QUOTE_APPROVAL', 'DIAGNOSING', 'IN_PROGRESS', 'QUALITY_CHECK', 'COMPLETED', 'CANCELLED',
 ])
 
 export async function PATCH(

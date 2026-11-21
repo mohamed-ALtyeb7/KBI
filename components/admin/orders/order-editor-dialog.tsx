@@ -257,6 +257,22 @@ export function OrderEditorDialog({
                 </div>
               </div>
 
+              <section className="lg:col-span-2 rounded-2xl border border-primary/30 bg-primary/5 p-5 space-y-3">
+                <h3 className="text-base font-bold">{lang === "ar" ? "مرحلة الطلب الظاهرة للعميل" : "Customer tracking stage"}</h3>
+                <p className="text-sm text-muted-foreground">{lang === "ar" ? "اختر المرحلة ثم اضغط تأكيد التغييرات لتحديث تتبع العميل." : "Choose a stage and confirm changes to update customer tracking."}</p>
+                <Select value={status} onValueChange={value => setStatus(value as OrderStatus)}><SelectTrigger className="h-12 rounded-xl"><SelectValue /></SelectTrigger><SelectContent>
+                  {[
+                    ["PENDING", "Order Created", "تم استلام الطلب"],
+                    ["ASSIGNED", "Technician Assigned", "تم إسناد الفني"],
+                    ["ON_THE_WAY", "Technician On the Way", "الفني في الطريق"],
+                    ["DIAGNOSING", "Diagnostic in Progress", "جارٍ تشخيص الجهاز"],
+                    ["IN_PROGRESS", "Repair in Progress", "جارٍ إصلاح الجهاز"],
+                    ["QUALITY_CHECK", "Quality Check", "فحص الجودة"],
+                    ["COMPLETED", "Completed / Delivered", "مكتمل / تم التسليم"],
+                    ...ORDER_STATUSES.filter(item => !["PENDING","ASSIGNED","ON_THE_WAY","DIAGNOSING","IN_PROGRESS","QUALITY_CHECK","COMPLETED"].includes(item)).map(item => [item, orderStatusLabel(item), orderStatusLabel(item)])
+                  ].map(([value,en,ar]) => <SelectItem key={value} value={value}>{lang === "ar" ? ar : en}</SelectItem>)}
+                </SelectContent></Select>
+              </section>
               <label className="lg:col-span-2 flex cursor-pointer items-center gap-3 rounded-2xl border border-primary/25 bg-primary/5 p-4 text-sm font-semibold">
                 <input type="checkbox" checked={showAssignment} onChange={event => setShowAssignment(event.target.checked)} className="size-5 accent-cyan-600" />
                 {lang === "ar" ? "إظهار خيارات إسناد الفني والفحص والصور" : "Show technician assignment, diagnostics and photos"}

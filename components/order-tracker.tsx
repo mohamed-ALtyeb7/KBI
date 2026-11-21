@@ -40,7 +40,7 @@ function resolveStatusStep(status: unknown) {
 
   const s = normalizeStatus(status)
   if (!s) return 1
-  const stages: Record<string, number> = { pending: 1, reviewing: 1, quoted: 1, approved: 1, assigned: 2, accepted: 2, "on the way": 3, "en route": 3, arrived: 4, inspection: 4, "in progress": 5, repairing: 5, "quality check": 6, completed: 7, delivered: 7 }
+  const stages: Record<string, number> = { pending: 1, reviewing: 1, quoted: 1, approved: 1, assigned: 2, accepted: 2, "on the way": 3, "en route": 3, arrived: 4, inspection: 4, diagnosing: 4, "in progress": 5, repairing: 5, "quality check": 6, completed: 7, delivered: 7 }
   if (stages[s]) return stages[s]
   if (s.includes("completed") || s.includes("delivered")) return max
 
