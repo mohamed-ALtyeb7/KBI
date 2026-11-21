@@ -1736,3 +1736,8 @@ html[lang="ar"] .corporate-page h1 { line-height: 1.5; letter-spacing: 0; }
 @media (max-width: 767px) {
   .admin-access-photo { background-position: right center; }
 }
+
+.admin-access-photo {
+  transform: scaleX(-1);
+  background-position: right center;
+}
