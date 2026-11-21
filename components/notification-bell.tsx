@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge"
 import { formatDistanceToNow } from "date-fns"
 import { clearNotificationsAction, getNotificationsAction, markNotificationReadAction, type Notification as NotificationType } from "@/app/actions/notifications"
 import { handleStaleServerActionError } from "@/lib/utils"
+import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "@/firebase/authClient"
 
 interface NotificationBellProps {
@@ -22,6 +23,7 @@ interface NotificationBellProps {
 }
 
 export function NotificationBell({ role = "admin" }: NotificationBellProps) {
+    const [fetchError, setFetchError] = useState("")
     const [notifications, setNotifications] = useState<NotificationType[]>([])
     const [unreadCount, setUnreadCount] = useState(0)
     const [clearing, setClearing] = useState(false)
@@ -40,8 +42,10 @@ export function NotificationBell({ role = "admin" }: NotificationBellProps) {
         try {
             const token = await auth.currentUser?.getIdToken()
             if (!token) return
-            const { notifications: data } = await getNotificationsAction(role, token, forceRefresh)
+            const { notifications: data, error: notificationError } = await getNotificationsAction(role, token, forceRefresh)
             if (!isMounted.current) return
+            if (notificationError) { setFetchError("Unable to load notifications. Please refresh or sign in again."); return }
+            setFetchError("")
             if (data && requestRevision === revision.current && !clearingRef.current) {
                 setNotifications(data)
                 setUnreadCount(data.filter(n => !n.read).length)
@@ -54,7 +58,7 @@ export function NotificationBell({ role = "admin" }: NotificationBellProps) {
 
     // Initial fetch
     useEffect(() => {
-        fetchNotifications()
+        return onAuthStateChanged(auth, user => { if (user) void fetchNotifications(true) })
     }, [fetchNotifications])
 
     // Admin decisions should surface without requiring a page reload. Keep the
@@ -138,15 +142,15 @@ export function NotificationBell({ role = "admin" }: NotificationBellProps) {
     }
 
     return (
-        <DropdownMenu>
+        <DropdownMenu onOpenChange={open => { if (open) void fetchNotifications(true) }}>
             <DropdownMenuTrigger asChild>
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="relative"
+                    className="relative rounded-xl border border-border bg-muted/50 text-foreground hover:bg-muted"
                     aria-label="Open notifications"
                 >
-                    <Bell className="h-5 w-5 text-white/70 hover:text-white" />
+                    <Bell className="h-5 w-5 text-slate-700 dark:text-slate-200" />
                     {unreadCount > 0 && (
                         <Badge
                             className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-white text-xs"
@@ -194,7 +198,7 @@ export function NotificationBell({ role = "admin" }: NotificationBellProps) {
 
                 {notifications.length === 0 ? (
                     <div className="py-8 text-center text-white/50 text-sm">
-                        No notifications
+                        {fetchError || "No notifications"}
                     </div>
                 ) : (
                     <div className="max-h-[400px] overflow-y-auto">
