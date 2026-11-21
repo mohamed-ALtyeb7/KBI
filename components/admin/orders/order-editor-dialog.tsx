@@ -161,7 +161,7 @@ export function OrderEditorDialog({
                   <p className="text-xs font-bold text-foreground mt-0.5">{order.createdAt ? order.createdAt.toLocaleDateString() : "—"}</p>
                 </div>
                 <div>
-                  <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Assigned Techs</span>
+                  <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">{lang === "ar" ? "الفنيون المسندون" : "Assigned Techs"}</span>
                   <p className="text-xs font-bold text-foreground mt-0.5">{technicianIds.length} <AdminText k="Assigned" /></p>
                 </div>
               </div>
@@ -180,7 +180,7 @@ export function OrderEditorDialog({
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-[11px] font-semibold text-muted-foreground">Phone Number & WhatsApp</Label>
+                    <Label className="text-[11px] font-semibold text-muted-foreground">{lang === "ar" ? "رقم الهاتف وواتساب" : "Phone Number & WhatsApp"}</Label>
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-bold text-foreground font-mono">{order.customerPhone || "—"}</p>
                       {order.customerPhone && (
@@ -199,7 +199,7 @@ export function OrderEditorDialog({
                             className="p-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold flex items-center gap-1.5 transition"
                             title="Send WhatsApp update / report"
                           >
-                            <span>WhatsApp Report</span>
+                            <span>{lang === "ar" ? "تقرير واتساب" : "WhatsApp Report"}</span>
                           </a>
                         </>
                       )}
@@ -223,7 +223,7 @@ export function OrderEditorDialog({
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-[11px] font-semibold text-muted-foreground">Location / Address</Label>
+                    <Label className="text-[11px] font-semibold text-muted-foreground">{lang === "ar" ? "الموقع / العنوان" : "Location / Address"}</Label>
                     <div className="flex items-start gap-2">
                       <MapPin className="size-3.5 text-rose-500 shrink-0 mt-0.5" />
                       <p className="text-xs font-semibold text-foreground leading-relaxed">{order.address || "Abu Dhabi, UAE"}</p>
@@ -236,7 +236,7 @@ export function OrderEditorDialog({
               <div className="bg-muted/20 border border-border/70 rounded-2xl p-5 space-y-4">
                 <div className="flex items-center gap-2 border-b border-border/70 pb-3">
                   <Wrench className="size-4 text-primary" />
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">Service & Device Request</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">{lang === "ar" ? "تفاصيل الجهاز والخدمة" : "Service & Device Request"}</h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
