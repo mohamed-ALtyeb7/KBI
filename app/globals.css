@@ -1741,3 +1741,16 @@ html[lang="ar"] .corporate-page h1 { line-height: 1.5; letter-spacing: 0; }
   transform: scaleX(-1);
   background-position: right center;
 }
+
+.corporate-page > section:first-child {
+  background: radial-gradient(ellipse at top left, hsl(var(--primary) / .08), transparent 65%), hsl(var(--background));
+}
+.corporate-hero-background { display: none; }
+.corporate-contact-panel h2 { max-width: 22ch; }
+.corporate-contact-panel p { font-size: 1rem; }
+.corporate-contact-panel a.rounded-full { min-height: 44px; padding: 12px 22px; font-size: .875rem; }
+@media (max-width: 639px) {
+  .corporate-contact-panel h2 { font-size: 1.6rem; margin-bottom: 16px; }
+  .corporate-contact-panel h3 { margin-bottom: 20px; }
+  .corporate-contact-panel a.rounded-full { width: auto; flex: 1; }
+}

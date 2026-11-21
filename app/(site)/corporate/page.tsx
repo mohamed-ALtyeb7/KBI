@@ -8,12 +8,6 @@ import fs from "node:fs"
 import path from "node:path"
 import {
   Building2,
-  Smartphone,
-  Laptop,
-  Printer,
-  Monitor,
-  Camera,
-  Tv,
   Shield,
   Users,
   Rocket,
@@ -59,7 +53,7 @@ export default async function CorporatePage() {
     <PageEntrance className="corporate-page min-h-screen bg-background text-foreground selection:bg-cyan-500/30 pb-16 lg:pb-0 font-sans text-start">
 
       <section className="relative pt-24 md:pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 -z-10">
+        <div className="corporate-hero-background absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
           <div className="absolute top-[-20%] left-[-10%] hidden h-[50vw] w-[50vw] rounded-full bg-blue-600/10 blur-[140px] md:block" />
           <div className="absolute bottom-[-20%] right-[-10%] hidden h-[40vw] w-[40vw] rounded-full bg-cyan-600/10 blur-[140px] md:block" />
@@ -216,171 +210,6 @@ export default async function CorporatePage() {
         </div>
       </section>
 
-      {/* Comprehensive Device Support */}
-      <section className="deferred-section py-16 md:py-20 relative bg-slate-100/60 dark:bg-black/60 transition-colors">
-        <div className="absolute inset-0 bg-slate-200/20 dark:bg-white/5 skew-y-3 transform origin-top-left -z-10" />
-
-        <div className="container mx-auto px-6">
-          <FadeIn>
-            <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-10 text-foreground">
-              <span><T k="Comprehensive Device Support" /></span>
-            </h2>
-          </FadeIn>
-
-          <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Mobile Devices */}
-            <StaggerItem>
-              <GlassCard className="h-full group relative overflow-hidden bg-card border-border hover:border-cyan-500/50 transition-colors duration-500 shadow-xs">
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                <div className="relative z-10">
-                  <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 ring-1 ring-cyan-500/20">
-                    <Smartphone className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors"><T k="Mobile Fleet" /></h3>
-                  <p className="text-muted-foreground text-sm mb-4"><T k="iPhone – Samsung – Huawei – Tablets" /></p>
-
-                  <div className="space-y-2">
-                    {["Screen Replacement", "Battery Service", "Charging Port", "Data Migration"].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 text-sm text-foreground/80 font-medium">
-                        <div className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
-                        <T k={item} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </GlassCard>
-            </StaggerItem>
-
-            {/* Laptops */}
-            <StaggerItem>
-              <GlassCard className="h-full group relative overflow-hidden bg-card border-border hover:border-blue-500/50 transition-colors duration-500 shadow-xs">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                <div className="relative z-10">
-                  <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 ring-1 ring-blue-500/20">
-                    <Laptop className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"><T k="Laptops & Workstations" /></h3>
-                  <p className="text-muted-foreground text-sm mb-4"><T k="Dell – HP – Lenovo – MacBook" /></p>
-
-                  <div className="space-y-2">
-                    {["Hardware Repair", "SSD/RAM Upgrades", "OS Troubleshooting", "Performance Tuning"].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 text-sm text-foreground/80 font-medium">
-                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                        <T k={item} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </GlassCard>
-            </StaggerItem>
-
-            {/* Printers */}
-            <StaggerItem>
-              <GlassCard className="h-full group relative overflow-hidden bg-card border-border hover:border-purple-500/50 transition-colors duration-500 shadow-xs">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                <div className="relative z-10">
-                  <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 ring-1 ring-purple-500/20">
-                    <Printer className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors"><T k="Office Equipment" /></h3>
-                  <p className="text-muted-foreground text-sm mb-4"><T k="Printers – Scanners – Plotters" /></p>
-
-                  <div className="space-y-2">
-                    {["Paper Jam Fix", "Toner/Cartridge", "Network Setup", "Annual Maintenance"].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 text-sm text-foreground/80 font-medium">
-                        <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />
-                        <T k={item} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </GlassCard>
-            </StaggerItem>
-
-            {/* Monitors */}
-            <StaggerItem>
-              <GlassCard className="h-full group relative overflow-hidden bg-card border-border hover:border-green-500/50 transition-colors duration-500 shadow-xs">
-                <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                <div className="relative z-10">
-                  <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 ring-1 ring-green-500/20">
-                    <Monitor className="w-6 h-6 text-green-600 dark:text-green-400" />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors"><T k="Displays & Signage" /></h3>
-                  <p className="text-muted-foreground text-sm mb-4"><T k="Monitors – Video Walls – Kiosks" /></p>
-
-                  <div className="space-y-2">
-                    {["Panel Replacement", "Power Issues", "Color Calibration", "Mounting"].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 text-sm text-foreground/80 font-medium">
-                        <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                        <T k={item} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </GlassCard>
-            </StaggerItem>
-
-            {/* CCTV */}
-            <StaggerItem>
-              <GlassCard className="h-full group relative overflow-hidden bg-card border-border hover:border-rose-500/50 transition-colors duration-500 shadow-xs">
-                <div className="absolute inset-0 bg-gradient-to-br from-rose-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                <div className="relative z-10">
-                  <div className="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 ring-1 ring-rose-500/20">
-                    <Camera className="w-6 h-6 text-rose-600 dark:text-rose-400" />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors"><T k="Security Systems" /></h3>
-                  <p className="text-muted-foreground text-sm mb-4"><T k="CCTV – Access Control – Biometrics" /></p>
-
-                  <div className="space-y-2">
-                    {["Camera Installation", "DVR/NVR Config", "Cabling", "System Upgrades"].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 text-sm text-foreground/80 font-medium">
-                        <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-                        <T k={item} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </GlassCard>
-            </StaggerItem>
-
-            {/* TVs */}
-            <StaggerItem>
-              <GlassCard className="h-full group relative overflow-hidden bg-card border-border hover:border-amber-500/50 transition-colors duration-500 shadow-xs">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                <div className="relative z-10">
-                  <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 ring-1 ring-amber-500/20">
-                    <Tv className="w-6 h-6 text-amber-600 dark:text-amber-400" />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors"><T k="Meeting Rooms" /></h3>
-                  <p className="text-muted-foreground text-sm mb-4"><T k="Smart TVs – Projectors – Audio" /></p>
-
-                  <div className="space-y-2">
-                    {["Connectivity Issues", "Mounting Service", "Sound Systems", "Conference Setup"].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 text-sm text-foreground/80 font-medium">
-                        <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                        <T k={item} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </GlassCard>
-            </StaggerItem>
-          </StaggerContainer>
-        </div>
-      </section>
-
       {/* Corporate Advantages */}
       <section className="deferred-section py-20">
         <div className="container mx-auto px-6">
@@ -479,12 +308,12 @@ export default async function CorporatePage() {
       <section className="deferred-section py-20">
         <div className="container mx-auto px-6">
           <FadeIn>
-            <div className="group relative rounded-[2.5rem] overflow-hidden border border-border bg-card shadow-xl">
+            <div className="corporate-contact-panel group relative rounded-[1.75rem] overflow-hidden border border-border bg-card shadow-xl">
               <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
               <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
               <div className="grid lg:grid-cols-2 relative z-10 items-stretch">
-                <div className="relative bg-muted/40 p-8 md:p-12 lg:p-16 border-b lg:border-b-0 lg:border-r border-border flex flex-col justify-center rounded-2xl overflow-hidden text-start items-start order-2 lg:order-1">
+                <div className="relative bg-muted/40 p-5 sm:p-7 lg:p-8 border-b lg:border-b-0 lg:border-r border-border flex flex-col justify-center rounded-2xl overflow-hidden text-start items-start order-2 lg:order-1">
                   <h3 className="text-xl font-bold mb-8 flex items-center gap-3 text-foreground">
                     <span className="w-8 h-1 rounded-full bg-cyan-500 block" /> <T k="Contact Information" />
                   </h3>
@@ -536,7 +365,7 @@ export default async function CorporatePage() {
                     <Shield className="w-3 h-3 text-cyan-600 dark:text-cyan-400" />
                     <span className="text-xs font-bold text-cyan-700 dark:text-cyan-400 uppercase tracking-wider"><T k="Priority Support" /></span>
                   </div>
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 leading-tight tracking-tight text-foreground text-start">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold mb-6 leading-tight tracking-tight text-foreground text-start">
                     <T k="Ready to Upgrade Your Corporate Maintenance?" />
                   </h2>
                   <p className="text-base md:text-lg text-muted-foreground mb-8 leading-relaxed text-start">
