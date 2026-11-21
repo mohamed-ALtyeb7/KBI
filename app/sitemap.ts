@@ -17,13 +17,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { path: '/account-deletion', priority: 0.3, changeFrequency: 'monthly' },
         { path: '/terms', priority: 0.5, changeFrequency: 'monthly' },
     ]
-
-    const now = new Date()
     const localizedStaticPaths = new Set(['/book', '/corporate', '/about', '/contact', '/track'])
 
     const staticRoutes = routes.map((r) => ({
         url: `${baseUrl}${r.path}`,
-        lastModified: now,
         changeFrequency: r.changeFrequency,
         priority: r.priority,
         ...(r.path === '' ? {
@@ -37,7 +34,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     const locationRoutes = locations.map((loc) => ({
         url: `${baseUrl}/locations/${loc.slug}`,
-        lastModified: now,
         changeFrequency: 'weekly' as const,
         priority: 0.8,
         alternates: {
@@ -51,7 +47,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     const serviceRoutes = SERVICES_SEO_DATA.map((service) => ({
         url: `${baseUrl}/services/${service.slug}`,
-        lastModified: now,
         changeFrequency: 'weekly' as const,
         priority: 0.9,
         alternates: {
@@ -66,21 +61,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const arabicRoutes: MetadataRoute.Sitemap = [
         {
             url: `${baseUrl}/ar`,
-            lastModified: now,
             changeFrequency: 'weekly',
             priority: 1,
             alternates: { languages: { en: baseUrl, ar: `${baseUrl}/ar`, 'x-default': baseUrl } },
         },
         {
             url: `${baseUrl}/ar/services`,
-            lastModified: now,
             changeFrequency: 'weekly',
             priority: 0.9,
             alternates: { languages: { en: `${baseUrl}/services`, ar: `${baseUrl}/ar/services`, 'x-default': `${baseUrl}/services` } },
         },
         ...['/book', '/corporate', '/about', '/contact', '/track'].map((path) => ({
             url: `${baseUrl}/ar${path}`,
-            lastModified: now,
             changeFrequency: 'monthly' as const,
             priority: path === '/book' ? 0.9 : 0.8,
             alternates: {
@@ -93,7 +85,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         })),
         ...SERVICES_SEO_DATA.map((service) => ({
             url: `${baseUrl}/ar/services/${service.slug}`,
-            lastModified: now,
             changeFrequency: 'weekly' as const,
             priority: 0.9,
             alternates: {
@@ -106,7 +97,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         })),
         ...locations.map((loc) => ({
             url: `${baseUrl}/ar/locations/${loc.slug}`,
-            lastModified: now,
             changeFrequency: 'weekly' as const,
             priority: 0.8,
             alternates: {

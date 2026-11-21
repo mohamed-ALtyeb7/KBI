@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = `${service.arabic.name} في جميع أنحاء الإمارات`
   return {
     title,
+    robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
     description: service.arabic.description,
     alternates: { canonical: arabicPath, languages: { en: englishPath, ar: arabicPath, "x-default": englishPath } },
     openGraph: {

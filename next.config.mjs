@@ -68,6 +68,8 @@ const nextConfig = {
 
     return [
       { source: '/home', destination: '/', permanent: true },
+      { source: '/en', destination: '/', permanent: true },
+      { source: '/ar/guides/apple-watch-screen-battery-repair', destination: '/ar/services/apple-watch-repair', permanent: true },
       ...serviceRedirects,
     ]
   },
