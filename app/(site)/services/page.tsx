@@ -1,3 +1,5 @@
+import Link from "next/link"
+import { T } from "@/components/i18n-text"
 import type React from "react"
 
 import { ServicesHero } from "@/components/services-hero"
@@ -57,6 +59,7 @@ export default function ServicesPage() {
       <ServicesHero />
 
       <div className="container mx-auto px-6 py-12">
+        <div className="mb-10 grid gap-4 sm:grid-cols-2">{[{slug:"gaming-pc-repair",label:"Gaming PC Repair"},{slug:"gaming-pc-upgrade",label:"Gaming PC Upgrade"}].map(item => <Link key={item.slug} href={"/services/"+item.slug} className="rounded-2xl border border-border bg-card p-6 text-lg font-bold text-foreground hover:border-cyan-500"><T k={item.label} /></Link>)}</div>
         {devices.map((device) => (
           <ServiceCategory
             key={device.id}

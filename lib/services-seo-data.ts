@@ -981,6 +981,177 @@ export const SERVICES_SEO_DATA: ServiceSeoData[] = [
 ]
 
 // Slug lookup map
+SERVICES_SEO_DATA.push(...[
+  {
+    "slug": "gaming-pc-repair",
+    "bookingParam": "gaming-pc",
+    "name": "Gaming PC Repair",
+    "h1": "Gaming PC Repair Across the UAE",
+    "seoTitle": "Gaming PC Repair UAE | Dubai & Abu Dhabi",
+    "metaDescription": "Gaming PC Repair for custom and prebuilt desktops across the UAE. On-site compatibility checks, clear quotes and appointments confirmed before work.",
+    "heroSubtitle": "A gaming PC fault can originate from hardware, cooling, firmware or software. KBI inspects custom-built and prebuilt desktops at your home or office, checks the reported symptoms and explains the available repair options. We distinguish component faults from setup problems before recommending parts.",
+    "overview": {
+      "paragraph1": "A gaming PC fault can originate from hardware, cooling, firmware or software. KBI inspects custom-built and prebuilt desktops at your home or office, checks the reported symptoms and explains the available repair options. We distinguish component faults from setup problems before recommending parts.",
+      "paragraph2": "We confirm the visit window after checking your location and technician availability. The technician explains the diagnosis or upgrade plan and obtains approval before paid work. Back up important files before service; parts, migration and warranty terms are agreed in the written quote. Performance gains depend on the original system and selected components."
+    },
+    "commonProblems": [
+      {
+        "title": "No power or no display",
+        "description": "Test the power supply, memory seating, display connections and motherboard before recommending replacement parts."
+      },
+      {
+        "title": "Overheating and shutdowns",
+        "description": "Inspect airflow, dust buildup, fans, cooler mounting and thermal interface condition under load."
+      },
+      {
+        "title": "Crashes and blue screens",
+        "description": "Check memory stability, storage health, drivers and operating system errors to isolate the fault."
+      },
+      {
+        "title": "GPU and gaming performance faults",
+        "description": "Diagnose artifacts, driver failures, unstable frame rates and graphics-card power connections."
+      }
+    ],
+    "supportedBrands": [
+      {
+        "name": "Custom-built Gaming PCs",
+        "models": [
+          "Intel and AMD platforms",
+          "NVIDIA and AMD graphics"
+        ]
+      },
+      {
+        "name": "Prebuilt Gaming Desktops",
+        "models": [
+          "ASUS ROG",
+          "MSI",
+          "HP OMEN",
+          "Lenovo Legion",
+          "Alienware"
+        ]
+      }
+    ],
+    "highlights": [
+      {
+        "title": "On-site assessment",
+        "description": "Home and office visits subject to coverage and availability."
+      },
+      {
+        "title": "Compatibility first",
+        "description": "Check existing components before approving new parts."
+      },
+      {
+        "title": "Clear quotation",
+        "description": "Agree the scope and cost before paid work."
+      },
+      {
+        "title": "Service documentation",
+        "description": "Written repair details and applicable warranty terms."
+      }
+    ],
+    "ctaText": "Book Gaming PC Repair",
+    "relatedServices": [
+      {
+        "slug": "gaming-pc-upgrade",
+        "name": "Gaming PC Upgrade"
+      },
+      {
+        "slug": "computer-repair",
+        "name": "Computer Repair"
+      }
+    ],
+    "arabic": {
+      "name": "صيانة كمبيوتر الألعاب",
+      "h1": "صيانة كمبيوتر الألعاب في جميع أنحاء الإمارات",
+      "description": "صيانة كمبيوتر الألعاب للأجهزة المجمعة والجاهزة في الإمارات. فحص ميداني وتحقق من توافق القطع وعرض سعر واضح قبل العمل."
+    }
+  },
+  {
+    "slug": "gaming-pc-upgrade",
+    "bookingParam": "gaming-pc",
+    "name": "Gaming PC Upgrade",
+    "h1": "Gaming PC Upgrade Across the UAE",
+    "seoTitle": "Gaming PC Upgrade UAE | Dubai & Abu Dhabi",
+    "metaDescription": "Gaming PC Upgrade for custom and prebuilt desktops across the UAE. On-site compatibility checks, clear quotes and appointments confirmed before work.",
+    "heroSubtitle": "Gaming PC upgrades should match the games you play, your display and your budget. KBI reviews the existing build and identifies the practical bottleneck before proposing compatible changes. Customers can discuss supplied components or request a parts quote; availability and final pricing are confirmed separately.",
+    "overview": {
+      "paragraph1": "Gaming PC upgrades should match the games you play, your display and your budget. KBI reviews the existing build and identifies the practical bottleneck before proposing compatible changes. Customers can discuss supplied components or request a parts quote; availability and final pricing are confirmed separately.",
+      "paragraph2": "We confirm the visit window after checking your location and technician availability. The technician explains the diagnosis or upgrade plan and obtains approval before paid work. Back up important files before service; parts, migration and warranty terms are agreed in the written quote. Performance gains depend on the original system and selected components."
+    },
+    "commonProblems": [
+      {
+        "title": "Graphics card upgrades",
+        "description": "Review case clearance, power supply capacity, connectors and monitor resolution before selecting a GPU."
+      },
+      {
+        "title": "RAM and SSD upgrades",
+        "description": "Check memory generation, motherboard support, available slots and storage interfaces. Data migration is agreed before work."
+      },
+      {
+        "title": "CPU and motherboard upgrades",
+        "description": "Check socket, chipset, BIOS support, cooling and operating system implications before changing the platform."
+      },
+      {
+        "title": "Cooling and airflow upgrades",
+        "description": "Assess fan layout, radiator clearance, cooler compatibility and noise priorities for a balanced system."
+      }
+    ],
+    "supportedBrands": [
+      {
+        "name": "Custom-built Gaming PCs",
+        "models": [
+          "Intel and AMD platforms",
+          "NVIDIA and AMD graphics"
+        ]
+      },
+      {
+        "name": "Prebuilt Gaming Desktops",
+        "models": [
+          "ASUS ROG",
+          "MSI",
+          "HP OMEN",
+          "Lenovo Legion",
+          "Alienware"
+        ]
+      }
+    ],
+    "highlights": [
+      {
+        "title": "On-site assessment",
+        "description": "Home and office visits subject to coverage and availability."
+      },
+      {
+        "title": "Compatibility first",
+        "description": "Check existing components before approving new parts."
+      },
+      {
+        "title": "Clear quotation",
+        "description": "Agree the scope and cost before paid work."
+      },
+      {
+        "title": "Service documentation",
+        "description": "Written repair details and applicable warranty terms."
+      }
+    ],
+    "ctaText": "Book Gaming PC Upgrade",
+    "relatedServices": [
+      {
+        "slug": "gaming-pc-repair",
+        "name": "Gaming PC Repair"
+      },
+      {
+        "slug": "computer-repair",
+        "name": "Computer Repair"
+      }
+    ],
+    "arabic": {
+      "name": "ترقية كمبيوتر الألعاب",
+      "h1": "ترقية كمبيوتر الألعاب في جميع أنحاء الإمارات",
+      "description": "ترقية كمبيوتر الألعاب للأجهزة المجمعة والجاهزة في الإمارات. فحص ميداني وتحقق من توافق القطع وعرض سعر واضح قبل العمل."
+    }
+  }
+])
+
 export const SERVICES_BY_SLUG: Record<string, ServiceSeoData> = SERVICES_SEO_DATA.reduce(
   (acc, service) => {
     acc[service.slug] = service
