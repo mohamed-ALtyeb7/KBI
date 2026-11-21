@@ -1754,3 +1754,14 @@ html[lang="ar"] .corporate-page h1 { line-height: 1.5; letter-spacing: 0; }
   .corporate-contact-panel h3 { margin-bottom: 20px; }
   .corporate-contact-panel a.rounded-full { width: auto; flex: 1; }
 }
+
+html[lang="ar"] .corporate-page { direction: rtl; text-align: right; }
+html[lang="en"] .corporate-page { direction: ltr; }
+html[lang="ar"] .corporate-page .items-start { align-items: flex-start; }
+html[lang="ar"] .corporate-page :is(input[type="email"], input[type="tel"]) {
+  direction: ltr;
+  text-align: left;
+}
+html[lang="ar"] .corporate-page .tracking-wider { letter-spacing: 0; }
+html[lang="ar"] .corporate-page .divide-x > :not(:last-child) { --tw-divide-x-reverse: 1; }
+html[lang="ar"] .corporate-page svg.lucide-arrow-right { transform: rotate(180deg); }

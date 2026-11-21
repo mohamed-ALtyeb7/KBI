@@ -24,6 +24,11 @@ const ENGLISH_COPY: Record<string, string> = {
   "Quality Guarantee Desc": "We use original or high-quality parts and back eligible repairs with a clear service warranty.",
 }
 export const DICTIONARY: Record<string, string> = {
+  "Service plans": "خطط الخدمة",
+  "Flexible": "مرنة",
+  "Coverage": "التغطية",
+  "SLA targets": "أهداف مستوى الخدمة",
+  "Multi-site": "مواقع متعددة",
   "Device repair and IT solutions wherever you are in the UAE. We come to your home or office with fast, professional, same-day service.": "إصلاح الأجهزة وحلول تقنية المعلومات أينما كنت في الإمارات. نصل إلى منزلك أو مكتبك بخدمة سريعة واحترافية في اليوم نفسه.",
   "Operations Overview": "نظرة عامة على العمليات",
   "Operations workspace": "مساحة العمليات",
