@@ -422,7 +422,7 @@ function OrderInspector({ order, onCopy, onEdit, onReassign }: {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => onCopy(order)}><Copy className="w-4 h-4 mr-2" /><AdminText k="Copy reference" /></DropdownMenuItem>
-                <DropdownMenuItem onClick={() => { window.location.href = "https://kbi-repair-invoices.vercel.app/" }}><FileText className="w-4 h-4 mr-2" />View Tax Invoice (PDF)</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => { window.open("https://kbi-repair-invoices.vercel.app/", "_blank", "noopener,noreferrer") }}><FileText className="w-4 h-4 mr-2" />View Tax Invoice (PDF)</DropdownMenuItem>
                 {order.customerPhone && (
                   <>
                     <DropdownMenuSeparator />
@@ -476,7 +476,7 @@ function OrderInspector({ order, onCopy, onEdit, onReassign }: {
               <MessageCircle /><AdminText k="Message" />
             </a>
           ) : null}
-          <button type="button" onClick={() => { window.location.href = "https://kbi-repair-invoices.vercel.app/" }}><FileText /><AdminText k="Invoice" /></button>
+          <button type="button" onClick={() => { window.open("https://kbi-repair-invoices.vercel.app/", "_blank", "noopener,noreferrer") }}><FileText /><AdminText k="Invoice" /></button>
           <button type="button" onClick={() => onReassign(order)}><UserRoundCog /><AdminText k="Reassign" /></button>
           <button type="button" className={styles.primaryAction} onClick={() => onEdit(order)}><AdminText k="Open Order" /><ArrowRight /></button>
         </div>
