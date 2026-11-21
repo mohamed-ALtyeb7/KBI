@@ -866,12 +866,12 @@ export function BookingForm() {
                   transition={{ duration: 0.2 }}
                   className="space-y-6"
                 >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h2 className="text-xl sm:text-2xl font-black text-foreground tracking-tight">
+                  <div className={cn("flex items-center justify-between", isAr && "flex-row-reverse")}>
+                    <div className="flex-1">
+                      <h2 className={cn("text-xl sm:text-2xl font-black text-foreground tracking-tight", isAr && "text-right")} dir={isAr ? "rtl" : "ltr"}>
                         {t("What needs repair?")}
                       </h2>
-                      <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
+                      <p className={cn("text-xs sm:text-sm text-muted-foreground mt-0.5", isAr && "text-right")} dir={isAr ? "rtl" : "ltr"}>
                         {isAr ? "حدد نوع الجهاز وسنرسل لك الفني المعتمد والمجهز" : "Select your device to begin on-site service"}
                       </p>
                     </div>
@@ -1135,12 +1135,12 @@ export function BookingForm() {
                   transition={{ duration: 0.2 }}
                   className="space-y-6"
                 >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h2 className="text-xl sm:text-2xl font-black text-foreground tracking-tight">
+                  <div className={cn("flex items-center justify-between", isAr && "flex-row-reverse")}>
+                    <div className="flex-1">
+                      <h2 className={cn("text-xl sm:text-2xl font-black text-foreground tracking-tight", isAr && "text-right")} dir={isAr ? "rtl" : "ltr"}>
                         {t("Where should we come?")}
                       </h2>
-                      <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
+                      <p className={cn("text-xs sm:text-sm text-muted-foreground mt-0.5", isAr && "text-right")} dir={isAr ? "rtl" : "ltr"}>
                         {isAr ? "نصل إلى باب بيتك أو مكتبك في أي مكان بالإمارات" : "On-site doorstep service across all 7 Emirates"}
                       </p>
                     </div>
@@ -1343,12 +1343,12 @@ export function BookingForm() {
                   transition={{ duration: 0.2 }}
                   className="space-y-6"
                 >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h2 className="text-xl sm:text-2xl font-black text-foreground tracking-tight">
+                  <div className={cn("flex items-center justify-between", isAr && "flex-row-reverse")}>
+                    <div className="flex-1">
+                      <h2 className={cn("text-xl sm:text-2xl font-black text-foreground tracking-tight", isAr && "text-right")} dir={isAr ? "rtl" : "ltr"}>
                         {t("Almost done")}
                       </h2>
-                      <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
+                      <p className={cn("text-xs sm:text-sm text-muted-foreground mt-0.5", isAr && "text-right")} dir={isAr ? "rtl" : "ltr"}>
                         {t("Where should we send your booking confirmation?")}
                       </p>
                     </div>
