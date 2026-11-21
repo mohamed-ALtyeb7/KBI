@@ -115,7 +115,7 @@ export function OrderEditorDialog({
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="w-full sm:w-[92vw] lg:w-[880px] max-w-[95vw] max-h-[90vh] p-0 bg-card border border-border shadow-2xl rounded-[24px] overflow-hidden text-card-foreground flex flex-col font-sans">
+        <DialogContent className="order-details-dialog w-[calc(100vw-1rem)] max-w-none sm:w-[94vw] sm:max-w-[1280px] max-h-[94dvh] gap-0 p-0 bg-card border border-border shadow-2xl rounded-2xl sm:rounded-[24px] overflow-y-auto text-card-foreground flex flex-col font-sans">
           {/* Fixed Header */}
           <DialogHeader className="shrink-0 border-b border-border bg-muted/30 px-6 lg:px-8 py-5 pr-14">
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -141,9 +141,9 @@ export function OrderEditorDialog({
 
           {/* Scrollable Content Body */}
           {order && (
-            <div className="flex-1 overflow-y-auto px-6 lg:px-8 py-6 space-y-6">
+            <div className="order-details-sections shrink-0 grid grid-cols-1 lg:grid-cols-2 items-start gap-5 px-4 sm:px-6 lg:px-8 py-5">
               {/* Order Reference & Timestamps */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-muted/20 border border-border/70 rounded-2xl p-4">
+              <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4 bg-muted/20 border border-border/70 rounded-2xl p-4">
                 <div>
                   <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider"><AdminText k="Source" /></span>
                   <p className="text-xs font-bold text-foreground uppercase mt-0.5">{order.source}</p>
@@ -590,7 +590,7 @@ export function OrderEditorDialog({
           )}
 
           {/* Fixed Footer Action Bar */}
-          <DialogFooter className="shrink-0 border-t border-border bg-muted/30 px-6 lg:px-8 py-4.5 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <DialogFooter className="sticky bottom-0 z-10 shrink-0 border-t border-border bg-card px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
             {/* Delete Action (Left Side) */}
             {onDelete && order ? (
               confirmDelete ? (

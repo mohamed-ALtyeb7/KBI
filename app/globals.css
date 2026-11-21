@@ -1696,3 +1696,13 @@ html[lang="ar"] .corporate-page h1 { line-height: 1.5; letter-spacing: 0; }
   .corporate-page a.rounded-full { width: 100%; }
   .corporate-page .grid-cols-2 { gap: 12px; }
 }
+
+.order-details-dialog .order-details-sections > * { min-width: 0; }
+.order-details-dialog .order-details-sections :is(p, label, h3) { overflow-wrap: anywhere; }
+.order-details-dialog .order-details-sections .text-xs { font-size: .875rem; line-height: 1.6; }
+.order-details-dialog .order-details-sections .text-\[11px\] { font-size: .75rem; line-height: 1.6; }
+@media (max-width: 639px) {
+  .order-details-dialog [data-slot="dialog-footer"] { align-items: stretch; }
+  .order-details-dialog [data-slot="dialog-footer"] > div { flex-wrap: wrap; }
+  .order-details-dialog [data-slot="dialog-footer"] button { min-height: 44px; }
+}
