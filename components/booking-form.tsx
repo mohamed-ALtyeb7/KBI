@@ -904,7 +904,7 @@ export function BookingForm() {
                             })
                           }}
                           className={cn(
-                            "relative group flex flex-col items-start justify-between p-4 rounded-2xl border text-left transition-all duration-300 cursor-pointer min-h-[88px] sm:min-h-[98px] overflow-hidden backdrop-blur-xl",
+                            "relative group flex flex-col items-center justify-center p-4 pt-7 rounded-2xl border text-center transition-all duration-300 cursor-pointer min-h-[120px] sm:min-h-[128px] overflow-hidden backdrop-blur-xl",
                             isSelected
                               ? "border-cyan-400 bg-gradient-to-br from-cyan-500/20 via-blue-500/15 to-transparent shadow-[0_0_30px_rgba(6,182,212,0.25)] ring-1 ring-cyan-400/60 text-foreground"
                               : "border-white/10 bg-card/60 hover:bg-muted/50 text-muted-foreground hover:text-foreground hover:border-cyan-400/40 hover:shadow-lg",
@@ -937,7 +937,7 @@ export function BookingForm() {
                             <Icon className="h-5 w-5 stroke-[1.75]" aria-hidden="true" />
                           </div>
 
-                          <span className="text-xs sm:text-sm font-bold tracking-tight mt-2.5 line-clamp-1">
+                          <span className="w-full text-center text-xs sm:text-sm font-bold tracking-tight mt-2.5 leading-relaxed line-clamp-2">
                             {isAr ? dev.nameAr : dev.name}
                           </span>
                         </motion.button>
