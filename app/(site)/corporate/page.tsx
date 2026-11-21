@@ -129,7 +129,6 @@ export default async function CorporatePage() {
                   alt="Corporate partnership handshake"
                   fill
                   priority
-                  unoptimized
                   sizes="(max-width: 767px) 92vw, (max-width: 1024px) 100vw, 50vw"
                   className="object-cover object-center scale-105 group-hover:scale-100 transition-transform duration-1000"
                 />

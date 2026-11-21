@@ -207,7 +207,7 @@ export function OrderTracker({ initialOrderId = "" }: { initialOrderId?: string 
                 <Search className="absolute top-1/2 left-4 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   type="text"
-                  name="orderId"
+                  name="orderId" aria-label={isAr ? "رقم الطلب" : "Order number"}
                   autoComplete="off"
                   value={orderId}
                   onChange={(e) => setOrderId(e.target.value)}
@@ -221,7 +221,7 @@ export function OrderTracker({ initialOrderId = "" }: { initialOrderId?: string 
                 <Phone className="absolute top-1/2 left-4 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   type="tel"
-                  name="phone"
+                  name="phone" aria-label={isAr ? "رقم الهاتف" : "Phone number"}
                   inputMode="tel"
                   autoComplete="tel"
                   value={phone}
